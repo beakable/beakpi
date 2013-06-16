@@ -1,0 +1,142 @@
+body{
+	margin:0;
+	padding:0;
+	background: url(/img/background.jpg) repeat;
+	font-family:Arial;
+	font-weight: 700;
+	color:#FFF;
+	width:100%;
+}
+
+#serviceView{
+  width:700px;
+  margin:0 auto 0 auto;
+  padding:20px 0 0 0;
+
+}
+
+#search{
+  margin: 20px 0 0 3px;
+}
+
+.inputSearch{
+	margin:0 0 0 8px;
+	padding:0;
+	width:622px;
+}
+
+.dijitButtonText{
+  font-size:10px;
+}
+
+.claro .dijitSliderReadOnly .dijitSliderImageHandleH, .claro .dijitSliderDisabled .dijitSliderImageHandleH{
+  display: none
+}
+.claro .dijitSlider .dijitSliderProgressBarH, .claro .dijitSlider .dijitSliderLeftBumper,
+.claro .dijitSliderDisabled .dijitSliderProgressBarH, .claro .dijitSliderDisabled .dijitSliderLeftBumper{
+  background: #28292C
+}
+
+.trackWithArt {
+	float:left; 
+	width:233px; 
+	height:130px; 
+	display:inline; 
+	opacity:0;
+	font-size:10px;
+}
+
+.trackWithArt .buttons{
+	margin:0 0 0 5px;
+	float:left;
+}
+
+.trackWithArt .title{
+	margin:0 0 0 5px;
+	width: 120px;
+	height:76px;
+	font-size:11px;
+	float:left;
+}
+
+.trackWithoutArt {
+	float:left; 
+	width:335px;
+	opacity:0
+}
+.trackWithoutArt .title{
+	float:left;
+	font-size: 12px;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+}
+
+.trackWithoutArt .title .name{
+	width: 200px;
+	height: 15px;
+	font-size:13px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	word-wrap: break-word;
+	display: inline-block;
+}
+.trackWithoutArt .title .artist{
+	font-weight: 100;
+	width: 200px;
+	height: 15px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	word-wrap: break-word;
+	display: inline-block;
+}
+
+.trackWithoutArt .buttons{
+	float:left;
+	margin:0 10px 0 0;
+}
+.claro .dijitDialogPaneContent {
+	background: url(/img/background.jpg) repeat;
+}
+
+.searchSummary{
+	font-size:9px; 
+	font-weight:100; 
+	margin-left:7px;
+}
+.currentlyPlaying{
+	float:left;
+	text-align: center;
+	width: 330px;
+}
+
+.logos{
+	width:351px;
+	height:71px;
+	margin: 0 auto;
+	display: block;
+}
+
+.playlistStored{
+	margin: 10px 0 20px 0;
+	text-align: center;
+}
+
+.claro .controlButtons .dijitButton .dijitButtonNode {
+	background-color: #E3F9E3;
+	border: #B3EDB3;
+}
+
+.claro .btSearch.dijitButton .dijitButtonNode {
+	background-color: #E3F9E3;
+	border: #B3EDB3;
+}
+
+.clear {
+	clear:both;
+}
+
+.noSongs{
+	text-align: center;
+	display: block;
+}

@@ -1,0 +1,115 @@
+body{
+	margin:0;
+	padding:0;
+	background: url(/img/background.jpg) repeat;
+	font-family:Arial;
+	font-weight: 0;
+	color:#FFF;
+}
+
+.inputSearch{
+	width:79%;
+	margin-left: 2%
+}
+
+.dijitButtonText{
+  font-size:10px;
+}
+
+.claro .dijitSliderReadOnly .dijitSliderImageHandleH, .claro .dijitSliderDisabled .dijitSliderImageHandleH{
+  display: none
+}
+.claro .dijitSlider .dijitSliderProgressBarH, .claro .dijitSlider .dijitSliderLeftBumper,
+.claro .dijitSliderDisabled .dijitSliderProgressBarH, .claro .dijitSliderDisabled .dijitSliderLeftBumper{
+  background: #28292C
+}
+
+.trackWithoutArt {
+	float:left; 
+	width:100%;  
+	opacity:0
+}
+.trackWithoutArt .title{
+	float:left;
+	font-size: 10px;
+	width:65%;
+	margin:0 0 0 5px;
+}
+
+.trackWithoutArt .title .name{
+	font-size:13px;
+	width: 100%;
+	height: 14px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	word-wrap: break-word;
+	display: inline-block;
+}
+.trackWithoutArt .title .artist{
+	width: 100%;
+	height: 11px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	word-wrap: break-word;
+	display: inline-block;
+}
+
+
+.trackWithoutArt .buttons{
+	float:left;
+
+}
+.claro .dijitDialogPaneContent {
+	background: url(/img/background.jpg) repeat;
+}
+
+#search{
+	overflow: hidden;
+	width:100%;
+
+}
+.searchSummary{
+	font-size:9px; 
+	font-weight:100; 
+	margin-left:7px;
+}
+
+.currentlyPlaying{
+	padding: 10px 0;
+	display: block;
+	background: url(/img/playing-background.png) repeat-x;
+	margin:10px auto 0;
+	text-align: center;
+	border-bottom:solid 2px #37373C;
+}
+.controlButtons{
+	text-align: center;
+}
+
+.logos{
+	width:100%
+}
+
+.claro .controlButtons .dijitButton .dijitButtonNode {
+	background-color: #E3F9E3;
+	border: #B3EDB3;
+}
+
+.claro .btSearch.dijitButton .dijitButtonNode {
+	background-color: #E3F9E3;
+	border: #B3EDB3;
+}
+
+.playlistStored{
+	margin: 5 px 0 20px 0;
+	text-align: center;
+}
+
+.clear {
+	clear:both;
+}
+
+.noSongs{
+	text-align: center;
+	display: block;
+}
