@@ -73,7 +73,7 @@ function(declare, lang, fx, Deferred, on, when, domConstruct, domAttr, keys, _Wi
     summary: function(result) {
       var i;
       for(i =0; i < result.tracks.length; i++){
-        if(result.tracks[i].album.availability.territories.indexOf("GB") !== -1) {
+        if(result.tracks[i].album.availability.territories.indexOf(dojoConfig.countryCode) !== -1) {
           ++this.totalTracks;
         }
       }
@@ -96,7 +96,7 @@ function(declare, lang, fx, Deferred, on, when, domConstruct, domAttr, keys, _Wi
       }
   		for(i =0; i < result.tracks.length; i++){
   		  trackResult = new track;
-        if (result.tracks[i].album.availability.territories.indexOf("GB") !== -1) {
+        if (result.tracks[i].album.availability.territories.indexOf(dojoConfig.countryCode) !== -1) {
           var trackInfo = {
             name: result.tracks[i].name, 
             href: result.tracks[i].href,

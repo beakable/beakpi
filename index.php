@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL); ini_set('display_errors', '1');
+?>
+<?php
 /*
 
 This program is free software: you can redistribute it and/or modify
@@ -48,14 +51,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <?php 
 // SETTINGS 
 // ---------------------------------------------------
-  $mopidySocket = "ws://192.168.1.68:6680/mopidy/ws/"
+  $mopidySocket = "ws://192.168.1.68:6680/mopidy/ws/";
+  $countryCode = "GB"; 
+// AG AI AQ AR AU BB BM BO BR BS BT BZ CK CL CO CR CU DE DM DO EC FK GB 
+// GD GF GI GP GT GU GY HN HT IO JM KI KN KY LC MP MQ MS MX NI NR NU NZ PA 
+// PE PM PN PR PY SB SR SV TC TK TO TT TV US UY VC VE VG VU WF WS
 // ---------------------------------------------------
 ?>
 
 
 
 <?php
-  require_once 'Mobile_Detect.php';
+  require_once 'php/Mobile_Detect.php';
   $detect = new Mobile_Detect;
   $deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
 ?>
@@ -80,7 +87,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       debugAtAllCosts: true,
   	  async: true,
   	  isDebug: true,
-      device: "<?php echo $deviceType ?>"
+      device: "<?php echo $deviceType ?>",
+      countryCode: "<?php echo $countryCode ?>"
       }
     </script>
     <script src="js/mopidy.js"></script>
@@ -104,7 +112,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         require([
           "dojo/parser", 
           "dojo/ready",
-          "dijit/bpi/music/serviceView",
+          "bpi/music/serviceView",
           "dojox/mobile/parser", 
           "dojox/mobile"
         ], function(parser, ready){
@@ -116,7 +124,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </head>
 
   <body class="claro">
-  	<div id="serviceView" data-dojo-type="dijit/bpi/music/serviceView"></div>
+  	<div id="serviceView" data-dojo-type="bpi/music/serviceView"></div>
     <div class="clear"></div>
     <img src="/img/logos.png" class="logos"/>
   </body>

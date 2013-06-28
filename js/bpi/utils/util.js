@@ -61,7 +61,7 @@ define([
 
 	requestSearch: function(path) {
 	  var dfd = new Deferred();
-	  xhr("/search.php?xhr="+path, {
+	  xhr("/php/search.php?xhr="+path, {
 	  handleAs: "json"
 	  }).then(function(data){
 		dfd.resolve(data);
@@ -75,7 +75,7 @@ define([
   
 	requestCoverArt: function(path) {
     var dfd = new Deferred();
-    xhr("/coverart.php?xhr=" + path, {
+    xhr("/php/coverart.php?xhr=" + path, {
     preventCache: false,
     }).then(function(data){
     	dfd.resolve(data);
@@ -89,7 +89,7 @@ define([
 
  	requestCurrentTrack: function() {
     var dfd = new Deferred();
-    xhr("/currentTrack.php", {
+    xhr("/php/currentTrack.php", {
     preventCache: false,
     }).then(function(data){
     	dfd.resolve(data);
@@ -103,7 +103,7 @@ define([
 
  	requestCurrentSeek: function(){
 	  var dfd = new Deferred();
-	  xhr("/currentSeek.php", {
+	  xhr("/php/currentSeek.php", {
 		preventCache: false,
 	  }).then(function(data){
 			dfd.resolve(data);
@@ -117,7 +117,7 @@ define([
   
   requestStoredPlaylists: function(){
     var dfd = new Deferred();
-      xhr("/mpc.php?xhr=lsplaylists", {
+      xhr("/php/mpc.php?xhr=lsplaylists", {
       }).then(function(data){
         dfd.resolve(data);
       }, function(err){
@@ -130,7 +130,7 @@ define([
 
   requestCurrentPlaylist: function(){
 	  var dfd = new Deferred();
-	  xhr("/currentPlaylist.php", {
+	  xhr("/php/currentPlaylist.php", {
 		preventCache: false,
 	  }).then(function(data){
 			dfd.resolve(data);
@@ -161,7 +161,7 @@ define([
 
   command: function(com){
     var dfd = new Deferred();
-    xhr("/command.php?xhr=" + com, {
+    xhr("/php/command.php?xhr=" + com, {
 	  }).then(function(data){
       dfd.resolve(data);
 	  }, function(err){
