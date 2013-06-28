@@ -92,7 +92,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       }
     </script>
     <script src="js/mopidy.js"></script>
-    <script src="js/dojo/dojo/dojo.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script>
 
     <link rel="stylesheet" href="js/dojo/dijit/themes/claro/claro.css" />
     <link rel="stylesheet" href="js/dojo/dojox/widget/Toaster/Toaster.css" >
