@@ -44,7 +44,7 @@ function(declare, lang, win, mouse, on, when, domAttr, domStyle, domConstruct, a
     widgetsInTemplate: true,
     templateString: template,
     _currentlyPlaying: null,
-    _intervalCurrentPlaying: new timing.Timer(1000),
+    intervalCurrentPlaying: new timing.Timer(1000),
     _btnPlay: null,
     _currentSongSeek: null,
     _currentPlaylist: null,
@@ -102,11 +102,15 @@ function(declare, lang, win, mouse, on, when, domAttr, domStyle, domConstruct, a
         }));
       }));
 
-      this._intervalCurrentPlaying.onTick = lang.hitch(this,function(){
+      this.intervalCurrentPlaying.onTick = lang.hitch(this,function(){
         this.updateCurrentPlaying(volumeSeek);
       });
-      this._intervalCurrentPlaying.start();
+      this.intervalCurrentPlaying.start();
       this.applyButtonCommands();
+    },
+
+    endPlayer: function() {
+      this.intervalCurrentPlaying.stop();
     },
 
     showSettings: function() {
@@ -164,7 +168,7 @@ function(declare, lang, win, mouse, on, when, domAttr, domStyle, domConstruct, a
         }));
       }
       else{
-        domStyle.set(this.btnSettings.domNode, "display", "none");
+        domStyle.set(this._btnSettings.domNode, "display", "none");
       }
     },
 

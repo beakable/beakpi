@@ -67,7 +67,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $detect = new Mobile_Detect;
   $deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
 ?>
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -128,15 +127,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             var BpiHolder = dom.byId("serviceView");
             var Bpi = new menu();
+            var musicPlayer = null;
+            var homeRF = null;
             Bpi.placeAt(BpiHolder);
 
             aspect.after(Bpi, "launchMusicPlayer", lang.hitch(this, function(){
-              var musicPlayer = new MusicPlayer();
-              musicPlayer.placeAt(BpiHolder);
+              if (musicPlayer === null) {
+                musicPlayer = new MusicPlayer();
+                musicPlayer.placeAt(BpiHolder);
+              }
+              if (homeRF !== null) {
+                homeRF.destroy();
+                musicPlayer = null;
+              }
             }));
 
             aspect.after(Bpi, "launchHomeRF", lang.hitch(this, function(){
-              var homeRF = new HomeRF();
+              if (homeRF === null) {
+                homeRF = new HomeRF();
+              }
+              if (musicPlayer !== null) {
+                musicPlayer.endPlayer();
+                musicPlayer.destroy();
+                musicPlayer = null;
+              }
               homeRF.placeAt(BpiHolder);
             }));
 
