@@ -15,15 +15,55 @@
     
 define([
 "dojo/request/xhr",
+"dojo/json",
 "dojo/Deferred",
-"dojo/store/Memory"
+"dojo/store/Memory",
 ],
 
- function(xhr, Deferred, Memory) {
+ function(xhr, JSON, Deferred, Memory) {
  return {
 
  	store: null,
  	storeLength: null,
+
+
+  xmlToJson: function(xml) {
+    
+    // Create the return object
+    var obj = {};
+
+    if (xml.nodeType == 1) { // element
+      // do attributes
+      if (xml.attributes.length > 0) {
+      obj["@attributes"] = {};
+        for (var j = 0; j < xml.attributes.length; j++) {
+          var attribute = xml.attributes.item(j);
+          obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+        }
+      }
+    } else if (xml.nodeType == 3) { // text
+      obj = xml.nodeValue;
+    }
+
+    // do children
+    if (xml.hasChildNodes()) {
+      for(var i = 0; i < xml.childNodes.length; i++) {
+        var item = xml.childNodes.item(i);
+        var nodeName = item.nodeName;
+        if (typeof(obj[nodeName]) == "undefined") {
+          obj[nodeName] = xmlToJson(item);
+        } else {
+          if (typeof(obj[nodeName].push) == "undefined") {
+            var old = obj[nodeName];
+            obj[nodeName] = [];
+            obj[nodeName].push(old);
+          }
+          obj[nodeName].push(xmlToJson(item));
+        }
+      }
+    }
+    return obj;
+  },
 
  	storeSet: function(saveName, saveValues) {
 		if(this.store === null) {
@@ -33,7 +73,6 @@ define([
 		}
 		else {
 			var exists = this.storeCheck(saveName);
-			console.log(exists);
 			if (exists >= 0) {
 				this.store.remove(exists);
 				this.storeLength --;
@@ -170,6 +209,29 @@ define([
 	  	dfd.resolve(evt);
 	  });  
 	  return dfd.promise;
- }
+  },
+
+// ---------------------------
+
+
+  requestRF: function(xml) {
+    var _self = this;
+    var dfd = new Deferred();
+    xhr.post("/php/tcpsocket.php",{
+      method: "POST",
+      handleAs: "json",
+      data: {
+            xmlpost: xml
+      }
+    }).then(function(data){
+      dfd.resolve(data);
+    }, function(err){
+      dfd.resolve(err);
+    }, function(evt){
+      dfd.resolve(evt);
+    });  
+    return dfd.promise;
+  }
+
 }
 });

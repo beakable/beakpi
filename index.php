@@ -111,21 +111,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             webSocketUrl: "<?php echo $mopidySocket ?>"
         });
         require([
-          "dojo/parser", 
+          "dojo/parser",
           "dojo/ready",
+          "dojo/_base/lang",
+          "dojo/dom",
+          "dojo/dom-construct",
+          "dojo/aspect",
+          "bpi/menu",
           "bpi/music/serviceView",
-          "dojox/mobile/parser", 
+          "bpi/rf/serviceView",
+          "dojox/mobile/parser",
           "dojox/mobile"
-        ], function(parser, ready){
+        ], function(parser, ready, lang, dom, domConst, aspect, menu, MusicPlayer, HomeRF){
         	ready(function(){
         		parser.parse();
+
+            var BpiHolder = dom.byId("serviceView");
+            var Bpi = new menu();
+            Bpi.placeAt(BpiHolder);
+
+            aspect.after(Bpi, "launchMusicPlayer", lang.hitch(this, function(){
+              var musicPlayer = new MusicPlayer();
+              musicPlayer.placeAt(BpiHolder);
+            }));
+
+            aspect.after(Bpi, "launchHomeRF", lang.hitch(this, function(){
+              var homeRF = new HomeRF();
+              homeRF.placeAt(BpiHolder);
+            }));
+
         	});
         });
       </script>
   </head>
 
   <body class="claro">
-  	<div id="serviceView" data-dojo-type="bpi/music/serviceView"></div>
+  	<div id="serviceView" data-dojo-attach-point="bpi"></div>
     <div class="clear"></div>
     <img src="/img/logos.png" class="logos"/>
   </body>
