@@ -14,100 +14,98 @@
     along with BeakPi.  If not, see <http://www.gnu.org/licenses/>. */
 
 define([
-"dojo/_base/declare",
-"dojo/_base/lang",
-"dojo/_base/window",
-"dojo/mouse",
-"dojo/on",
-"dojo/when",
-"dojo/dom-attr",
-"dojo/dom-style",
-"dojo/dom-construct",
-"dojo/aspect",
-"dijit/focus",
-"dijit/_WidgetBase",
-"dijit/_TemplatedMixin",
-"dijit/_WidgetsInTemplateMixin",
-"dijit/Dialog",
-"dojox/timing",
-"bpi/music/search",
-"bpi/music/seekbar",
-"bpi/music/settings",
-"bpi/music/playlist",
-"bpi/utils/util",
-"dojo/text!./templates/serviceView.html",
-"dijit/form/Button"
+  "dojo/_base/declare",
+  "dojo/_base/lang",
+  "dojo/_base/window",
+  "dojo/mouse",
+  "dojo/on",
+  "dojo/when",
+  "dojo/dom-attr",
+  "dojo/dom-style",
+  "dojo/dom-construct",
+  "dojo/aspect",
+  "dijit/focus",
+  "dijit/_WidgetBase",
+  "dijit/_TemplatedMixin",
+  "dijit/_WidgetsInTemplateMixin",
+  "dijit/Dialog",
+  "dojox/timing",
+  "bpi/music/search",
+  "bpi/music/seekbar",
+  "bpi/music/settings",
+  "bpi/music/playlist",
+  "bpi/utils/util",
+  "dojo/text!./templates/serviceView.html",
+  "dijit/form/Button"
 ],
-function(declare, lang, win, mouse, on, when, domAttr, domStyle, domConstruct, aspect, focusUtil, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, 
-  Dialog, timing, search,  seekbar, settings, playlist, util, template) {
-  
+function(declare, lang, win, mouse, on, when, domAttr, domStyle, domConstruct, aspect, focusUtil, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Dialog, timing, search,  seekbar, settings, playlist, util, template) {
+
   return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
     widgetsInTemplate: true,
     templateString: template,
-    currentlyPlaying: null,
-    intervalCurrentPlaying: new timing.Timer(1000),
-    btnPlay: null,
-    currentSongSeek: null,
-    settingsDialog: null,
-    currentPlaylist: null,
-    currentSearch: null,
-    currentTrackView: "Playlist",
+    _currentlyPlaying: null,
+    _intervalCurrentPlaying: new timing.Timer(1000),
+    _btnPlay: null,
+    _currentSongSeek: null,
+    _currentPlaylist: null,
+    _currentSearch: null,
+    _currentTrackView: "Playlist",
 
     postCreate: function (){
-      var mouseup; 
-      var volumeSeek = new seekbar;
-      this.currentSongSeek = new seekbar;
-      
-      if(this.currentPlaylist === null) {
-        this.currentPlaylist = new playlist();
+      var mouseup;
+      var volumeSeek = new seekbar();
+      this._currentSongSeek = new seekbar();
+
+      if(this._currentPlaylist === null) {
+        this._currentPlaylist = new playlist();
       }
-      if(this.currentSearch === null) {
-        this.currentSearch = new search();
+      if(this._currentSearch === null) {
+        this._currentSearch = new search();
       }
-      this.currentSearch.placeAt(this.trackSearchView);
-      this.currentPlaylist.placeAt(this.trackPlaylistView);
-      domStyle.set(this.trackPlaylistView, "display", "none");
+      this._currentSearch.placeAt(this._trackSearchView);
+      this._currentPlaylist.placeAt(this._trackPlaylistView);
+      domStyle.set(this._trackPlaylistView, "display", "none");
 
 
       if(dojoConfig.device !== "computer") {
         var computedStyle = domStyle.getComputedStyle(this.musicPlayer);
-        this.currentSongSeek.createBar("song", this.progressSeekBar, "100%");
-        volumeSeek.createBar("volume", this.volumeSeekBar, "100%");
+        this._currentSongSeek.createBar("song", this._progressSeekBar, "100%");
+        volumeSeek.createBar("volume", this._volumeSeekBar, "100%");
       }
       else {
-        this.currentSongSeek.createBar("song", this.progressSeekBar, "692px");
-        volumeSeek.createBar("volume", this.volumeSeekBar, "370px");
+        this._currentSongSeek.createBar("song", this._progressSeekBar, "692px");
+        volumeSeek.createBar("volume", this._volumeSeekBar, "370px");
       }
 
       // NEED FIXED
-      this.currentSongSeek.slider.set("disabled", true);
-      this.currentSongSeek.slider.sliderHandle.display = false;
+      this._currentSongSeek.slider.set("disabled", true);
+      this._currentSongSeek.slider.sliderHandle.display = false;
 
-      on(this.currentSongSeek.slider, "focus", lang.hitch(this, function(evt){
-        this.currentSongSeek.set("dragging", true);
+      on(this._currentSongSeek.slider, "focus", lang.hitch(this, function(evt){
+        this._currentSongSeek.set("dragging", true);
         mouseup = on(win.doc.documentElement, "mouseup", lang.hitch(this,function(evt){
           focusUtil.curNode.blur();
           mouseup.remove();
-          util.commandPlayer("seek", parseInt(this.currentSongSeek.slider.get("value")))
-            this.currentSongSeek.set("dragging", false);
+          util.commandPlayer("seek", parseInt(this._currentSongSeek.slider.get("value"), 10));
+            this._currentSongSeek.set("dragging", false);
         }));
       }));
-      
+
       on(volumeSeek.slider, "focus", lang.hitch(this, function(evt){
         volumeSeek.set("dragging", true);
         mouseup = on(win.doc.documentElement, "mouseup", lang.hitch(this,function(evt){
           focusUtil.curNode.blur();
             mouseup.remove();
-            when(util.commandPlayer("setVolume", parseInt(volumeSeek.slider.get("value")))).then(lang.hitch(this, function(res){
+            when(util.commandPlayer("setVolume", parseInt(volumeSeek.slider.get("value"), 10))).then(lang.hitch(this, function(res){
               volumeSeek.set("dragging", false);
             }));
         }));
       }));
 
-      this.intervalCurrentPlaying.onTick = lang.hitch(this,function(){
+      this._intervalCurrentPlaying.onTick = lang.hitch(this,function(){
         this.updateCurrentPlaying(volumeSeek);
       });
-      this.intervalCurrentPlaying.start();
+      this._intervalCurrentPlaying.start();
       this.applyButtonCommands();
     },
 
@@ -125,48 +123,48 @@ function(declare, lang, win, mouse, on, when, domAttr, domStyle, domConstruct, a
     },
 
     applyButtonCommands: function (){
-      on(this.btnPlay, "click", lang.hitch(this, function(evt)  {
-        if(this.btnPlay.get("label") === "Pause"){
+      on(this._btnPlay, "click", lang.hitch(this, function(evt)  {
+        if(this._btnPlay.get("label") === "Pause"){
           util.commandPlayer("pause");
         } else{
           util.commandPlayer("play");
-        } 
+        }
       }));
-      on(this.btnStop, "click", lang.hitch(this, function(evt)  {
+      on(this._btnStop, "click", lang.hitch(this, function(evt)  {
         util.commandPlayer("stop");
       }));
-      on(this.btnNext, "click", lang.hitch(this, function(evt)  {
+      on(this._btnNext, "click", lang.hitch(this, function(evt)  {
         util.commandPlayer("next");
       }));
-      on(this.btnPrev, "click", lang.hitch(this, function(evt)  {
+      on(this._btnPrev, "click", lang.hitch(this, function(evt)  {
         util.commandPlayer("previous");
       }));
-      on(this.btnClear, "click", lang.hitch(this, function(evt) {
+      on(this._btnClear, "click", lang.hitch(this, function(evt) {
         util.commandTracklist("clear");
-        this.currentPlaylist.clear();
+        this._currentPlaylist.clear();
       }));
-      on(this.btnPlaylist, "click", lang.hitch(this, function(evt) {
-        if(this.currentTrackView === "Search") {
-          domStyle.set(this.trackSearchView, "display", "");
-          domStyle.set(this.trackPlaylistView, "display", "none");
-          this.currentTrackView = "Playlist";
+      on(this._btnPlaylist, "click", lang.hitch(this, function(evt) {
+        if(this._currentTrackView === "Search") {
+          domStyle.set(this._trackSearchView, "display", "");
+          domStyle.set(this._trackPlaylistView, "display", "none");
+          this._currentTrackView = "Playlist";
         }
         else{
-          domStyle.set(this.trackSearchView, "display", "none");
-          domStyle.set(this.trackPlaylistView, "display", "");
-          this.currentPlaylist.listStoredPlaylists();
-          this.currentPlaylist.list();
-          this.currentTrackView = "Search"          
+          domStyle.set(this._trackSearchView, "display", "none");
+          domStyle.set(this._trackPlaylistView, "display", "");
+          this._currentPlaylist.listStoredPlaylists();
+          this._currentPlaylist.list();
+          this._currentTrackView = "Search";
         }
-        this.btnPlaylist.set("label", this.currentTrackView);
+        this._btnPlaylist.set("label", this._currentTrackView);
       }));
       if(dojoConfig.device === "computer") {
-        on(this.btnSettings, "click", lang.hitch(this, function(evt)  {
+        on(this._btnSettings, "click", lang.hitch(this, function(evt)  {
           this.showSettings();
         }));
       }
       else{
-        domStyle.set(this.btnSettings.domNode, "display", "none")
+        domStyle.set(this.btnSettings.domNode, "display", "none");
       }
     },
 
@@ -179,36 +177,32 @@ function(declare, lang, win, mouse, on, when, domAttr, domStyle, domConstruct, a
       when(util.requestCurrentSeek()).then(lang.hitch(this, function(res){
         if(res !== undefined) {
           if(res.indexOf("[playing]") !== -1) {
-            this.btnPlay.set("label", "Pause");
+            this._btnPlay.set("label", "Pause");
             mpcInfo = res.split("  ");
-            track = mpcInfo[0].split("[playing]")
-            domAttr.set(this.currentlyPlaying, "innerHTML", track[0]);
+            track = mpcInfo[0].split("[playing]");
+            domAttr.set(this._currentlyPlaying, "innerHTML", track[0]);
             mpcInfo = mpcInfo[1].split(" ");
             timeInfo = mpcInfo[1].split("/");
-            volumeSeek.trackTo(parseInt(mpcInfo[3]));
-            domAttr.set(this.currentlyPlayingTime, "innerHTML", (timeInfo[0] + " / " + timeInfo[1]));
+            volumeSeek.trackTo(parseInt(mpcInfo[3], 10));
+            domAttr.set(this._currentlyPlayingTime, "innerHTML", (timeInfo[0] + " / " + timeInfo[1]));
             seekInfo = mpcInfo[2].replace(/[^0-9]/gi, '');
-            this.currentSongSeek.trackTo(parseInt(seekInfo));
+            this._currentSongSeek.trackTo(parseInt(seekInfo, 10));
           }
           else if(res.indexOf("[paused]") !== -1) {
-            this.btnPlay.set("label", "Play");
-            domAttr.set(this.currentlyPlayingTime, "innerHTML", "Paused");
+            this._btnPlay.set("label", "Play");
+            domAttr.set(this._currentlyPlayingTime, "innerHTML", "Paused");
           }
           else {
-            this.btnPlay.set("label", "Play");
-            domAttr.set(this.currentlyPlaying, "innerHTML", "Stopped");
-            this.currentSongSeek.slider.set("value",  0);
-            domAttr.set(this.currentlyPlayingTime, "innerHTML", "");
+            this._btnPlay.set("label", "Play");
+            domAttr.set(this._currentlyPlaying, "innerHTML", "Stopped");
+            this._currentSongSeek.slider.set("value",  0);
+            domAttr.set(this._currentlyPlayingTime, "innerHTML", "");
             mpcInfo = res.split("  ");
             mpcInfo = mpcInfo[0].split(" ");
-            volumeSeek.trackTo(parseInt(mpcInfo[1]));
+            volumeSeek.trackTo(parseInt(mpcInfo[1], 10));
           }
         }
       }));
-    },
-	
-    run: function(msg){
-
     }
   });
 });
