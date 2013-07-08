@@ -138,7 +138,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               }
               if (homeRF !== null) {
                 homeRF.destroy();
-                musicPlayer = null;
+                homeRF = null;
               }
             }));
 
