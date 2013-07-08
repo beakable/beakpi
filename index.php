@@ -62,6 +62,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 <?php
+
   require_once 'php/Mobile_Detect.php';
   $detect = new Mobile_Detect;
   $deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
@@ -93,9 +94,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </script>
     <script src="js/mopidy.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script>
-
-    <link rel="stylesheet" href="js/dojo/dijit/themes/claro/claro.css" />
-    <link rel="stylesheet" href="js/dojo/dojox/widget/Toaster/Toaster.css" >
+<!--<script src="js/dojo/dojo/dojo.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojox/widget/Toaster/Toaster.css">
 
     <?php if ($deviceType == 'computer' || $deviceType == 'tablet') { ?>
       <link rel="stylesheet" href="css/musicPlayer.css" />
