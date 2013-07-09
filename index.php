@@ -1,6 +1,18 @@
 <?php
 error_reporting(E_ALL); ini_set('display_errors', '1');
 ?>
+<?php 
+// SETTINGS 
+// ---------------------------------------------------
+  $RadioFrequencyController = true;
+  $MopidyMusicPlayer = true;
+  $mopidySocket = "ws://192.168.1.68:6680/mopidy/ws/";
+  $countryCode = "GB";
+// AG AI AQ AR AU BB BM BO BR BS BT BZ CK CL CO CR CU DE DM DO EC FK GB 
+// GD GF GI GP GT GU GY HN HT IO JM KI KN KY LC MP MQ MS MX NI NR NU NZ PA 
+// PE PM PN PR PY SB SR SV TC TK TO TT TV US UY VC VE VG VU WF WS
+// ---------------------------------------------------
+?>
 <?php
 /*
 
@@ -48,26 +60,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 ?>
-<?php 
-// SETTINGS 
-// ---------------------------------------------------
-  $mopidySocket = "ws://192.168.1.68:6680/mopidy/ws/";
-  $countryCode = "GB"; 
-// AG AI AQ AR AU BB BM BO BR BS BT BZ CK CL CO CR CU DE DM DO EC FK GB 
-// GD GF GI GP GT GU GY HN HT IO JM KI KN KY LC MP MQ MS MX NI NR NU NZ PA 
-// PE PM PN PR PY SB SR SV TC TK TO TT TV US UY VC VE VG VU WF WS
-// ---------------------------------------------------
-?>
-
-
-
 <?php
-
   require_once 'php/Mobile_Detect.php';
   $detect = new Mobile_Detect;
   $deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
 ?>
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -88,6 +85,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       debugAtAllCosts: true,
   	  async: true,
   	  isDebug: true,
+      rfController: "<?php echo $RadioFrequencyController ?>",
+      mopidyPlayer: "<?php echo $MopidyMusicPlayer ?>",
       device: "<?php echo $deviceType ?>",
       countryCode: "<?php echo $countryCode ?>"
       }
@@ -111,21 +110,74 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             webSocketUrl: "<?php echo $mopidySocket ?>"
         });
         require([
-          "dojo/parser", 
+          "dojo/parser",
           "dojo/ready",
+          "dojo/_base/lang",
+          "dojo/dom",
+          "dojo/dom-construct",
+          "dojo/aspect",
+          "bpi/menu",
           "bpi/music/serviceView",
-          "dojox/mobile/parser", 
+          "bpi/rf/serviceView",
+          "dojox/mobile/parser",
           "dojox/mobile"
-        ], function(parser, ready){
+        ], function(parser, ready, lang, dom, domConst, aspect, menu, MusicPlayer, HomeRF){
         	ready(function(){
         		parser.parse();
+
+            var BpiHolder = dom.byId("serviceView");
+            var Bpi = new menu();
+            var musicPlayer = null;
+            var homeRF = null;
+            Bpi.placeAt(BpiHolder);
+
+            if(dojoConfig.mopidyPlayer) {
+              if(!dojoConfig.rfController) {
+                musicPlayer = new MusicPlayer();
+                musicPlayer.placeAt(BpiHolder);
+              }
+              else {
+                Bpi.set("displayMusicButton", true);
+                aspect.after(Bpi, "launchMusicPlayer", lang.hitch(this, function(){
+                  if (musicPlayer === null) {
+                    musicPlayer = new MusicPlayer();
+                    musicPlayer.placeAt(BpiHolder);
+                  }
+                  if (homeRF !== null) {
+                    homeRF.destroy();
+                    homeRF = null;
+                  }
+                }));
+              }
+            }
+
+            if(dojoConfig.rfController) {
+              if(!dojoConfig.mopidyPlayer) {
+                homeRF = new HomeRF();
+                homeRF.placeAt(BpiHolder);
+              }
+              else {
+                Bpi.set("displayRFButton", true);
+                aspect.after(Bpi, "launchHomeRF", lang.hitch(this, function(){
+                  if (homeRF === null) {
+                    homeRF = new HomeRF();
+                    homeRF.placeAt(BpiHolder);
+                  }
+                  if (musicPlayer !== null) {
+                    musicPlayer.endPlayer();
+                    musicPlayer.destroy();
+                    musicPlayer = null;
+                  }
+                }));
+              }
+            }
         	});
         });
       </script>
   </head>
 
   <body class="claro">
-  	<div id="serviceView" data-dojo-type="bpi/music/serviceView"></div>
+  	<div id="serviceView" data-dojo-attach-point="bpi"></div>
     <div class="clear"></div>
     <img src="/img/logos.png" class="logos"/>
   </body>
