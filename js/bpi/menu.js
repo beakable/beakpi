@@ -29,26 +29,28 @@ function(declare, lang, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, B
 
     widgetsInTemplate: true,
     templateString: template,
-
     _menu: null,
 
-    postCreate: function() {
+    _setDisplayRFButtonAttr: function() {
       var _self = this;
-      var musicPlayer = new Button({
-        label: "Home Audio",
-        onClick: function(){
-          _self.launchMusicPlayer();
-        }
-      })
-      musicPlayer.placeAt(this._menu);
-
-      var homeRF = new Button({
+      var btnHomeRF = new Button({
         label: "Home Control",
         onClick: function(){
           _self.launchHomeRF();
         }
-      })
-      homeRF.placeAt(this._menu);
+      });
+      btnHomeRF.placeAt(this._menu);
+    },
+
+    _setDisplayMusicButtonAttr: function() {
+      var _self = this;
+      var btnMusicPlayer = new Button({
+        label: "Home Audio",
+        onClick: function(){
+          _self.launchMusicPlayer();
+        }
+      });
+      btnMusicPlayer.placeAt(this._menu);
     },
 
     launchMusicPlayer: function() {
