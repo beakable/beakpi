@@ -15,12 +15,17 @@ Currently it only supports home audio which requires:
 
 ====
 
+It almost supports RF interfacing for X10 and Insteon Devices using: https://www.simplehomenet.com/proddetail.asp?prod=ZigBee_INSTEON_X10_Interface
+
+====
+
+
 To Install:
 
 1 - Navigate to your web root
 
 2 - Perform with the fullstop at the end: git clone https://github.com/beakable/beakpi.git .
 
-3 - Configure line 54 and 55 of index.php to reflect your Mopidy websocket address and Spotify region account
+3 - Configure line 7, 8, 9 and 10 of index.php to reflect your Mopidy websocket address and Spotify region account
 
 4 - Done
