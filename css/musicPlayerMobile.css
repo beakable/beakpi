@@ -6,6 +6,10 @@ body{
 	font-weight: 0;
 	color:#FFF;
 }
+#serviceMenuView{
+	width:100%;
+ 	text-align: center;
+}
 
 .inputSearch{
 	width:79%;

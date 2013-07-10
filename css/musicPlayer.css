@@ -8,11 +8,15 @@ body{
 	width:100%;
 }
 
+#serviceMenuView{
+	width:100%;
+ 	text-align: center;
+}
+
 #serviceView{
   width:700px;
   margin:0 auto 0 auto;
   padding:20px 0 0 0;
-
 }
 
 #search{
