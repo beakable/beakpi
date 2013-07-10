@@ -19,6 +19,7 @@ define([
   "dojo/_base/array",
   "dojo/json",
   "dojo/Deferred",
+  "dojo/dom-construct",
   "dijit/_WidgetBase",
   "dijit/_WidgetsInTemplateMixin",
   "dijit/_TemplatedMixin",
@@ -27,7 +28,7 @@ define([
   "dojo/text!./templates/serviceView.html"
 ],
 
-function(declare, lang, array, JSON, Deferred, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, Button, util, template) {
+function(declare, lang, array, JSON, Deferred, domConst, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, Button, util, template) {
 
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
@@ -71,7 +72,7 @@ function(declare, lang, array, JSON, Deferred, _WidgetBase, _WidgetsInTemplateMi
       array.forEach(nodeArray, lang.hitch(this, function(node){
         if(node.name !=="") {
           var btnPowerOn = new Button({
-            label: node.name + " Off",
+            label: "Off",
             rfid: node.id,
             onClick: function(){
               when(util.requestRF('<zbpPacket><Object>ZBP_Node</Object><methodName>Node_ClusterCommand</methodName><Arguments><Argument type="uchar" base="10">2</Argument><Argument type="ushort" base="10">'+this.rfid+'</Argument><Argument type="uchar" base="10">0</Argument><Argument type="ushort" base="10">0</Argument><Argument type="uchar" base="10">0</Argument><Argument type="QByteArray" base="10">[19,0]</Argument></Arguments>'+_self._session+'<id>14921</id></zbpPacket>'), function(res) {
@@ -79,10 +80,8 @@ function(declare, lang, array, JSON, Deferred, _WidgetBase, _WidgetsInTemplateMi
               });
             }
           });
-          btnPowerOn.placeAt(this._serviceView);
-
           var btnPowerOff = new Button({
-            label: node.name + " On",
+            label: "On",
             rfid: node.id,
             onClick: function(){
               when(util.requestRF('<zbpPacket><Object>ZBP_Node</Object><methodName>Node_ClusterCommand</methodName><Arguments><Argument type="uchar" base="10">2</Argument><Argument type="ushort" base="10">'+this.rfid+'</Argument><Argument type="uchar" base="10">0</Argument><Argument type="ushort" base="10">0</Argument><Argument type="uchar" base="10">0</Argument><Argument type="QByteArray" base="10">[2,0]</Argument></Arguments>'+_self._session+'<id>14921</id></zbpPacket>'), function(res) {
@@ -91,6 +90,9 @@ function(declare, lang, array, JSON, Deferred, _WidgetBase, _WidgetsInTemplateMi
               });
             }
           });
+
+          domConst.place("<h2>" +  node.name + "</h2>", this._serviceView);
+          btnPowerOn.placeAt(this._serviceView);
           btnPowerOff.placeAt(this._serviceView);
         }
       }));
