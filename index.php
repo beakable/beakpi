@@ -137,6 +137,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             if(dojoConfig.mopidyPlayer) {
               if(!dojoConfig.rfController) {
                 musicPlayer = new MusicPlayer();
+                musicPlayer.loadMusicNodes();
                 musicPlayer.placeAt(BpiHolder);
               }
               else {
@@ -173,6 +174,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             if(dojoConfig.rfController) {
               if(!dojoConfig.mopidyPlayer) {
                 homeRF = new HomeRF();
+                homeRF.loadRfNodes()
                 homeRF.placeAt(BpiHolder);
               }
               else {
