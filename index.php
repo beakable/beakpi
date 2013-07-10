@@ -113,23 +113,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           "dojo/parser",
           "dojo/ready",
           "dojo/_base/lang",
+          "dojo/on",
+          "dojo/fx",
           "dojo/dom",
           "dojo/dom-construct",
+          "dojo/dom-style",
           "dojo/aspect",
           "bpi/menu",
           "bpi/music/serviceView",
           "bpi/rf/serviceView",
           "dojox/mobile/parser",
           "dojox/mobile"
-        ], function(parser, ready, lang, dom, domConst, aspect, menu, MusicPlayer, HomeRF){
+        ], function(parser, ready, lang, on, fx, dom, domConst, domStyle, aspect, menu, MusicPlayer, HomeRF){
         	ready(function(){
         		parser.parse();
-
+            var BpiMenuHolder = dom.byId("serviceMenuView");
             var BpiHolder = dom.byId("serviceView");
             var Bpi = new menu();
             var musicPlayer = null;
             var homeRF = null;
-            Bpi.placeAt(BpiHolder);
+            Bpi.placeAt(BpiMenuHolder);
 
             if(dojoConfig.mopidyPlayer) {
               if(!dojoConfig.rfController) {
@@ -141,11 +144,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 aspect.after(Bpi, "launchMusicPlayer", lang.hitch(this, function(){
                   if (musicPlayer === null) {
                     musicPlayer = new MusicPlayer();
-                    musicPlayer.placeAt(BpiHolder);
-                  }
-                  if (homeRF !== null) {
-                    homeRF.destroy();
-                    homeRF = null;
+                    
+                    var close = fx.wipeOut({
+                      node: BpiHolder,
+                      duration: 500
+                    });
+
+                    var open = fx.wipeIn({
+                      node: BpiHolder
+                    });
+
+                    on(close, "End", lang.hitch(this, function() {
+                      if (homeRF !== null) {
+                        homeRF.destroy();
+                        homeRF = null;
+                      }
+                      when(musicPlayer.loadMusicNodes(), function(){
+                        musicPlayer.placeAt(BpiHolder);
+                        open.play();
+                      });
+                    }));
+                    close.play();
                   }
                 }));
               }
@@ -161,12 +180,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 aspect.after(Bpi, "launchHomeRF", lang.hitch(this, function(){
                   if (homeRF === null) {
                     homeRF = new HomeRF();
-                    homeRF.placeAt(BpiHolder);
-                  }
-                  if (musicPlayer !== null) {
-                    musicPlayer.endPlayer();
-                    musicPlayer.destroy();
-                    musicPlayer = null;
+
+                    var close = fx.wipeOut({
+                      node: BpiHolder,
+                      duration: 500
+                    });
+
+                    var open = fx.wipeIn({
+                      node: BpiHolder
+                    });
+                    
+                    on(close, "End", lang.hitch(this, function() {
+                      if (musicPlayer !== null) {
+                        musicPlayer.endPlayer();
+                        musicPlayer.destroy();
+                        musicPlayer = null;
+                      }
+                      when(homeRF.loadRfNodes(), function(){
+                        homeRF.placeAt(BpiHolder);
+                        open.play();
+                      });
+                    }));
+                    close.play(); 
                   }
                 }));
               }
@@ -177,9 +212,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </head>
 
   <body class="claro">
-  	<div id="serviceView" data-dojo-attach-point="bpi"></div>
+    <div id="serviceMenuView"></div>
+  	<div id="serviceView"></div>
     <div class="clear"></div>
-    <img src="/img/logos.png" class="logos"/>
   </body>
 
 </html>

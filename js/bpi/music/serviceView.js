@@ -20,6 +20,7 @@ define([
   "dojo/mouse",
   "dojo/on",
   "dojo/when",
+  "dojo/Deferred",
   "dojo/dom-attr",
   "dojo/dom-style",
   "dojo/dom-construct",
@@ -38,7 +39,7 @@ define([
   "dojo/text!./templates/serviceView.html",
   "dijit/form/Button"
 ],
-function(declare, lang, win, mouse, on, when, domAttr, domStyle, domConstruct, aspect, focusUtil, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Dialog, timing, search,  seekbar, settings, playlist, util, template) {
+function(declare, lang, win, mouse, on, when, Deferred, domAttr, domStyle, domConstruct, aspect, focusUtil, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Dialog, timing, search,  seekbar, settings, playlist, util, template) {
 
   return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
     widgetsInTemplate: true,
@@ -51,8 +52,9 @@ function(declare, lang, win, mouse, on, when, domAttr, domStyle, domConstruct, a
     _currentSearch: null,
     _currentTrackView: "Playlist",
 
-    postCreate: function (){
+    loadMusicNodes: function (){
       var mouseup;
+      var dfd = new Deferred();
       var volumeSeek = new seekbar();
       this._currentSongSeek = new seekbar();
 
@@ -101,12 +103,16 @@ function(declare, lang, win, mouse, on, when, domAttr, domStyle, domConstruct, a
             }));
         }));
       }));
-
-      this.intervalCurrentPlaying.onTick = lang.hitch(this,function(){
-        this.updateCurrentPlaying(volumeSeek);
-      });
+      when(this.updateCurrentPlaying(volumeSeek), lang.hitch(this, function() {
+        this.intervalCurrentPlaying.onTick = lang.hitch(this,function() {
+          this.updateCurrentPlaying(volumeSeek);
+        });
+        dfd.resolve();
+      }));
       this.intervalCurrentPlaying.start();
       this.applyButtonCommands();
+
+      return dfd.promise;
     },
 
     endPlayer: function() {
@@ -177,6 +183,7 @@ function(declare, lang, win, mouse, on, when, domAttr, domStyle, domConstruct, a
           timeInfo = [],
           seekInfo,
           status,
+          dfd = new Deferred(),
           track;
       when(util.requestCurrentSeek()).then(lang.hitch(this, function(res){
         if(res !== undefined) {
@@ -191,10 +198,12 @@ function(declare, lang, win, mouse, on, when, domAttr, domStyle, domConstruct, a
             domAttr.set(this._currentlyPlayingTime, "innerHTML", (timeInfo[0] + " / " + timeInfo[1]));
             seekInfo = mpcInfo[2].replace(/[^0-9]/gi, '');
             this._currentSongSeek.trackTo(parseInt(seekInfo, 10));
+            dfd.resolve();
           }
           else if(res.indexOf("[paused]") !== -1) {
             this._btnPlay.set("label", "Play");
             domAttr.set(this._currentlyPlayingTime, "innerHTML", "Paused");
+            dfd.resolve();
           }
           else {
             this._btnPlay.set("label", "Play");
@@ -204,9 +213,11 @@ function(declare, lang, win, mouse, on, when, domAttr, domStyle, domConstruct, a
             mpcInfo = res.split("  ");
             mpcInfo = mpcInfo[0].split(" ");
             volumeSeek.trackTo(parseInt(mpcInfo[1], 10));
+            dfd.resolve();
           }
         }
       }));
+      return dfd.promise;
     }
   });
 });

@@ -18,6 +18,7 @@ define([
   "dojo/_base/lang",
   "dojo/_base/array",
   "dojo/json",
+  "dojo/Deferred",
   "dijit/_WidgetBase",
   "dijit/_WidgetsInTemplateMixin",
   "dijit/_TemplatedMixin",
@@ -26,7 +27,7 @@ define([
   "dojo/text!./templates/serviceView.html"
 ],
 
-function(declare, lang, array, JSON, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, Button, util, template) {
+function(declare, lang, array, JSON, Deferred, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, Button, util, template) {
 
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
@@ -38,8 +39,9 @@ function(declare, lang, array, JSON, _WidgetBase, _WidgetsInTemplateMixin, _Temp
     _CURRENT: 0,
 
 
-    postCreate: function() {
+    loadRfNodes: function(){
       var _self = this;
+      var dfd = new Deferred();
       when(util.requestRF('<zbpPacket><Object>ZBP_System</Object><methodName>Sys_Authenticate</methodName><Arguments><Argument type="string">b02e5b66ace6dc3b459be661062c452b50ea1c13</Argument></Arguments></zbpPacket>'), function(res){
         res = _self._filterData(res);
         _self._session = "<session>" + res.session + "</session>";
@@ -47,8 +49,10 @@ function(declare, lang, array, JSON, _WidgetBase, _WidgetsInTemplateMixin, _Temp
            listRes = _self._filterData(listRes);
             console.log(listRes);
           _self.viewNodes(listRes);
+          dfd.resolve();
         });
       });
+      return dfd.promise;
     },
 
     _filterData: function(result) {
@@ -88,10 +92,6 @@ function(declare, lang, array, JSON, _WidgetBase, _WidgetsInTemplateMixin, _Temp
             }
           });
           btnPowerOff.placeAt(this._serviceView);
-          
-
-
-
         }
       }));
     }
