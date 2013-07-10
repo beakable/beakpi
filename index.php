@@ -141,6 +141,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 musicPlayer.placeAt(BpiHolder);
               }
               else {
+                domStyle.set(BpiMenuHolder, "display", "block");
                 Bpi.set("displayMusicButton", true);
                 aspect.after(Bpi, "launchMusicPlayer", lang.hitch(this, function(){
                   if (musicPlayer === null) {
@@ -178,6 +179,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 homeRF.placeAt(BpiHolder);
               }
               else {
+                domStyle.set(BpiMenuHolder, "display", "block");
                 Bpi.set("displayRFButton", true);
                 aspect.after(Bpi, "launchHomeRF", lang.hitch(this, function(){
                   if (homeRF === null) {
@@ -215,8 +217,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   <body class="claro">
     <div id="serviceMenuView"></div>
-  	<div id="serviceView"></div>
-    <div class="clear"></div>
+    <div id ="serviceViewHolder">
+    	<div id="serviceView"></div>
+      <div class="clear"></div>
+    </div>
   </body>
 
 </html>
