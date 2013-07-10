@@ -14,47 +14,47 @@
     along with BeakPi.  If not, see <http://www.gnu.org/licenses/>. */
 
 define([
-"dojo/_base/declare",
-"dojo/_base/lang",
-"dojo/_base/fx",
-"dojo/Deferred",
-"dojo/on",
-"dojo/when",
-"dojo/dom-construct",
-"dojo/dom-attr",
-"dojo/keys",
-"dijit/_WidgetBase",
-"dijit/_WidgetsInTemplateMixin",
-"dijit/_TemplatedMixin",
-"dijit/registry",
-"bpi/utils/util",
-"bpi/music/track",
-"dojo/text!./templates/search.html",
-"dijit/form/TextBox",
-"dijit/form/Form",
-"dijit/form/Button"
+  "dojo/_base/declare",
+  "dojo/_base/lang",
+  "dojo/_base/fx",
+  "dojo/Deferred",
+  "dojo/on",
+  "dojo/when",
+  "dojo/dom-construct",
+  "dojo/dom-attr",
+  "dojo/keys",
+  "dijit/_WidgetBase",
+  "dijit/_WidgetsInTemplateMixin",
+  "dijit/_TemplatedMixin",
+  "dijit/registry",
+  "bpi/utils/util",
+  "bpi/music/track",
+  "dojo/text!./templates/search.html",
+  "dijit/form/TextBox",
+  "dijit/form/Form",
+  "dijit/form/Button"
 ],
 
 function(declare, lang, fx, Deferred, on, when, domConstruct, domAttr, keys, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, registry, util, track, template) {
   return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
-  	widgetsInTemplate: true,
+    widgetsInTemplate: true,
     templateString: template,
-  	inputSearch: null,
+    inputSearch: null,
     totalTracks: null,
     _btSearch: null,
 
-  	postCreate: function(){
-  		var _self = this;
-  		on(this._btSearch, "click", function(evt){
+    postCreate: function(){
+      var _self = this;
+      on(this._btSearch, "click", function(evt){
         _self.clearList();
-  			when(util.requestSearch("http://ws.spotify.com/search/1/track.json?q="+_self.inputSearch.value)).then(
-  				function(res) {
+        when(util.requestSearch("http://ws.spotify.com/search/1/track.json?q="+_self.inputSearch.value)).then(
+          function(res) {
             _self.summary(res);
-  					_self.list(res);
+            _self.list(res);
             fx.fadeIn({node: _self.results}).play();
-  				}
-  			);
-  		});
+          }
+        );
+      });
       on(_self.inputSearch, "keydown", function(evt){
         if(evt.keyCode === keys.ENTER){
           evt.preventDefault();
@@ -68,7 +68,7 @@ function(declare, lang, fx, Deferred, on, when, domConstruct, domAttr, keys, _Wi
           );
         }
       });
-  	},
+    },
 
     summary: function(result) {
       var i;
@@ -79,10 +79,10 @@ function(declare, lang, fx, Deferred, on, when, domConstruct, domAttr, keys, _Wi
       }
       domAttr.set(this.searchSummary, "innerHTML", "Displaying Results 0 of "+ this.totalTracks);
     },
-  	
-  	list: function(result) {
-  		var trackResult,
-          i, 
+
+    list: function(result) {
+      var trackResult,
+          i,
           trackResultNumber = 1,
           displayArt = false,
           clearSplit = 2;
@@ -94,24 +94,24 @@ function(declare, lang, fx, Deferred, on, when, domConstruct, domAttr, keys, _Wi
           clearSplit = 3;
         }
       }
-  		for(i =0; i < result.tracks.length; i++){
-  		  trackResult = new track;
+      for(i =0; i < result.tracks.length; i++){
+        trackResult = new track();
         if (result.tracks[i].album.availability.territories.indexOf(dojoConfig.countryCode) !== -1) {
           var trackInfo = {
-            name: result.tracks[i].name, 
+            name: result.tracks[i].name,
             href: result.tracks[i].href,
             artist: result.tracks[i].artists[0].name
           };
-    			when(trackResult.displayTrack(trackInfo, this.results, displayArt)).then(lang.hitch(this, function(){
+          when(trackResult.displayTrack(trackInfo, this.results, displayArt)).then(lang.hitch(this, function(){
               domAttr.set(this.searchSummary, "innerHTML", "Displaying Results "+ trackResultNumber +" of "+ this.totalTracks);
-              if(trackResultNumber % clearSplit === 0 || trackResultNumber === this.totalTracks) {
+              if (trackResultNumber % clearSplit === 0 || trackResultNumber === this.totalTracks) {
                 domConstruct.place(domConstruct.toDom("<div style='clear:both'></div>"), this.results);
               }
               ++trackResultNumber;
           }));
         }
-  		}
-  	},
+      }
+    },
 
     clearList: function() {
       var clearResults;
