@@ -17,7 +17,6 @@ define([
   "dojo/_base/declare",
   "dojo/_base/lang",
   "dojo/_base/fx",
-  "dojo/Deferred",
   "dojo/on",
   "dojo/when",
   "dojo/dom-construct",
@@ -35,7 +34,7 @@ define([
   "dijit/form/Button"
 ],
 
-function(declare, lang, fx, Deferred, on, when, domConstruct, domAttr, keys, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, registry, util, track, template) {
+function(declare, lang, fx, on, when, domConstruct, domAttr, keys, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, registry, util, track, template) {
   return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
     widgetsInTemplate: true,
     templateString: template,
