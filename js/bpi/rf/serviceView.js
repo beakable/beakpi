@@ -43,7 +43,7 @@ function(declare, lang, array, JSON, Deferred, domConst, _WidgetBase, _WidgetsIn
     loadRfNodes: function(){
       var _self = this;
       var dfd = new Deferred();
-      when(util.requestRF('<zbpPacket><Object>ZBP_System</Object><methodName>Sys_Authenticate</methodName><Arguments><Argument type="string">b02e5b66ace6dc3b459be661062c452b50ea1c13</Argument></Arguments></zbpPacket>'), function(res){
+      when(util.requestRF('<zbpPacket><Object>ZBP_System</Object><methodName>Sys_Authenticate</methodName><Arguments><Argument type="string">'+dojoConfig.radioFrequencySHAPassword+'</Argument></Arguments></zbpPacket>'), function(res){
         res = _self._filterData(res);
         _self._session = "<session>" + res.session + "</session>";
         when(util.requestRF('<zbpPacket><Object>ZBP_Node</Object><methodName>Node_GetAllNodesJson</methodName><Arguments></Arguments>'+_self._session+'</zbpPacket>'), function(listRes){
@@ -75,7 +75,7 @@ function(declare, lang, array, JSON, Deferred, domConst, _WidgetBase, _WidgetsIn
             label: "Off",
             rfid: node.id,
             onClick: function(){
-              when(util.requestRF('<zbpPacket><Object>ZBP_Node</Object><methodName>Node_ClusterCommand</methodName><Arguments><Argument type="uchar" base="10">2</Argument><Argument type="ushort" base="10">'+this.rfid+'</Argument><Argument type="uchar" base="10">0</Argument><Argument type="ushort" base="10">0</Argument><Argument type="uchar" base="10">0</Argument><Argument type="QByteArray" base="10">[19,0]</Argument></Arguments>'+_self._session+'<id>14921</id></zbpPacket>'), function(res) {
+              when(util.requestRF('<zbpPacket><Object>ZBP_Node</Object><methodName>Node_ClusterCommand</methodName><Arguments><Argument type="uchar" base="10">2</Argument><Argument type="ushort" base="10">'+this.rfid+'</Argument><Argument type="uchar" base="10">0</Argument><Argument type="ushort" base="10">0</Argument><Argument type="uchar" base="10">0</Argument><Argument type="QByteArray" base="10">[19,0]</Argument></Arguments>'+_self._session+'<id>'+this.rfid+'</id></zbpPacket>'), function(res) {
                 console.log("Response: " , res);
               });
             }
@@ -84,15 +84,16 @@ function(declare, lang, array, JSON, Deferred, domConst, _WidgetBase, _WidgetsIn
             label: "On",
             rfid: node.id,
             onClick: function(){
-              when(util.requestRF('<zbpPacket><Object>ZBP_Node</Object><methodName>Node_ClusterCommand</methodName><Arguments><Argument type="uchar" base="10">2</Argument><Argument type="ushort" base="10">'+this.rfid+'</Argument><Argument type="uchar" base="10">0</Argument><Argument type="ushort" base="10">0</Argument><Argument type="uchar" base="10">0</Argument><Argument type="QByteArray" base="10">[2,0]</Argument></Arguments>'+_self._session+'<id>14921</id></zbpPacket>'), function(res) {
+              when(util.requestRF('<zbpPacket><Object>ZBP_Node</Object><methodName>Node_ClusterCommand</methodName><Arguments><Argument type="uchar" base="10">2</Argument><Argument type="ushort" base="10">'+this.rfid+'</Argument><Argument type="uchar" base="10">0</Argument><Argument type="ushort" base="10">0</Argument><Argument type="uchar" base="10">0</Argument><Argument type="QByteArray" base="10">[2,0]</Argument></Arguments>'+_self._session+'<id>'+this.rfid+'</id></zbpPacket>'), function(res) {
                 console.log("Response: " , _self._CURRENT);
                 _self._CURRENT++;
               });
             }
           });
 
-          domConst.place("<h2>" +  node.name + "</h2>", this._serviceView);
+          domConst.place("<h3>" +  node.name + "</h3>", this._serviceView);
           btnPowerOn.placeAt(this._serviceView);
+          domConst.place("<span> - </span>", this._serviceView);
           btnPowerOff.placeAt(this._serviceView);
         }
       }));
