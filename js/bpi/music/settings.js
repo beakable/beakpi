@@ -39,13 +39,13 @@ define([
           this._chkAlbumArt.set("checked", loadedSettings.albumArt);
         }
       }
-      on(this._btnSave, "click", lang.hitch(this, function(evt) { 
+      on(this._btnSave, "click", lang.hitch(this, function(evt) {
          this.storeSettings();
       }));
 		},
 
     storeSettings: function() {
-      util.storeSet("musicSettings", {albumArt: this._chkAlbumArt.checked})
+      util.storeSet("musicSettings", {albumArt: this._chkAlbumArt.checked});
     }
 	});
 
