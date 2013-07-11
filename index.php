@@ -55,9 +55,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               Improve UI layout including the addition of standard player features such as repeat and randomise
               Expand on media using the Mopidy support for SoundCloud and Last.fm
 
-- Near Future features :
+  - RF Control :
+              Requirements :
+              Smartenit ZBPM Plug, X10, Insteon or ZigBee modules
 
-  - RF Control
+              Allows :
+              Currently allows for turning toggling X10 devices as well as controlling dimming of lampgs
+
+              Future :
+              Improve the visual interface and make it possible to add your own devices through a simple UI
 
 */
 ?>
