@@ -258,7 +258,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       musicPlayer = null;
                     }    
                     when(piSettings.loadSettings(), function(){
-                      console.log("???");
                       piSettings.placeAt(BpiHolder);
                       open.play();
                     });
