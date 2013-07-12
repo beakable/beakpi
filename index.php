@@ -4,6 +4,7 @@ error_reporting(E_ALL); ini_set('display_errors', '1');
 <?php 
 // SETTINGS 
 // ---------------------------------------------------
+  $PiSettings = true;
   $RadioFrequencyController = true;
   $RadioFrequencySHAPassword = "b02e5b66ace6dc3b459be661062c452b50ea1c13";
   $MopidyMusicPlayer = true;
@@ -96,6 +97,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       mopidyPlayer: "<?php echo $MopidyMusicPlayer ?>",
       device: "<?php echo $deviceType ?>",
       countryCode: "<?php echo $countryCode ?>",
+      piSettings: "<?php echo $PiSettings ?>",
       radioFrequencySHAPassword: "<?php echo $RadioFrequencySHAPassword ?>"
       }
     </script>
@@ -130,9 +132,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           "bpi/menu",
           "bpi/music/serviceView",
           "bpi/rf/serviceView",
+          "bpi/settings/serviceView",
           "dojox/mobile/parser",
           "dojox/mobile"
-        ], function(parser, ready, lang, on, fx, dom, domConst, domStyle, aspect, menu, MusicPlayer, HomeRF){
+        ], function(parser, ready, lang, on, fx, dom, domConst, domStyle, aspect, menu, MusicPlayer, HomeRF, PiSettings){
         	ready(function(){
         		parser.parse();
             var BpiMenuHolder = dom.byId("serviceMenuView");
@@ -140,6 +143,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             var Bpi = new menu();
             var musicPlayer = null;
             var homeRF = null;
+            var piSettings = null;
             Bpi.placeAt(BpiMenuHolder);
 
             if(dojoConfig.mopidyPlayer) {
@@ -168,6 +172,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       if (homeRF !== null) {
                         homeRF.destroy();
                         homeRF = null;
+                      }
+                      if (piSettings !== null) {
+                        piSettings.destroy();
+                        piSettings = null;
                       }
                       when(musicPlayer.loadMusicNodes(), function(){
                         musicPlayer.placeAt(BpiHolder);
@@ -208,6 +216,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         musicPlayer.destroy();
                         musicPlayer = null;
                       }
+                     if (piSettings !== null) {
+                        piSettings.destroy();
+                        piSettings = null;
+                      }
                       when(homeRF.loadRfNodes(), function(){
                         homeRF.placeAt(BpiHolder);
                         open.play();
@@ -218,6 +230,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 }));
               }
             }
+
+            if(dojoConfig.piSettings) {
+              domStyle.set(BpiMenuHolder, "display", "block");
+              Bpi.set("displayPiSettingsButton", true);
+              aspect.after(Bpi, "launchPiSettings", lang.hitch(this, function(){
+                if (piSettings === null) {
+                  piSettings = new PiSettings();
+
+                  var close = fx.wipeOut({
+                    node: BpiHolder,
+                    duration: 500
+                  });
+
+                  var open = fx.wipeIn({
+                    node: BpiHolder
+                  });
+                  
+                  on(close, "End", lang.hitch(this, function() {
+                    if (homeRF !== null) {
+                      homeRF.destroy();
+                      homeRF = null;
+                    }
+                    if (musicPlayer !== null) {
+                      musicPlayer.endPlayer();
+                      musicPlayer.destroy();
+                      musicPlayer = null;
+                    }    
+                    when(piSettings.loadSettings(), function(){
+                      console.log("???");
+                      piSettings.placeAt(BpiHolder);
+                      open.play();
+                    });
+                  }));
+                  close.play(); 
+                }
+              }));
+            }
+
         	});
         });
       </script>
