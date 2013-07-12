@@ -168,6 +168,7 @@ define([
     },
 
   // ---------------------------
+  // RF Stuff
 
 
     requestRF: function(xml) {
@@ -187,6 +188,23 @@ define([
         dfd.resolve(evt);
       });
       return dfd.promise;
+    },
+
+  //-----------------------
+  // Settings Stuff
+
+    getSystemUsage: function(){
+      var dfd = new Deferred();
+      xhr("/php/systemuse.php", {
+      }).then(function(data){
+        dfd.resolve(data);
+      }, function(err){
+        dfd.resolve(err);
+      }, function(evt){
+        dfd.resolve(evt);
+      });
+      return dfd.promise;
     }
+
   };
 });
