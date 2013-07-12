@@ -174,6 +174,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         homeRF = null;
                       }
                       if (piSettings !== null) {
+                        piSettings.endSettings();
                         piSettings.destroy();
                         piSettings = null;
                       }
@@ -217,6 +218,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         musicPlayer = null;
                       }
                      if (piSettings !== null) {
+                        piSettings.endSettings();
                         piSettings.destroy();
                         piSettings = null;
                       }

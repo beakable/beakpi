@@ -64,6 +64,10 @@ function(declare, lang, array, Deferred, domConst, _WidgetBase, _WidgetsInTempla
       return dfd.promise;
     },
 
+    endSettings: function() {
+      this._intervalCurrentUsage.stop();
+    },
+
     loadSettings: function() {
       var _self = this;
       var dfd = new Deferred();
@@ -84,8 +88,8 @@ function(declare, lang, array, Deferred, domConst, _WidgetBase, _WidgetsInTempla
             when(util.command("/opt/vc/bin/vcgencmd get_mem gpu"), function(res){
               res = _self._filterText(res);
               domConst.place("<br /><span>GPU Memory: " + res.replace("gpu=", "") + "</span>", _self._serviceViewInfo);
-              dfd.resolve();  
-            });            
+              dfd.resolve();
+            });
           });
         });
       });
