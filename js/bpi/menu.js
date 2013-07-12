@@ -53,7 +53,23 @@ function(declare, lang, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, B
       btnMusicPlayer.placeAt(this._menu);
     },
 
+    _setDisplayPiSettingsButtonAttr: function() {
+      var _self = this;
+      var btnMusicPlayer = new Button({
+        label: "Pi Settings",
+        onClick: function(){
+          _self.launchPiSettings();
+        }
+      });
+      btnMusicPlayer.placeAt(this._menu);
+    },
+
+
     launchMusicPlayer: function() {
+      // Synthetic Event
+    },
+
+    launchPiSettings: function() {
       // Synthetic Event
     },
 
