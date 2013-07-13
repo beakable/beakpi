@@ -21,13 +21,15 @@ body{
  	text-align: center;
  	background: url(/img/menu-background.png) repeat; 	
  	border-bottom: solid 2px #000;
- 	padding:5px 0;
+ 	height: 34px;
  	display: none;
+ 	position:absolute;
+	z-index: 100;
 }
 
 #serviceView{
   width:700px;
-  margin:0 auto 0 auto;
+  margin: 36px auto 0 auto;
   padding:20px 0 0 0;
 }
 
@@ -158,5 +160,17 @@ body{
 }
 
 .rfControlList {
+	text-align: center;
+}
+
+.slideInHolder {
+	top: 0px;
+	height:100%;
+	left:0px;
+	padding-top:54px;
+	width: 320px;
+	position: fixed;
+	background: rgba(0,0,0,0.7);
+	z-index: 50;
 	text-align: center;
 }
