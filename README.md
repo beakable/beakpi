@@ -24,7 +24,7 @@ To Install:
 
 1 - Navigate to your web root
 
-2 - Perform with the fullstop at the end: git clone https://github.com/beakable/beakpi.git .
+2 - Perform: `git clone https://github.com/beakable/beakpi.git .`
 
 3 - Configure line 7, 8, 9 and 10 of index.php to reflect your Mopidy websocket address and Spotify region account
 
