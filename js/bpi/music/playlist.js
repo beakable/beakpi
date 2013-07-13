@@ -51,6 +51,10 @@ function (declare, lang, win, when, aspect, on, touch, domConst, domAttr, domGeo
         domStyle.set(this.slideInHolder, "display", "block");
         this.listStoredPlaylists(this.slideInHolder, "<br />");
       }
+      on(this._btnClear, "click", lang.hitch(this, function(evt) {
+        util.commandTracklist("clear");
+        this._clear();
+      }));
     },
 
     listStoredPlaylists: function(domHolder, buttonSplit) {
@@ -103,7 +107,7 @@ function (declare, lang, win, when, aspect, on, touch, domConst, domAttr, domGeo
       }));
     },
 
-    clear: function() {
+    _clear: function() {
       domAttr.set(this.playlistCurrent, "innerHTML", "<span class='noSongs'>No songs Queued</span>");
     },
 

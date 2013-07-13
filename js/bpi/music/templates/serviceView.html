@@ -1,7 +1,4 @@
 <div data-dojo-attach-point="musicPlayer">
-  <span style="font-size:9px; font-weight:100; float:left">Volume</span>
-  <div style="clear:both"></div>
-  <div style="float:left;" data-dojo-attach-point="_volumeSeekBar"></div>
   <div class="currentlyPlaying">
     <span data-dojo-attach-point="_currentlyPlaying"></span>
     <br />
@@ -9,15 +6,11 @@
   </div>
   <div style="clear:both"></div>
   <div class="controlButtons">
-		<button data-dojo-attach-point="_btnPlay" data-dojo-type="dijit/form/Button" type="button" >Play</button>
-		<button data-dojo-attach-point="_btnStop" data-dojo-type="dijit/form/Button" type="button" >Stop</button>
-    <button data-dojo-attach-point="_btnPrev" data-dojo-type="dijit/form/Button" type="button" >Prev</button>
-		<button data-dojo-attach-point="_btnNext" data-dojo-type="dijit/form/Button" type="button" >Next</button>
-    <button data-dojo-attach-point="_btnClear" data-dojo-type="dijit/form/Button" type="button" >Clear</button>
     <button data-dojo-attach-point="_btnPlaylist" data-dojo-type="dijit/form/Button" type="button" >Playlist</button>
     <button data-dojo-attach-point="_btnSettings" data-dojo-type="dijit/form/Button" type="button" >Settings</button>
   </div>
-  <div data-dojo-attach-point="_progressSeekBar"></div>
+
 	<div data-dojo-attach-point="_trackSearchView"></div>
   <div data-dojo-attach-point="_trackPlaylistView"></div>
+  <div data-dojo-attach-point="_playingControlHolder"></div>
 </div>

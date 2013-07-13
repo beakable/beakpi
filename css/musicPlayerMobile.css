@@ -7,6 +7,11 @@ body{
 	color:#FFF;
 }
 
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
 #serviceViewHolder{
 	background: url(/img/serviceView-background.png) repeat-x top center;
 	width:100%;
@@ -162,4 +167,18 @@ body{
 	background: rgba(0,0,0,0.9);
 	z-index: 50;
 	text-align: center;
+}
+
+.PlayingControlHolder {
+	position: fixed;
+	bottom: 0;
+	left:0;
+	width: 100%;
+	height: 44px;
+ 	background: url(/img/menu-background.png) repeat; 
+	z-index: 60;
+}
+
+.PlayingControl {
+	width: 700px
 }
