@@ -103,7 +103,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </script>
     <script src="js/mopidy.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script>
-<!--<script src="js/dojo/dojo/dojo.js"></script>-->
+    <!--<script src="js/dojo/dojo/dojo.js"></script>-->
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dijit/themes/claro/claro.css">
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojox/widget/Toaster/Toaster.css">
 
@@ -151,6 +151,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 musicPlayer = new MusicPlayer();
                 musicPlayer.loadMusicNodes();
                 musicPlayer.placeAt(BpiHolder);
+                domStyle.set(BpiHolder, "margin-top", 0);
               }
               else {
                 domStyle.set(BpiMenuHolder, "display", "block");
@@ -194,6 +195,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 homeRF = new HomeRF();
                 homeRF.loadRfNodes()
                 homeRF.placeAt(BpiHolder);
+                domStyle.set(BpiHolder, "margin-top", 0);
               }
               else {
                 domStyle.set(BpiMenuHolder, "display", "block");

@@ -20,8 +20,14 @@ body{
  	text-align: center;
  	background: url(/img/menu-background.png) repeat; 	
  	border-bottom: solid 2px #000;
- 	padding:5px 0;
+ 	height: 34px;
  	display: none;
+ 	position: absolute;
+	z-index: 500;
+}
+
+#serviceView{
+  margin: 36px auto 0 auto;
 }
 
 .inputSearch{
@@ -132,5 +138,28 @@ body{
 }
 
 .rfControlList {
+	text-align: center;
+}
+
+.slideInEnder {
+	top: 0px;
+	bottom: -200px;
+	left: 0px;
+	padding-top:44px;
+	width: 100%;
+	position: fixed;
+	z-index: 40;
+	text-align: center;
+}
+
+.slideInHolder {
+	top: 0px;
+	bottom: -200px;
+	left: 0px;
+	padding-top:44px;
+	width: 63%;
+	position: fixed;
+	background: rgba(0,0,0,0.9);
+	z-index: 50;
 	text-align: center;
 }

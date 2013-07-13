@@ -162,7 +162,6 @@ function(declare, lang, win, mouse, on, when, Deferred, domAttr, domStyle, domCo
         else{
           domStyle.set(this._trackSearchView, "display", "none");
           domStyle.set(this._trackPlaylistView, "display", "");
-          this._currentPlaylist.listStoredPlaylists();
           this._currentPlaylist.list();
           this._currentTrackView = "Search";
         }
