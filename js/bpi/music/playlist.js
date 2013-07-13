@@ -47,7 +47,7 @@ function (declare, lang, win, when, aspect, on, touch, domConst, domAttr, domGeo
         }));
       }
       else{
-        domStyle.set(this._btnStored, "display", "");
+        domStyle.set(this._btnStored, "display", "none");
         domStyle.set(this.slideInHolder, "display", "block");
         this.listStoredPlaylists(this.slideInHolder, "<br />");
       }
@@ -108,9 +108,14 @@ function (declare, lang, win, when, aspect, on, touch, domConst, domAttr, domGeo
     },
 
     _loadStoredPlaylists: function() {
+      domStyle.set(this.slideInEnder, "display", "block");
       domStyle.set(this.slideInHolder, "display", "block");
       this.listStoredPlaylists(this.slideInHolder, "<br />");
       domStyle.set(win.body(), "overflow", "hidden");
+      on(this.slideInEnder, "click", lang.hitch(this, function(evt)  {
+      domStyle.set(this.slideInEnder, "display", "none");
+      domStyle.set(this.slideInHolder, "display", "none");
+      }));
     }
 
   });

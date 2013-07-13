@@ -141,6 +141,17 @@ body{
 	text-align: center;
 }
 
+.slideInEnder {
+	top: 0px;
+	bottom: -200px;
+	left: 0px;
+	padding-top:44px;
+	width: 100%;
+	position: fixed;
+	z-index: 40;
+	text-align: center;
+}
+
 .slideInHolder {
 	top: 0px;
 	bottom: -200px;
