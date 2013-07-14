@@ -47,7 +47,6 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
     intervalCurrentPlaying: new timing.Timer(1000),
     _currentPlaylist: null,
     _currentSearch: null,
-    _currentTrackView: "Playlist",
     _playingControl: null,
     _slider: null,
 
@@ -55,18 +54,23 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       var dfd = new Deferred();
 
       this._playingControl = new PlayingControl();
-      this._playingControl.placeAt(this);
-
       this._slider = new Slider();
-      this._slider.placeAt(this);
+      this._currentPlaylist = new playlist();
+      this._currentSearch = new search();
 
-      if(this._currentPlaylist === null) {
-        this._currentPlaylist = new playlist();
+      this._playingControl.placeAt(this);
+      this._slider.placeAt(this);
+      //this._currentSearch.placeAt(this._trackSearchView);
+
+      if(dojoConfig.device === "computer") {
+        domConst.destroy(this._btnStored.domNode);
+        this._slider.show();
+        this._currentPlaylist.listStored(this._slider.get("holder"), "<br />", this._trackListHolder);
       }
-      if(this._currentSearch === null) {
-        this._currentSearch = new search();
-      }
-      this._currentSearch.placeAt(this._trackSearchView);
+
+      this.applyButtonCommands();
+
+      this._currentPlaylist.listCurrent(this._trackListHolder);
 
       when(this.updateCurrentPlaying(), lang.hitch(this, function() {
         this.intervalCurrentPlaying.onTick = lang.hitch(this,function() {
@@ -74,23 +78,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
         });
         dfd.resolve();
       }));
-
       this.intervalCurrentPlaying.start();
-      this.applyButtonCommands();
-
-     if(dojoConfig.device !== "computer") {
-        on(this._btnStored, "click", lang.hitch(this, function(evt)  {
-          this._slider.show();
-          this._currentPlaylist.listStored(this._slider.get("holder"), "<br />", this._trackListHolder);
-        }));
-      }
-      else{
-        domConst.destroy(this._btnStored.domNode);
-        this._slider.show();
-        this._currentPlaylist.listStored(this._slider.get("holder"), "<br />", this._trackListHolder);
-      }
-
-      this._currentPlaylist.listCurrent(this._trackListHolder);
 
       return dfd.promise;
     },
@@ -113,6 +101,14 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
     },
 
     applyButtonCommands: function (){
+
+     if(dojoConfig.device !== "computer") {
+        on(this._btnStored, "click", lang.hitch(this, function(evt)  {
+          this._slider.show();
+          this._currentPlaylist.listStored(this._slider.get("holder"), "<br />", this._trackListHolder);
+        }));
+      }
+
       aspect.after(this._playingControl, "btnShufflePressed", lang.hitch(this, function(){
         when(util.commandShuffleTracks(), lang.hitch(this, function(){
           this._currentPlaylist.listCurrent(this._trackListHolder);

@@ -28,11 +28,10 @@ define([
   "dijit/_WidgetBase",
   "dijit/form/Button",
   "bpi/music/track",
-  "bpi/utils/util",
-  "dojo/text!./templates/playlist.html"
+  "bpi/utils/util"
 ],
 
-function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, domStyle, _WidgetBase, Button, track, util, template){
+function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, domStyle, _WidgetBase, Button, track, util){
   return declare([_WidgetBase], {
 
     listStored: function(domHolder, buttonSplit, domToPlaceInto) {
