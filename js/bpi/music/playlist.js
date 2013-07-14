@@ -26,20 +26,16 @@ define([
   "dojo/dom-geometry",
   "dojo/dom-style",
   "dijit/_WidgetBase",
-  "dijit/_WidgetsInTemplateMixin",
-  "dijit/_TemplatedMixin",
   "dijit/form/Button",
   "bpi/music/track",
   "bpi/utils/util",
   "dojo/text!./templates/playlist.html"
 ],
 
-function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, domStyle, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, Button, track, util, template){
-  return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
-    widgetsInTemplate: true,
-    templateString: template,
+function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, domStyle, _WidgetBase, Button, track, util, template){
+  return declare([_WidgetBase], {
 
-    listStored: function(domHolder, buttonSplit) {
+    listStored: function(domHolder, buttonSplit, domPlacer) {
       var storedPlaylists = [], _self = this;
       when(util.requestStoredPlaylists()).then(lang.hitch(this, function(res){
         res = res.replace(/\n/g,"$%^");
@@ -52,7 +48,7 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
               onClick: function(){
                 when(util.commandTracklist("clear"), lang.hitch(this, function(){
                   util.command(("mpc load '" + this.label +"'")).then(lang.hitch(this, function(res) {
-                    _self.listCurrent();
+                    _self.listCurrent(domPlacer);
                   }));
                 }));
               }
@@ -68,31 +64,27 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
       }));
     },
 
-    listCurrent: function() {
+    listCurrent: function(domPlacer) {
       var tracklist = [], i, individualTrack = [];
-      domConst.empty(this.playlistCurrent);
+      domConst.empty(domPlacer);
       when(util.requestCurrentPlaylist()).then(lang.hitch(this, function(res){
         if(res) {
           res = res.replace(/\n/g,"$%^");
           tracklist = res.split("$%^");
           for(i = 0; i <= tracklist.length; i++ ){
             if(tracklist[i] !== "" && tracklist[i] !== undefined) {
-              var trackResult = new track;
+              var trackResult = new track();
               individualTrack = tracklist[i].split(" - ");
-              when(trackResult.displayTrack({name: individualTrack[0], href: (i + 1), artist: individualTrack[1]}, this.playlistCurrent, false)).then(lang.hitch(this, function(){
+              when(trackResult.displayTrack({name: individualTrack[0], href: (i + 1), artist: individualTrack[1]}, domPlacer, false)).then(lang.hitch(this, function(){
                 aspect.after(trackResult, "onPlaylistRemove", lang.hitch(this, function(){ this.listCurrent() }));
               }));
             }
           }
         }
         else{
-          domAttr.set(this.playlistCurrent, "innerHTML", "<span class='noSongs'>No songs Queued</span>");
+          domAttr.set(domPlacer, "innerHTML", "<span class='noSongs'>No songs Queued</span>");
         }
       }));
-    },
-
-    _clear: function() {
-      domAttr.set(this.playlistCurrent, "innerHTML", "<span class='noSongs'>No songs Queued</span>");
     }
 
   });

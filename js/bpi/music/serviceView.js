@@ -67,7 +67,6 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
         this._currentSearch = new search();
       }
       this._currentSearch.placeAt(this._trackSearchView);
-      this._currentPlaylist.placeAt(this._trackPlaylistView);
 
       when(this.updateCurrentPlaying(), lang.hitch(this, function() {
         this.intervalCurrentPlaying.onTick = lang.hitch(this,function() {
@@ -82,19 +81,16 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
      if(dojoConfig.device !== "computer") {
         on(this._btnStored, "click", lang.hitch(this, function(evt)  {
           this._slider.show();
-          this._currentPlaylist.listStored(this._slider.get("holder"), "<br />");
+          this._currentPlaylist.listStored(this._slider.get("holder"), "<br />", this._trackListHolder);
         }));
       }
       else{
         domConst.destroy(this._btnStored.domNode);
         this._slider.show();
-        this._currentPlaylist.listStored(this._slider.get("holder"), "<br />");
+        this._currentPlaylist.listStored(this._slider.get("holder"), "<br />", this._trackListHolder);
       }
 
-      this._currentPlaylist.listCurrent();
-
-
-
+      this._currentPlaylist.listCurrent(this._trackListHolder);
 
       return dfd.promise;
     },
@@ -119,7 +115,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
     applyButtonCommands: function (){
       aspect.after(this._playingControl, "btnShufflePressed", lang.hitch(this, function(){
         when(util.commandShuffleTracks(), lang.hitch(this, function(){
-          this._currentPlaylist.listCurrent();
+          this._currentPlaylist.listCurrent(this._trackListHolder);
         }));
       }));
     },
