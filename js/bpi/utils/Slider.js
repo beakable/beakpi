@@ -33,7 +33,6 @@ function (declare, lang, win, when, on, domStyle, _WidgetBase, _TemplatedMixin, 
     show: function() {
       domStyle.set(this._slideInEnder, "display", "block");
       domStyle.set(this._slideInHolder, "display", "block");
-      domStyle.set(win.body(), "overflow", "hidden");
       on(this._slideInEnder, "click", lang.hitch(this, function(evt)  {
         this.hide();
       }));
