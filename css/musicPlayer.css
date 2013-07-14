@@ -13,6 +13,7 @@ body{
 	width:100%;
 	float:left;
 	min-height:188px;
+	margin-bottom:62px;
 	padding-top:10px;
 }
 
@@ -35,6 +36,10 @@ body{
 
 #search{
   margin: 20px 0 0 3px;
+}
+
+.trackList {
+	padding-bottom: 30px;
 }
 
 .inputSearch{
@@ -173,4 +178,48 @@ body{
 	background: rgba(0,0,0,0.7);
 	z-index: 50;
 	text-align: center;
+}
+
+.PlayingControlHolder {
+	position: fixed;
+	bottom: 0;
+	left:0;
+	width: 100%;
+	height: 44px;
+ 	background: url(/img/menu-background.png) repeat; 
+	z-index: 60;
+}
+
+.PlayingControl {
+	width: 700px;
+	margin:0 auto;
+}
+
+.iconPlay{
+	background: url(/img/music-images/Play.png);
+	height:20px;
+	width:20px;
+}
+
+.iconPause{
+	background: url(/img/music-images/Pause.png);
+	height:20px;
+	width:20px;
+}
+
+.iconPrev{
+	background: url(/img/music-images/Skip-back.png);
+	height:20px;
+	width:20px;
+}
+
+.iconNext{
+	background: url(/img/music-images/Skip-ahead.png);
+	height:20px;
+	width:20px;
+}
+.iconShuffle{
+	background: url(/img/music-images/random-shuffle.png);
+	height:20px;
+	width:20px;
 }
