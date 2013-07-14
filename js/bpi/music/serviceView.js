@@ -33,10 +33,11 @@ define([
   "bpi/music/playlist",
   "bpi/music/PlayingControl",
   "bpi/utils/util",
+  "bpi/utils/Slider",
   "dojo/text!./templates/serviceView.html",
   "dijit/form/Button"
 ],
-function(declare, lang, on, when, Deferred, domAttr, domStyle, domConstruct, aspect, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Dialog, timing, search, settings, playlist, PlayingControl, util, template) {
+function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Dialog, timing, search, settings, playlist, PlayingControl, util, Slider, template) {
 
   return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
     widgetsInTemplate: true,
@@ -47,12 +48,16 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConstruct, asp
     _currentSearch: null,
     _currentTrackView: "Playlist",
     _playingControl: null,
+    _slider: null,
 
     loadMusicNodes: function (){
       var dfd = new Deferred();
 
       this._playingControl = new PlayingControl();
-      this._playingControl.placeAt(this._playingControlHolder);
+      this._playingControl.placeAt(this);
+
+      this._slider = new Slider();
+      this._slider.placeAt(this);
 
       if(this._currentPlaylist === null) {
         this._currentPlaylist = new playlist();
@@ -62,7 +67,6 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConstruct, asp
       }
       this._currentSearch.placeAt(this._trackSearchView);
       this._currentPlaylist.placeAt(this._trackPlaylistView);
-      domStyle.set(this._trackPlaylistView, "display", "none");
 
       when(this.updateCurrentPlaying(), lang.hitch(this, function() {
         this.intervalCurrentPlaying.onTick = lang.hitch(this,function() {
@@ -72,6 +76,22 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConstruct, asp
       }));
       this.intervalCurrentPlaying.start();
       this.applyButtonCommands();
+
+     if(dojoConfig.device !== "computer") {
+        on(this._btnStored, "click", lang.hitch(this, function(evt)  {
+          this._slider.show();
+          this._currentPlaylist.listStoredPlaylists(this._slider.get("holder"), "<br />");
+        }));
+      }
+      else{
+        domConst.destroy(this._btnStored.domNode);
+        this._slider.show();
+        this._currentPlaylist.listStoredPlaylists(this._slider.get("holder"), "<br />");
+      }
+      on(this._btnClear, "click", lang.hitch(this, function(evt) {
+        util.commandTracklist("clear");
+        this._clear();
+      }));
 
       return dfd.promise;
     },
@@ -94,28 +114,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConstruct, asp
     },
 
     applyButtonCommands: function (){
-      on(this._btnPlaylist, "click", lang.hitch(this, function(evt) {
-        if(this._currentTrackView === "Search") {
-          domStyle.set(this._trackSearchView, "display", "");
-          domStyle.set(this._trackPlaylistView, "display", "none");
-          this._currentTrackView = "Playlist";
-        }
-        else{
-          domStyle.set(this._trackSearchView, "display", "none");
-          domStyle.set(this._trackPlaylistView, "display", "");
-          this._currentPlaylist.list();
-          this._currentTrackView = "Search";
-        }
-        this._btnPlaylist.set("label", this._currentTrackView);
-      }));
-      if(dojoConfig.device === "computer") {
-        on(this._btnSettings, "click", lang.hitch(this, function(evt)  {
-          this.showSettings();
-        }));
-      }
-      else{
-        domStyle.set(this._btnSettings.domNode, "display", "none");
-      }
+      
     },
 
     updateCurrentPlaying: function(){

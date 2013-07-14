@@ -41,20 +41,7 @@ function (declare, lang, win, when, aspect, on, touch, domConst, domAttr, domGeo
     templateString: template,
 
     postCreate: function() {
-      if(dojoConfig.device !== "computer") {
-        on(this._btnStored, "click", lang.hitch(this, function(evt)  {
-          this._loadStoredPlaylists();
-        }));
-      }
-      else{
-        domStyle.set(this._btnStored, "display", "none");
-        domStyle.set(this.slideInHolder, "display", "block");
-        this.listStoredPlaylists(this.slideInHolder, "<br />");
-      }
-      on(this._btnClear, "click", lang.hitch(this, function(evt) {
-        util.commandTracklist("clear");
-        this._clear();
-      }));
+ 
     },
 
     listStoredPlaylists: function(domHolder, buttonSplit) {
@@ -109,17 +96,6 @@ function (declare, lang, win, when, aspect, on, touch, domConst, domAttr, domGeo
 
     _clear: function() {
       domAttr.set(this.playlistCurrent, "innerHTML", "<span class='noSongs'>No songs Queued</span>");
-    },
-
-    _loadStoredPlaylists: function() {
-      domStyle.set(this.slideInEnder, "display", "block");
-      domStyle.set(this.slideInHolder, "display", "block");
-      this.listStoredPlaylists(this.slideInHolder, "<br />");
-      domStyle.set(win.body(), "overflow", "hidden");
-      on(this.slideInEnder, "click", lang.hitch(this, function(evt)  {
-      domStyle.set(this.slideInEnder, "display", "none");
-      domStyle.set(this.slideInHolder, "display", "none");
-      }));
     }
 
   });
