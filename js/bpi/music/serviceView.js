@@ -74,20 +74,24 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
         });
         dfd.resolve();
       }));
+
       this.intervalCurrentPlaying.start();
       this.applyButtonCommands();
 
      if(dojoConfig.device !== "computer") {
         on(this._btnStored, "click", lang.hitch(this, function(evt)  {
           this._slider.show();
-          this._currentPlaylist.listStoredPlaylists(this._slider.get("holder"), "<br />");
+          this._currentPlaylist.listStored(this._slider.get("holder"), "<br />");
         }));
       }
       else{
         domConst.destroy(this._btnStored.domNode);
         this._slider.show();
-        this._currentPlaylist.listStoredPlaylists(this._slider.get("holder"), "<br />");
+        this._currentPlaylist.listStored(this._slider.get("holder"), "<br />");
       }
+
+      this._currentPlaylist.listCurrent();
+
       on(this._btnClear, "click", lang.hitch(this, function(evt) {
         util.commandTracklist("clear");
         this._clear();

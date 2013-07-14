@@ -17,7 +17,6 @@
 define([
   "dojo/_base/declare",
   "dojo/_base/lang",
-  "dojo/_base/window",
   "dojo/when",
   "dojo/aspect",
   "dojo/on",
@@ -35,16 +34,12 @@ define([
   "dojo/text!./templates/playlist.html"
 ],
 
-function (declare, lang, win, when, aspect, on, touch, domConst, domAttr, domGeom, domStyle, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, Button, track, util, template){
+function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, domStyle, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, Button, track, util, template){
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
     widgetsInTemplate: true,
     templateString: template,
 
-    postCreate: function() {
- 
-    },
-
-    listStoredPlaylists: function(domHolder, buttonSplit) {
+    listStored: function(domHolder, buttonSplit) {
       var storedPlaylists = [], _self = this;
       when(util.requestStoredPlaylists()).then(lang.hitch(this, function(res){
         res = res.replace(/\n/g,"$%^");
@@ -56,7 +51,7 @@ function (declare, lang, win, when, aspect, on, touch, domConst, domAttr, domGeo
               label: storedPlaylists[i],
               onClick: function(){
                 util.command(("mpc load '" + this.label +"'")).then( lang.hitch(this, function(res) {
-                  _self.list();
+                  _self.listCurrent();
                 }));
               }
             });
@@ -71,7 +66,7 @@ function (declare, lang, win, when, aspect, on, touch, domConst, domAttr, domGeo
       }));
     },
 
-    list: function() {
+    listCurrent: function() {
       var tracklist = [], i, individualTrack = [];
       domConst.empty(this.playlistCurrent);
       when(util.requestCurrentPlaylist()).then(lang.hitch(this, function(res){
@@ -83,7 +78,7 @@ function (declare, lang, win, when, aspect, on, touch, domConst, domAttr, domGeo
               var trackResult = new track;
               individualTrack = tracklist[i].split(" - ");
               when(trackResult.displayTrack({name: individualTrack[0], href: (i + 1), artist: individualTrack[1]}, this.playlistCurrent, false)).then(lang.hitch(this, function(){
-                aspect.after(trackResult, "onPlaylistRemove", lang.hitch(this, function(){ this.list() }));
+                aspect.after(trackResult, "onPlaylistRemove", lang.hitch(this, function(){ this.listCurrent() }));
               }));
             }
           }
