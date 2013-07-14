@@ -42,6 +42,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
   return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
     widgetsInTemplate: true,
     templateString: template,
+
     _currentlyPlaying: null,
     intervalCurrentPlaying: new timing.Timer(1000),
     _currentPlaylist: null,
@@ -90,9 +91,10 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
         this._currentPlaylist.listStored(this._slider.get("holder"), "<br />");
       }
 
-
-
       this._currentPlaylist.listCurrent();
+
+
+
 
       return dfd.promise;
     },
@@ -115,7 +117,11 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
     },
 
     applyButtonCommands: function (){
-      
+      aspect.after(this._playingControl, "btnShufflePressed", lang.hitch(this, function(){
+        when(util.commandShuffleTracks(), lang.hitch(this, function(){
+          this._currentPlaylist.listCurrent();
+        }));
+      }));
     },
 
     updateCurrentPlaying: function(){

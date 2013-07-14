@@ -104,9 +104,7 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
       }));
 
       on(this._btnShuffle, "click", lang.hitch(this, function(evt)  {
-        when(util.commandShuffleTracks(), lang.hitch(this, function(){
-          // this._currentPlaylist.listCurrent();
-        }));
+        this.btnShufflePressed();
       }));
 
 
@@ -116,16 +114,20 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
       this._currentSongSeek.slider.sliderHandle.display = false;
     },
 
-    _setPlayButtonAttr: function(val){
+    btnShufflePressed: function() {
+      // Synthetic Event
+    },
+
+    _setPlayButtonAttr: function(val) {
       this._btnPlayPause.set("label", val);
       this._btnPlayPause.set("iconClass", "icon"+val);
     },
 
-    _setVolumeSeekAttr: function(val){
+    _setVolumeSeekAttr: function(val) {
       this._volumeSeek.trackTo(val);
     },
 
-    _setSongSeekAttr: function(val){
+    _setSongSeekAttr: function(val) {
       this._currentSongSeek.trackTo(val);
     }
 
