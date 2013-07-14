@@ -183,3 +183,32 @@ table {
 .PlayingControl {
 	width: 700px
 }
+
+.iconPlay{
+	background: url(/img/music-images/Play.png);
+	height:20px;
+	width:20px;
+}
+
+.iconPause{
+	background: url(/img/music-images/Pause.png);
+	height:20px;
+	width:20px;
+}
+
+.iconPrev{
+	background: url(/img/music-images/Skip-back.png);
+	height:20px;
+	width:20px;
+}
+
+.iconNext{
+	background: url(/img/music-images/Skip-ahead.png);
+	height:20px;
+	width:20px;
+}
+.iconShuffle{
+	background: url(/img/music-images/random-shuffle.png);
+	height:20px;
+	width:20px;
+}
