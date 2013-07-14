@@ -13,6 +13,7 @@ body{
 	width:100%;
 	float:left;
 	min-height:188px;
+	margin-bottom:62px;
 	padding-top:10px;
 }
 
@@ -35,6 +36,10 @@ body{
 
 #search{
   margin: 20px 0 0 3px;
+}
+
+.trackList {
+	padding-bottom: 30px;
 }
 
 .inputSearch{
