@@ -92,11 +92,6 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
 
       this._currentPlaylist.listCurrent();
 
-      on(this._btnClear, "click", lang.hitch(this, function(evt) {
-        util.commandTracklist("clear");
-        this._clear();
-      }));
-
       return dfd.promise;
     },
 
