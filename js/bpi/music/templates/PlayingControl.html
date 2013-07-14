@@ -1,0 +1,27 @@
+<div class="PlayingControlHolder">
+	<div data-dojo-attach-point="PlayingControl" class="PlayingControl">
+		<div data-dojo-attach-point="_progressSeekBar"></div>
+		<div class="clear"></div>
+	    <table data-dojo-attach-point="_controlHolder">
+	    	<tr>
+	    		<td data-dojo-attach-point="_controlHolderButtons">
+				    <button data-dojo-attach-point="_btnPrev" data-dojo-type="dijit/form/Button" type="button"
+				    		data-dojo-props="iconClass:'iconPrev', showLabel:false">Prev</button>
+
+				    <button data-dojo-attach-point="_btnPlayPause" data-dojo-type="dijit/form/Button" type="button"
+				    data-dojo-props="iconClass:'iconPlay', showLabel:false">Play</button>
+					
+					<button data-dojo-attach-point="_btnNext" data-dojo-type="dijit/form/Button" type="button"
+					data-dojo-props="iconClass:'iconNext', showLabel:false">Next</button>
+				</td>
+				<td data-dojo-attach-point="_controlHolderVolume">
+					<div data-dojo-attach-point="_volumeSeekBar"></div>
+				</td>
+				<td data-dojo-attach-point="_controlHolderShuffle">
+  					<button data-dojo-attach-point="_btnShuffle" data-dojo-type="dijit/form/Button" type="button"
+  					data-dojo-props="iconClass:'iconShuffle', showLabel:false">Shuffle</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
