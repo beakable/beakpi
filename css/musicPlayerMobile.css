@@ -37,8 +37,9 @@ table {
 }
 
 .inputSearch{
-	width:79%;
-	margin-left: 2%
+	margin-top:4px;
+	width:198px;
+	float:left;
 }
 
 .dijitButtonText{
@@ -92,11 +93,7 @@ table {
 	background: url(/img/background.jpg) repeat;
 }
 
-#search{
-	overflow: hidden;
-	width:100%;
 
-}
 .searchSummary{
 	font-size:9px; 
 	font-weight:100; 
@@ -124,10 +121,6 @@ table {
 	border: #B3EDB3;
 }
 
-.claro .btSearch.dijitButton .dijitButtonNode {
-	background-color: #E3F9E3;
-	border: #B3EDB3;
-}
 
 .playlistStored{
 	margin: 5 px 0 20px 0;

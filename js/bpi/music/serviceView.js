@@ -60,7 +60,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
 
       this._playingControl.placeAt(this);
       this._slider.placeAt(this);
-      //this._currentSearch.placeAt(this._trackSearchView);
+      this._currentSearch.placeAt(this._trackSearchView);
 
       if(dojoConfig.device === "computer") {
         domConst.destroy(this._btnStored.domNode);
