@@ -50,7 +50,6 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
             var btnPlaylistTitle = new Button({
               label: storedPlaylists[i],
               onClick: function(){
-
                 when(util.commandTracklist("clear"), lang.hitch(this, function(){
                   util.command(("mpc load '" + this.label +"'")).then(lang.hitch(this, function(res) {
                     _self.listCurrent();

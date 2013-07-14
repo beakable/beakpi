@@ -61,8 +61,10 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
       on(this._btnPlayPause, "click", lang.hitch(this, function(evt)  {
         if(this._btnPlayPause.get("label") === "Pause"){
           util.commandPlayer("pause");
+          this._btnPlayPause.set("iconClass", "iconPlay");
         } else{
           util.commandPlayer("play");
+          this._btnPlayPause.set("iconClass", "iconPause");
         }
       }));
 
@@ -77,15 +79,17 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
       if (dojoConfig.device !== "computer") {
         var windowBox = win.getBox();
         this._currentSongSeek.createBar("song", this._progressSeekBar, windowBox.w+"px");
-        this._volumeSeek.createBar("volume", this._volumeSeekBar, windowBox.w-163+"px");
+        this._volumeSeek.createBar("volume", this._volumeSeekBar, windowBox.w-182+"px");
+        domStyle.set(this._controlHolderVolume, "width", windowBox.w-182+"px");
         domStyle.set(this._controlHolder, "width",  "100%");
-        domStyle.set(this._controlHolderButtons, "width", "160px");
+        domStyle.set(this._controlHolderButtons, "width", "140px");
       }
       else {
         this._volumeSeek.createBar("volume", this._volumeSeekBar, "100%");
         this._currentSongSeek.createBar("song", this._progressSeekBar, "100%");
         domStyle.set(this._controlHolder, "width", "100%");
-        domStyle.set(this._controlHolderButtons, "width", "160px");
+        domStyle.set(this._controlHolderButtons, "width", "140px");
+        domStyle.set(this._controlHolderShuffle, "width", "40px");
       }
 
       on(this._volumeSeek.slider, "focus", lang.hitch(this, function(evt){
@@ -99,6 +103,13 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
         }));
       }));
 
+      on(this._btnShuffle, "click", lang.hitch(this, function(evt)  {
+        when(util.commandShuffleTracks(), lang.hitch(this, function(){
+          // this._currentPlaylist.listCurrent();
+        }));
+      }));
+
+
       domStyle.set(this._btnPlayPause.domNode,"width","50px");
       domStyle.set(this._btnPlayPause.domNode.firstChild, "display", "block");
       this._currentSongSeek.slider.set("disabled", true);
@@ -107,6 +118,7 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
 
     _setPlayButtonAttr: function(val){
       this._btnPlayPause.set("label", val);
+      this._btnPlayPause.set("iconClass", "icon"+val);
     },
 
     _setVolumeSeekAttr: function(val){
