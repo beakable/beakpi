@@ -35,7 +35,7 @@ define([
 function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, domStyle, _WidgetBase, Button, track, util, template){
   return declare([_WidgetBase], {
 
-    listStored: function(domHolder, buttonSplit, domPlacer) {
+    listStored: function(domHolder, buttonSplit, domToPlaceInto) {
       var storedPlaylists = [], _self = this;
       when(util.requestStoredPlaylists()).then(lang.hitch(this, function(res){
         res = res.replace(/\n/g,"$%^");
@@ -48,7 +48,7 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
               onClick: function(){
                 when(util.commandTracklist("clear"), lang.hitch(this, function(){
                   util.command(("mpc load '" + this.label +"'")).then(lang.hitch(this, function(res) {
-                    _self.listCurrent(domPlacer);
+                    _self.listCurrent(domToPlaceInto);
                   }));
                 }));
               }
@@ -64,9 +64,9 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
       }));
     },
 
-    listCurrent: function(domPlacer) {
+    listCurrent: function(domToPlaceInto) {
       var tracklist = [], i, individualTrack = [];
-      domConst.empty(domPlacer);
+      domConst.empty(domToPlaceInto);
       when(util.requestCurrentPlaylist()).then(lang.hitch(this, function(res){
         if(res) {
           res = res.replace(/\n/g,"$%^");
@@ -75,14 +75,14 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
             if(tracklist[i] !== "" && tracklist[i] !== undefined) {
               var trackResult = new track();
               individualTrack = tracklist[i].split(" - ");
-              when(trackResult.displayTrack({name: individualTrack[0], href: (i + 1), artist: individualTrack[1]}, domPlacer, false)).then(lang.hitch(this, function(){
+              when(trackResult.displayTrack({name: individualTrack[0], href: (i + 1), artist: individualTrack[1]}, domToPlaceInto, false)).then(lang.hitch(this, function(){
                 aspect.after(trackResult, "onPlaylistRemove", lang.hitch(this, function(){ this.listCurrent() }));
               }));
             }
           }
         }
         else{
-          domAttr.set(domPlacer, "innerHTML", "<span class='noSongs'>No songs Queued</span>");
+          domAttr.set(domToPlaceInto, "innerHTML", "<span class='noSongs'>No songs Queued</span>");
         }
       }));
     }
