@@ -90,6 +90,12 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
         this._currentPlaylist.listStored(this._slider.get("holder"), "<br />");
       }
 
+      on(this._btnShuffle, "click", lang.hitch(this, function(evt)  {
+        when(util.commandShuffleTracks(), lang.hitch(this, function(){
+          this._currentPlaylist.listCurrent();
+        }));
+      }));
+
       this._currentPlaylist.listCurrent();
 
       return dfd.promise;

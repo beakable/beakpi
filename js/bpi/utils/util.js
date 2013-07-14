@@ -144,6 +144,9 @@ define([
     commandTracklist: function(com){
        mopidy.tracklist[com]();
     },
+    commandShuffleTracks: function() {
+      mopidy.tracklist.shuffle();
+    },
 
     commandPlayer: function(com,args){
       if(args){
