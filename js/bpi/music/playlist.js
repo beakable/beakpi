@@ -60,6 +60,7 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
               label: storedPlaylists[i],
               onClick: function(){
                 when(util.commandTracklist("clear"), lang.hitch(this, function(){
+                  _self.playlistLoading();
                   util.command(("mpc load '" + this.label +"'")).then(lang.hitch(this, function(res) {
                     _self.listCurrent(domToPlaceInto);
                   }));
@@ -108,6 +109,10 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
 
     _setResultsInfoAttr: function (val){
       this._resultsInfo = val;
+    },
+
+    playlistLoading: function() {
+      // Synthetic Event
     }
 
   });

@@ -74,11 +74,11 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
         this._currentPlaylist.listStored(this._slider.get("holder"), "<br />", this._trackListHolder);
       }
 
-      this.applyButtonCommands();
+      this._applyListeners();
 
-      when(this.updateCurrentPlaying(), lang.hitch(this, function() {
+      when(this._updateCurrentPlaying(), lang.hitch(this, function() {
         this.intervalCurrentPlaying.onTick = lang.hitch(this,function() {
-          this.updateCurrentPlaying();
+          this._updateCurrentPlaying();
         });
         dfd.resolve();
       }));
@@ -91,7 +91,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       this.intervalCurrentPlaying.stop();
     },
 
-    showSettings: function() {
+    /*showSettings: function() {
       var musicSettings = new settings();
       var settingsDisplay = new Dialog({
         title: "Music Settings",
@@ -102,17 +102,19 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       }));
       settingsDisplay.set("content", musicSettings);
       settingsDisplay.show();
-    },
+    },*/
 
-    applyButtonCommands: function (){
+    _applyListeners: function (){
 
      if(dojoConfig.device !== "computer") {
         on(this._btnStored, "click", lang.hitch(this, function(evt)  {
           this._slider.show();
           this._currentPlaylist.listStored(this._slider.get("holder"), "<br />", this._trackListHolder);
         }));
+        aspect.after(this._currentPlaylist, "playlistLoading", lang.hitch(this, function(){
+          this._slider.hide();
+        }));
       }
-
       aspect.after(this._playingControl, "btnShufflePressed", lang.hitch(this, function(){
         when(util.commandShuffleTracks(), lang.hitch(this, function(){
           this._currentPlaylist.listCurrent(this._trackListHolder);
@@ -120,7 +122,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       }));
     },
 
-    updateCurrentPlaying: function(){
+    _updateCurrentPlaying: function(){
       var mpcInfo = [],
           timeInfo = [],
           seekInfo,

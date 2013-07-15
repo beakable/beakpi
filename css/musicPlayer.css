@@ -123,10 +123,15 @@ body{
 	font-weight:100; 
 	margin-left:7px;
 }
+
 .currentlyPlaying{
-	float:left;
+	padding: 10px 0;
+	display: block;
+	background: url(/img/playing-background.png) repeat-x;
+	margin:10px auto 0;
 	text-align: center;
-	width: 330px;
+	height:50px;
+	border:solid 2px #37373C;
 }
 
 .logos{
