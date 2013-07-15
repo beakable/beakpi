@@ -38,7 +38,7 @@ table {
 
 .inputSearch{
 	margin-top:4px;
-	width:198px;
+	width:190px;
 	float:left;
 }
 
@@ -155,7 +155,7 @@ table {
 	top: 0px;
 	bottom: -200px;
 	left: 0px;
-	padding-top:44px;
+	padding-top:84px;
 	width: 63%;
 	position: fixed;
 	background: rgba(0,0,0,0.9);
