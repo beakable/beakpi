@@ -60,7 +60,13 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
 
       this._playingControl.placeAt(this);
       this._slider.placeAt(this);
+
       this._currentSearch.placeAt(this._trackSearchView);
+      this._currentSearch.set("resultsHolder", this._trackListHolder);
+      this._currentSearch.set("resultsInfo", this._trackListHolderInfo);
+
+      this._currentPlaylist.listCurrent(this._trackListHolder);
+      this._currentPlaylist.set("resultsInfo", this._trackListHolderInfo);
 
       if(dojoConfig.device === "computer") {
         domConst.destroy(this._btnStored.domNode);
@@ -69,8 +75,6 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       }
 
       this.applyButtonCommands();
-
-      this._currentPlaylist.listCurrent(this._trackListHolder);
 
       when(this.updateCurrentPlaying(), lang.hitch(this, function() {
         this.intervalCurrentPlaying.onTick = lang.hitch(this,function() {

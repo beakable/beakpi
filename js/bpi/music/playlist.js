@@ -34,15 +34,29 @@ define([
 function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, domStyle, _WidgetBase, Button, track, util){
   return declare([_WidgetBase], {
 
+    _resultsInfo: null,
+
     listStored: function(domHolder, buttonSplit, domToPlaceInto) {
-      var storedPlaylists = [], _self = this;
+      var storedPlaylists = [], _self = this, btnPlaylistTitle;
       when(util.requestStoredPlaylists()).then(lang.hitch(this, function(res){
         res = res.replace(/\n/g,"$%^");
         storedPlaylists = res.split("$%^");
         domConst.empty(domHolder);
+        btnPlaylistTitle= new Button({
+          label: "Current Playlist",
+          onClick: function(){
+            _self.listCurrent(domToPlaceInto);
+          }
+        });
+        btnPlaylistTitle.placeAt(domHolder);
+        domStyle.set(btnPlaylistTitle.domNode,"width","80%");
+        domStyle.set(btnPlaylistTitle.domNode.firstChild, "display", "block");
+
+        domConst.place("<br /><span>_______</span><br /><br />", domHolder);
+
         for (i = 0; i <= storedPlaylists.length; i++) {
           if (storedPlaylists[i] !== "" && storedPlaylists[i] !== undefined && storedPlaylists[i] !== "Starred") {
-            var btnPlaylistTitle = new Button({
+            btnPlaylistTitle = new Button({
               label: storedPlaylists[i],
               onClick: function(){
                 when(util.commandTracklist("clear"), lang.hitch(this, function(){
@@ -67,6 +81,8 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
       var tracklist = [], i, individualTrack = [];
       domConst.empty(domToPlaceInto);
       when(util.requestCurrentPlaylist()).then(lang.hitch(this, function(res){
+        console.log(res);
+        this._summary("Current Playlist");
         if(res) {
           res = res.replace(/\n/g,"$%^");
           tracklist = res.split("$%^");
@@ -84,6 +100,14 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
           domAttr.set(domToPlaceInto, "innerHTML", "<span class='noSongs'>No songs Queued</span>");
         }
       }));
+    },
+
+    _summary: function(result) {
+      domAttr.set(this._resultsInfo, "innerHTML", "Playlist: " + result);
+    },
+
+    _setResultsInfoAttr: function (val){
+      this._resultsInfo = val;
     }
 
   });

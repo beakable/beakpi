@@ -41,45 +41,47 @@ function(declare, lang, fx, on, when, domConstruct, domAttr, keys, _WidgetBase, 
     inputSearch: null,
     totalTracks: null,
     _btSearch: null,
+    _resultsHolder: null,
+    _resultsInfo: null,
 
     postCreate: function(){
       var _self = this;
       on(this._btSearch, "click", function(evt){
-        _self.clearList();
+        _self._clearList();
         when(util.requestSearch("http://ws.spotify.com/search/1/track.json?q="+_self.inputSearch.value)).then(
           function(res) {
-            _self.summary(res);
-            _self.list(res);
-            fx.fadeIn({node: _self.results}).play();
+            _self._summary(res);
+            _self._list(res);
+            fx.fadeIn({node: _self._resultsHolder}).play();
           }
         );
       });
-      on(_self.inputSearch, "keydown", function(evt){
+      on(this.inputSearch, "keydown", function(evt){
         if(evt.keyCode === keys.ENTER){
           evt.preventDefault();
-          _self.clearList();
+          _self._clearList();
           when(util.requestSearch("http://ws.spotify.com/search/1/track.json?q="+evt.target.value)).then(
             function(res) {
-            _self.summary(res);
-            _self.list(res);
-            fx.fadeIn({node: _self.results}).play();
+            _self._summary(res);
+            _self._list(res);
+            fx.fadeIn({node: _self._resultsHolder}).play();
             }
           );
         }
       });
     },
 
-    summary: function(result) {
+    _summary: function(result) {
       var i;
       for(i =0; i < result.tracks.length; i++){
         if(result.tracks[i].album.availability.territories.indexOf(dojoConfig.countryCode) !== -1) {
           ++this.totalTracks;
         }
       }
-      domAttr.set(this.searchSummary, "innerHTML", "Displaying Results 0 of "+ this.totalTracks);
+      domAttr.set(this._resultsInfo, "innerHTML", "Displaying Results 0 of "+ this.totalTracks);
     },
 
-    list: function(result) {
+    _list: function(result) {
       var trackResult,
           i,
           trackResultNumber = 1,
@@ -101,10 +103,10 @@ function(declare, lang, fx, on, when, domConstruct, domAttr, keys, _WidgetBase, 
             href: result.tracks[i].href,
             artist: result.tracks[i].artists[0].name
           };
-          when(trackResult.displayTrack(trackInfo, this.results, displayArt)).then(lang.hitch(this, function(){
-              domAttr.set(this.searchSummary, "innerHTML", "Displaying Results "+ trackResultNumber +" of "+ this.totalTracks);
+          when(trackResult.displayTrack(trackInfo, this._resultsHolder, displayArt)).then(lang.hitch(this, function(){
+              domAttr.set(this._resultsInfo, "innerHTML", "Displaying Results "+ trackResultNumber +" of "+ this.totalTracks);
               if (trackResultNumber % clearSplit === 0 || trackResultNumber === this.totalTracks) {
-                domConstruct.place(domConstruct.toDom("<div style='clear:both'></div>"), this.results);
+                domConstruct.place(domConstruct.toDom("<div style='clear:both'></div>"), this._resultsHolder);
               }
               ++trackResultNumber;
           }));
@@ -112,23 +114,27 @@ function(declare, lang, fx, on, when, domConstruct, domAttr, keys, _WidgetBase, 
       }
     },
 
-    clearList: function() {
+    _clearList: function() {
       var clearResults;
       this.totalTracks = 0;
       if(dojoConfig.device !== "computer") {
-        domConstruct.empty(this.results);
+        domConstruct.empty(this._resultsHolder);
       }
       else{
-        clearResults = fx.fadeOut({node: this.results}).play();
+        clearResults = fx.fadeOut({node: this._resultsHolder}).play();
         on(clearResults, "End", lang.hitch(this, function(){
-          domConstruct.empty(this.results);
+          domConstruct.empty(this._resultsHolder);
         }));
       }
-      domConstruct.empty(this.searchSummary);
+      domConstruct.empty(this._resultsInfo);
     },
 
-    show: function(){
-      return this.domNode;
+    _setResultsHolderAttr: function (val){
+      this._resultsHolder = val;
+    },
+
+    _setResultsInfoAttr: function (val){
+      this._resultsInfo = val;
     }
 
   });
