@@ -1,226 +1,228 @@
-body{
-	margin:0;
-	padding:0;
-	background: url(/img/background.jpg) repeat;
-	font-family:Arial;
-	font-weight: 700;
-	color:#FFF;
-	width:100%;
+/* BeakPi - CSS */
+
+
+
+/* App Main */
+/* -------- */
+
+body {
+  background: url(/img/background.jpg) repeat;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  color: #FFF;
+  width: 100%;
 }
 
-#serviceViewHolder{
-	background: url(/img/serviceView-background.png) repeat-x top center;
-	width:100%;
-	float:left;
-	min-height:188px;
-	margin-bottom:62px;
-	padding-top:10px;
+#serviceViewHolder {
+  background: url(/img/serviceView-background.png) repeat-x top center;
+  width: 100%;
+  float: left;
+  min-height: 188px;
+  margin-bottom: 62px;
+  padding-top: 10px;
 }
 
-#serviceMenuView{
-	width:100%;
- 	text-align: center;
- 	background: url(/img/menu-background.png) repeat; 	
- 	border-bottom: solid 2px #000;
- 	height: 34px;
- 	display: none;
- 	position:absolute;
-	z-index: 100;
+#serviceMenuView {
+  background: url(/img/menu-background.png) repeat; 
+  width:100%;
+  text-align: center;	
+  border-bottom: solid 2px #000;
+  height: 34px;
+  display: none;
+  position:absolute;
+  z-index: 100;
 }
 
-#serviceView{
-  width:700px;
+#serviceView {
+  width: 700px;
   margin: 36px auto 0 auto;
-  padding:20px 0 0 0;
-}
-
-.trackList {
-	padding-bottom: 30px;
-}
-
-.inputSearch{
-	margin:0 0 0 8px;
-	padding:0;
-	width:622px;
-}
-
-.dijitButtonText{
-  font-size:10px;
-}
-
-.claro .dijitSliderReadOnly .dijitSliderImageHandleH, .claro .dijitSliderDisabled .dijitSliderImageHandleH{
-  display: none
-}
-.claro .dijitSlider .dijitSliderProgressBarH, .claro .dijitSlider .dijitSliderLeftBumper,
-.claro .dijitSliderDisabled .dijitSliderProgressBarH, .claro .dijitSliderDisabled .dijitSliderLeftBumper{
-  background: #28292C
-}
-
-.trackWithArt {
-	float:left; 
-	width:233px; 
-	height:130px; 
-	display:inline; 
-	opacity:0;
-	font-size:10px;
-}
-
-.trackWithArt .buttons{
-	margin:0 0 0 5px;
-	float:left;
-}
-
-.trackWithArt .title{
-	margin:0 0 0 5px;
-	width: 120px;
-	height:76px;
-	font-size:11px;
-	float:left;
-}
-
-.trackWithoutArt {
-	float:left; 
-	width:335px;
-	opacity:0
-}
-.trackWithoutArt .title{
-	float:left;
-	font-size: 12px;
-	overflow: hidden;
-	padding: 0;
-	margin: 0;
-}
-
-.trackWithoutArt .title .name{
-	width: 200px;
-	height: 15px;
-	font-size:13px;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	word-wrap: break-word;
-	display: inline-block;
-}
-.trackWithoutArt .title .artist{
-	font-weight: 100;
-	width: 200px;
-	height: 15px;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	word-wrap: break-word;
-	display: inline-block;
-}
-
-.trackWithoutArt .buttons{
-	float:left;
-	margin:0 10px 0 0;
-}
-.claro .dijitDialogPaneContent {
-	background: url(/img/background.jpg) repeat;
-}
-
-.searchSummary{
-	font-size:9px; 
-	font-weight:100; 
-	margin-left:7px;
-}
-
-.currentlyPlaying{
-	padding: 10px 0;
-	display: block;
-	background: url(/img/playing-background.png) repeat-x;
-	margin:10px auto 0;
-	text-align: center;
-	height:50px;
-	border:solid 2px #37373C;
-}
-
-.logos{
-	width:351px;
-	height:71px;
-	margin: 0 auto;
-	display: block;
-}
-
-.playlistStored{
-	margin: 10px 0 20px 0;
-	text-align: center;
-}
-
-.claro .controlButtons .dijitButton .dijitButtonNode {
-	background-color: #E3F9E3;
-	border: #B3EDB3;
-}
-
-.claro .btSearch.dijitButton .dijitButtonNode {
-	background-color: #E3F9E3;
-	border: #B3EDB3;
+  padding: 20px 0 0;
 }
 
 .clear {
-	clear:both;
-}
-
-.noSongs{
-	text-align: center;
-	display: block;
-}
-
-.rfControlList {
-	text-align: center;
+  clear: both;
 }
 
 .slideInHolder {
-	top: 0px;
-	height:100%;
-	left:0px;
-	padding-top:84px;
-	width: 21%;
-	position: fixed;
-	background: rgba(0,0,0,0.7);
-	z-index: 50;
-	text-align: center;
+  top: 0px;
+  height: 100%;
+  left: 0px;
+  padding-top: 84px;
+  width: 21%;
+  position: fixed;
+  background: rgba(0,0,0,0.7);
+  z-index: 50;
+  text-align: center;
+}
+/* --------------- */
+/* --------------- */
+
+
+
+/* Dojo Overwrites */
+/* --------------- */
+
+.dijitButtonText {
+  font-size:10px;
+}
+
+.claro .dijitSliderReadOnly .dijitSliderImageHandleH, .claro .dijitSliderDisabled .dijitSliderImageHandleH {
+  display: none
+}
+
+.claro .dijitDialogPaneContent {
+  background: url(/img/background.jpg) repeat;
+}
+
+/* --------------- */
+/* --------------- */
+
+
+
+/* Audio Player */
+/* ------------ */
+
+.inputSearch {
+  margin: 0 0 0 8px;
+  padding: 0;
+  width: 622px;
+}
+
+.trackWithArt {
+  float: left; 
+  width: 233px; 
+  height: 130px; 
+  display: inline; 
+  opacity: 0;
+  font-size: 10px;
+}
+
+.trackWithArt .buttons{
+  margin: 0 0 0 5px;
+  float: left;
+}
+
+.trackWithArt .title{
+  margin: 0 0 0 5px;
+  width: 120px;
+  height: 76px;
+  font-size: 11px;
+  float: left;
+}
+
+.trackWithoutArt {
+  float: left; 
+  width: 335px;
+  opacity: 0
+}
+.trackWithoutArt .title{
+  float: left;
+  font-size: 12px;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+.trackWithoutArt .title .name{
+  width: 200px;
+  height: 15px;
+  font-size:13px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-wrap: break-word;
+  display: inline-block;
+}
+.trackWithoutArt .title .artist{
+  font-weight: 100;
+  width: 200px;
+  height: 15px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-wrap: break-word;
+  display: inline-block;
+}
+
+.trackWithoutArt .buttons{
+  float: left;
+  margin: 0 10px 0 0;
+}
+
+.searchSummary{
+  font-size: 9px; 
+  font-weight: 100; 
+  margin-left: 7px;
+}
+
+.currentlyPlaying{
+  background: url(/img/playing-background.png) repeat-x;
+  padding: 10px 0;
+  display: block;
+  margin: 10px auto 0;
+  text-align: center;
+  height: 50px;
+  border: solid 2px #37373C;
+}
+
+.noSongs{
+  text-align: center;
+  display: block;
 }
 
 .PlayingControlHolder {
-	position: fixed;
-	bottom: 0;
-	left:0;
-	width: 100%;
-	height: 44px;
- 	background: url(/img/menu-background.png) repeat; 
-	z-index: 60;
+  background: url(/img/menu-background.png) repeat; 
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 44px;
+  z-index: 60;
 }
 
 .PlayingControl {
-	width: 700px;
-	margin:0 auto;
+  width: 700px;
+  margin: 0 auto;
 }
 
-.iconPlay{
-	background: url(/img/music-images/Play.png);
-	height:20px;
-	width:20px;
+.iconPlay {
+  background: url(/img/music-images/Play.png);
+  height: 20px;
+  width: 20px;
 }
 
-.iconPause{
-	background: url(/img/music-images/Pause.png);
-	height:20px;
-	width:20px;
+.iconPause {
+  background: url(/img/music-images/Pause.png);
+  height: 20px;
+  width: 20px;
 }
 
-.iconPrev{
-	background: url(/img/music-images/Skip-back.png);
-	height:20px;
-	width:20px;
+.iconPrev {
+  background: url(/img/music-images/Skip-back.png);
+  height: 20px;
+  width: 20px;
 }
 
-.iconNext{
-	background: url(/img/music-images/Skip-ahead.png);
-	height:20px;
-	width:20px;
+.iconNext {
+  background: url(/img/music-images/Skip-ahead.png);
+  height: 20px;
+  width: 20px;
 }
-.iconShuffle{
-	background: url(/img/music-images/random-shuffle.png);
-	height:20px;
-	width:20px;
+.iconShuffle {
+  background: url(/img/music-images/random-shuffle.png);
+  height: 20px;
+  width: 20px;
 }
+
+/* --------------- */
+/* --------------- */
+
+
+
+/* RF Controller */
+/* ------------ */
+
+.rfControlList {
+  text-align: center;
+}
+
