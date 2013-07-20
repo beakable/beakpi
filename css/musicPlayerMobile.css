@@ -1,10 +1,17 @@
-body{
-	margin:0;
-	padding:0;
-	background: url(/img/background.jpg) repeat;
-	font-family:Arial;
-	font-weight: 0;
-	color:#FFF;
+/* BeakPi - CSS */
+
+
+
+/* App Main */
+/* -------- */
+
+body {
+  background: url(/img/background.jpg) repeat;  
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 0;
+  color:#FFF;
 }
 
 table {
@@ -12,196 +19,208 @@ table {
   border-spacing: 0;
 }
 
-#serviceViewHolder{
-	background: url(/img/serviceView-background.png) repeat-x top center;
-	width:100%;
-	float:left;
-	min-height:188px;
-	padding-top:10px;
-	margin-bottom:60px;
+#serviceViewHolder {
+  background: url(/img/serviceView-background.png) repeat-x top center;
+  width: 100%;
+  float: left;
+  min-height: 188px;
+  padding-top: 10px;
+  margin-bottom: 60px;
 }
 
-#serviceMenuView{
-	width:100%;
- 	text-align: center;
- 	background: url(/img/menu-background.png) repeat; 	
- 	border-bottom: solid 2px #000;
- 	height: 34px;
- 	display: none;
- 	position: absolute;
-	z-index: 500;
+#serviceMenuView {
+  width: 100%;
+  text-align: center;
+  background: url(/img/menu-background.png) repeat; 	
+  border-bottom: solid 2px #000;
+  height: 34px;
+  display: none;
+  position: absolute;
+  z-index: 500;
 }
 
-#serviceView{
-  margin: 36px auto 0 auto;
+#serviceView {
+  margin: 36px auto 0;
 }
 
-.inputSearch{
-	margin-top:4px;
-	width:204px;
-	float:left;
+.clear {
+  clear:both;
 }
+
+.slideInHolder {
+  top: 0px;
+  bottom: -200px;
+  left: 0px;
+  padding-top:84px;
+  width: 63%;
+  position: fixed;
+  background: rgba(0,0,0,0.9);
+  z-index: 50;
+  text-align: center;
+}
+
+.slideInEnder {
+  top: 0px;
+  bottom: -200px;
+  left: 0px;
+  padding-top:44px;
+  width: 100%;
+  position: fixed;
+  z-index: 40;
+  text-align: center;
+}
+
+/* --------------- */
+/* --------------- */
+
+
+
+/* Dojo Overwrites */
+/* --------------- */
 
 .dijitButtonText{
-  font-size:10px;
+font-size:10px;
 }
 
 .claro .dijitSliderReadOnly .dijitSliderImageHandleH, .claro .dijitSliderDisabled .dijitSliderImageHandleH{
-  display: none
-}
-.claro .dijitSlider .dijitSliderProgressBarH, .claro .dijitSlider .dijitSliderLeftBumper,
-.claro .dijitSliderDisabled .dijitSliderProgressBarH, .claro .dijitSliderDisabled .dijitSliderLeftBumper{
-  background: #28292C
+display: none
 }
 
-.trackWithoutArt {
-	float:left; 
-	width:100%;  
-	opacity:0
+.claro .dijitDialogPaneContent {
+  background: url(/img/background.jpg) repeat;
 }
+
+
+/* --------------- */
+/* --------------- */
+
+
+
+/* Audio Player */
+/* ------------ */
+
+.trackWithoutArt {
+  float: left; 
+  width: 100%;  
+  opacity: 0
+}
+
 .trackWithoutArt .title{
-	float:left;
-	font-size: 10px;
-	width:65%;
-	margin:0 0 0 5px;
+  float: left;
+  font-size: 10px;
+  width: 65%;
+  margin: 0 0 0 5px;
 }
 
 .trackWithoutArt .title .name{
-	font-size:13px;
-	width: 100%;
-	height: 14px;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	word-wrap: break-word;
-	display: inline-block;
+  font-size:13px;
+  width: 100%;
+  height: 14px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-wrap: break-word;
+  display: inline-block;
 }
 .trackWithoutArt .title .artist{
-	width: 100%;
-	height: 11px;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	word-wrap: break-word;
-	display: inline-block;
+  width: 100%;
+  height: 11px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-wrap: break-word;
+  display: inline-block;
 }
-
 
 .trackWithoutArt .buttons{
-	float:left;
+  float: left;
 
 }
-.claro .dijitDialogPaneContent {
-	background: url(/img/background.jpg) repeat;
-}
-
 
 .searchSummary{
-	font-size:9px; 
-	font-weight:100; 
-	margin-left:7px;
+  font-size: 9px; 
+  font-weight: 100; 
+  margin-left: 7px;
 }
 
 .currentlyPlaying{
-	padding: 10px 0;
-	display: block;
-	background: url(/img/playing-background.png) repeat-x;
-	margin:10px auto 0;
-	text-align: center;
-	border-bottom:solid 2px #37373C;
+  background: url(/img/playing-background.png) repeat-x;
+  padding: 10px 0;
+  display: block;
+  margin: 10px auto 0;
+  text-align: center;
+  border-bottom:solid 2px #37373C;
 }
 .controlButtons{
-	text-align: center;
+  text-align: center;
 }
 
-.logos{
-	width:100%
-}
-
-.claro .controlButtons .dijitButton .dijitButtonNode {
-	background-color: #E3F9E3;
-	border: #B3EDB3;
+.inputSearch{
+  margin-top: 4px;
+  width: 204px;
+  float: left;
 }
 
 
 .playlistStored{
-	margin: 5 px 0 20px 0;
-	text-align: center;
-}
-
-.clear {
-	clear:both;
+  margin: 5px 0 20px;
+  text-align: center;
 }
 
 .noSongs{
-	text-align: center;
-	display: block;
-}
-
-.rfControlList {
-	text-align: center;
-}
-
-.slideInEnder {
-	top: 0px;
-	bottom: -200px;
-	left: 0px;
-	padding-top:44px;
-	width: 100%;
-	position: fixed;
-	z-index: 40;
-	text-align: center;
-}
-
-.slideInHolder {
-	top: 0px;
-	bottom: -200px;
-	left: 0px;
-	padding-top:84px;
-	width: 63%;
-	position: fixed;
-	background: rgba(0,0,0,0.9);
-	z-index: 50;
-	text-align: center;
+  text-align: center;
+  display: block;
 }
 
 .PlayingControlHolder {
-	position: fixed;
-	bottom: 0;
-	left:0;
-	width: 100%;
-	height: 44px;
- 	background: url(/img/menu-background.png) repeat; 
-	z-index: 60;
+  background: url(/img/menu-background.png) repeat;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 44px;
+  z-index: 60;
 }
 
 .PlayingControl {
-	width: 700px
+  width: 700px
 }
 
 .iconPlay{
-	background: url(/img/music-images/Play.png);
-	height:20px;
-	width:20px;
+  background: url(/img/music-images/Play.png);
+  height: 20px;
+  width: 20px;
 }
 
 .iconPause{
-	background: url(/img/music-images/Pause.png);
-	height:20px;
-	width:20px;
+  background: url(/img/music-images/Pause.png);
+  height: 20px;
+  width: 20px;
 }
 
 .iconPrev{
-	background: url(/img/music-images/Skip-back.png);
-	height:20px;
-	width:20px;
+  background: url(/img/music-images/Skip-back.png);
+  height: 20px;
+  width: 20px;
 }
 
 .iconNext{
-	background: url(/img/music-images/Skip-ahead.png);
-	height:20px;
-	width:20px;
+  background: url(/img/music-images/Skip-ahead.png);
+  height: 20px;
+  width: 20px;
 }
 .iconShuffle{
-	background: url(/img/music-images/random-shuffle.png);
-	height:20px;
-	width:20px;
+  background: url(/img/music-images/random-shuffle.png);
+  height: 20px;
+  width: 20px;
+}
+
+/* --------------- */
+/* --------------- */
+
+
+
+/* RF Controller */
+/* ------------ */
+
+.rfControlList {
+  text-align: center;
 }
