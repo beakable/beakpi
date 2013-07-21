@@ -76,6 +76,10 @@ body {
   background: url(/img/background.jpg) repeat;
 }
 
+.claro .dijitSlider .dijitSliderProgressBarH, .claro .dijitSlider .dijitSliderLeftBumper,
+.claro .dijitSliderDisabled .dijitSliderProgressBarH, .claro .dijitSliderDisabled .dijitSliderLeftBumper{
+  background: #28292C
+}
 /* --------------- */
 /* --------------- */
 
