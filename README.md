@@ -1,4 +1,17 @@
-# BeakPi Home Automation # 
+# BeakPi Home Automation
+
+These setup instructions cover setting BeakPi up from a fresh OS install.
+
+Currently it is presummed you are pulling this source for either using as a Spotify Player, a Harmony RF Gateway, or both.
+
+Requirements for the Spotify Player: Spotify Premium Account - https://www.spotify.com/
+
+Requirements for the RF Gateway: ZBPLM - https://www.simplehomenet.com/proddetail.asp?prod=ZigBee_INSTEON_X10_Interface
+
+
+After installing line 7 to 12 in index.php holds the required config parameters to run BeakPi.
+
+
 
 ### Update first:
 
@@ -169,7 +182,7 @@ Then:
 sudo apt-get update
 sudo apt-get install zbpserver
 sudo reboot
-sudo service zbp start`
+sudo service zbp start
 Use http://harmonygateway.com/ to setup initial Config.
 ```
 
