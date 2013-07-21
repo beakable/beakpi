@@ -1,14 +1,33 @@
-Update first:
+# BeakPi Home Automation # 
+
+### Update first:
 
 `sudo apt-get update`
 
-Install apache and PHP:
+
+### Install apache and PHP:
 
 `sudo apt-get install php5-common libapache2-mod-php5 php5-cli`
 
 You should now be able to go to the IP address of your Pi in a browser and see a "It Works!" message
 
-Install Mopidy:
+
+### Pull BeakPi Source:
+
+```
+cd /var/www
+sudo git clone https://github.com/beakable/beakpi.git .
+```
+
+
+### To setup access to system info for Settings:
+
+```
+sudo usermod -G video www-data
+sudo reboot
+```
+
+### Install Mopidy:
 
 http://docs.mopidy.com/en/latest/installation/raspberrypi/
 
@@ -22,7 +41,7 @@ sudo apt-get install mopidy
 ```
 
 
-Setup Mopidy:
+### Setup Mopidy:
 
 ```
 cd
@@ -53,9 +72,10 @@ enabled = false
 enabled = false
 ```
 
-Running mopidy should now work.
+Running `mopidy` should now work.
 
-Setup Mopidy as A Service:
+
+### Setup Mopidy as A Service:
 
 http://delarre.net/posts/setting-up-a-raspberry-pi-media-center/
 
@@ -132,14 +152,31 @@ sudo chmod 666 /var/run/mopidy.pid
 sudo service mopidy start
 ```
 
-Pull BeakPi Source:
+
+### To Setup Smartenit RF Gateway:
+
+https://www.simplehomenet.com/solutions.asp?page_id=HomAidPi
+
+`sudo nano /etc/apt/sources.list`
+
+Add to the end of the file:
+
+`deb http://harmonygateway.com/repo/ZBPServer/debian/arm/RPi /`
+
+Then:
 
 ```
-cd /var/www
-sudo git clone https://github.com/beakable/beakpi.git .
+sudo apt-get update
+sudo apt-get install zbpserver
+sudo reboot
+sudo service zbp start`
+Use http://harmonygateway.com/ to setup initial Config.
 ```
 
-Setup Wi-Pi Dongle:
+## Misc Setup
+
+
+### Setup Wi-Pi Dongle:
 
 http://www.element14.com/community/docs/DOC-49107/l/wi-pi-wi-pi-wlan-installation-procedure-for-raspbian-on-raspberry-pi
 
@@ -168,42 +205,14 @@ wpa-ssid YOUWIFINANE
 wpa-psk YOURWIFIPASS
 ```
 
-
-
 Then:
 
 `sudo service networking restart`
 
-To setup access to system info for Settings:
 
-```
-sudo usermod -G video www-data
-sudo reboot
-```
-
-To setup FTP
+### To setup FTP
 
 ```
 sudo apt-get install vsftpd
 sudo chmod -R 777 /var/www/
-```
-
-To Setup Smartenit RF Gateway:
-
-https://www.simplehomenet.com/solutions.asp?page_id=HomAidPi
-
-`sudo nano /etc/apt/sources.list`
-
-Add to the end of the file:
-
-`deb http://harmonygateway.com/repo/ZBPServer/debian/arm/RPi /`
-
-Then:
-
-```
-sudo apt-get update
-sudo apt-get install zbpserver
-sudo reboot
-sudo service zbp start`
-Use http://harmonygateway.com/ to setup initial Config.
 ```
