@@ -22,7 +22,8 @@ sudo wget -q -O /etc/apt/sources.list.d/mopidy.list http://apt.mopidy.com/mopidy
 
 sudo apt-get update
 
-sudo apt-get install mopidy```
+sudo apt-get install mopidy
+```
 
 
 Setup Mopidy:
@@ -35,7 +36,8 @@ mkdir .config/mopidy
 
 touch .config/mopidy/mopidy.conf
 
-nano .config/mopidy/mopidy.conf```
+nano .config/mopidy/mopidy.conf
+```
 
 In the config file:
 ```[mpd]
@@ -62,7 +64,8 @@ enabled = false
 
 [scrobbler]
 
-enabled = false```
+enabled = false
+```
 
 Running mopidy should now work.
 
@@ -80,7 +83,9 @@ sudo mkdir /home/mopidy/.config/mopidy
 
 cd
 sudo cp .config/mopidy/mopidy.conf /home/mopidy/.config/mopidy/mopidy.conf
-sudo nano /etc/init.d/mopidy```
+
+sudo nano /etc/init.d/mopidy
+```
 
 Paste in the following (For a description of what you're doing check out Ben Delarres great blog post linked):
 
@@ -129,7 +134,8 @@ restart)
 *)
         echo "Usage: $0 {start|stop|restart}"
         exit 1
-esac```
+esac
+```
 
 Then:
 
@@ -145,14 +151,16 @@ sudo touch /var/run/mopidy.pid
 
 sudo chmod 666 /var/run/mopidy.pid
 
-sudo service mopidy start```
+sudo service mopidy start
+```
 
 
 Pull BeakPi Source:
 
 ```cd /var/www
 
-sudo git clone https://github.com/beakable/beakpi.git .```
+sudo git clone https://github.com/beakable/beakpi.git .
+```
 
 Setup Wi-Pi Dongle:
 
@@ -168,7 +176,8 @@ iface wlan0 inet dhcp
 
 wpa-ssid YOUWIFINANE
 
-wpa-psk YOURWIFIPASS```
+wpa-psk YOURWIFIPASS
+```
 
 
 I had issues due to other stuff in the networking file, my final file looked like:
@@ -187,7 +196,8 @@ iface wlan0 inet dhcp
 
 wpa-ssid YOUWIFINANE
 
-wpa-psk YOURWIFIPASS```
+wpa-psk YOURWIFIPASS
+```
 
 
 
@@ -199,13 +209,15 @@ To setup access to system info for Settings:
 
 ```sudo usermod -G video www-data
 
-sudo reboot```
+sudo reboot
+```
 
 To setup FTP
 
 ```sudo apt-get install vsftpd
 
-sudo chmod -R 777 /var/www/```
+sudo chmod -R 777 /var/www/
+```
 
 To Setup Smartenit RF Gateway:
 
@@ -227,4 +239,5 @@ sudo reboot
 
 sudo service zbp start`
 
-Use http://harmonygateway.com/ to setup initial Config.```
+Use http://harmonygateway.com/ to setup initial Config.
+```
