@@ -24,42 +24,32 @@ sudo apt-get install mopidy
 
 Setup Mopidy:
 
-```cd
-
+```
+cd
 mkdir .config
-
 mkdir .config/mopidy
-
 touch .config/mopidy/mopidy.conf
-
 nano .config/mopidy/mopidy.conf
 ```
 
 In the config file:
-```[mpd]
-
+```
+[mpd]
 hostname = ::
 
 [http]
-
 enabled = true
-
 hostname = ::
-
 port = 6680
 
 [spotify]
-
 username = SPOTIFYUSER
-
 password = SPOTIFYPASS
 
 [local]
-
 enabled = false
 
 [scrobbler]
-
 enabled = false
 ```
 
@@ -69,23 +59,20 @@ Setup Mopidy as A Service:
 
 http://delarre.net/posts/setting-up-a-raspberry-pi-media-center/
 
-```sudo adduser --system mopidy
-
+```
+sudo adduser --system mopidy
 sudo adduser mopidy audio
-
 sudo mkdir /home/mopidy/.config
-
 sudo mkdir /home/mopidy/.config/mopidy
-
 cd
 sudo cp .config/mopidy/mopidy.conf /home/mopidy/.config/mopidy/mopidy.conf
-
 sudo nano /etc/init.d/mopidy
 ```
 
 Paste in the following (For a description of what you're doing check out Ben Delarres great blog post linked):
 
-```#!/bin/bash
+```
+#!/bin/bash
 # mopidy daemon
 # chkconfig: 345 20 80
 # description: mopidy daemon
@@ -135,26 +122,20 @@ esac
 
 Then:
 
-```sudo chmod +x /etc/init.d/mopidy
-
+```
+sudo chmod +x /etc/init.d/mopidy
 sudo update-rc.d mopidy defaults
-
 sudo touch /var/log/mopidy.log
-
 sudo chmod 666 /var/log/mopidy.log
-
 sudo touch /var/run/mopidy.pid
-
 sudo chmod 666 /var/run/mopidy.pid
-
 sudo service mopidy start
 ```
 
-
 Pull BeakPi Source:
 
-```cd /var/www
-
+```
+cd /var/www
 sudo git clone https://github.com/beakable/beakpi.git .
 ```
 
@@ -166,32 +147,24 @@ http://www.element14.com/community/docs/DOC-49107/l/wi-pi-wi-pi-wlan-installatio
 
 For WPA/WPA2 add to the end of the file:
 
-```auto wlan0
-
+```
+auto wlan0
 iface wlan0 inet dhcp
-
 wpa-ssid YOUWIFINANE
-
 wpa-psk YOURWIFIPASS
 ```
 
 
 I had issues due to other stuff in the networking file, my final file looked like:
 
-```auto lo
-
+```
+auto lo
 iface lo inet loopback
-
 iface eth0 inet dhcp
-
 auto wlan0
-
 allow-hotplug wlan0
-
 iface wlan0 inet dhcp
-
 wpa-ssid YOUWIFINANE
-
 wpa-psk YOURWIFIPASS
 ```
 
@@ -203,15 +176,15 @@ Then:
 
 To setup access to system info for Settings:
 
-```sudo usermod -G video www-data
-
+```
+sudo usermod -G video www-data
 sudo reboot
 ```
 
 To setup FTP
 
-```sudo apt-get install vsftpd
-
+```
+sudo apt-get install vsftpd
 sudo chmod -R 777 /var/www/
 ```
 
@@ -227,13 +200,10 @@ Add to the end of the file:
 
 Then:
 
-```sudo apt-get update
-
+```
+sudo apt-get update
 sudo apt-get install zbpserver
-
 sudo reboot
-
 sudo service zbp start`
-
 Use http://harmonygateway.com/ to setup initial Config.
 ```
