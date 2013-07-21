@@ -57,7 +57,7 @@ define([
         toFind = this.store.query({name: loadName});
         return toFind[0].value;
       }
-    },
+    }, 
 
     requestSearch: function(path) {
       var dfd = new Deferred();
@@ -76,19 +76,6 @@ define([
     requestCoverArt: function(path) {
       var dfd = new Deferred();
       xhr("/php/coverart.php?xhr=" + path, {
-        preventCache: false
-      }).then(function(data){
-        dfd.resolve(data);
-      }, function(err){
-        dfd.resolve(undefined);
-      }, function(evt){
-      });
-      return dfd.promise;
-    },
-
-    requestCurrentTrack: function() {
-      var dfd = new Deferred();
-      xhr("/php/currentTrack.php", {
         preventCache: false
       }).then(function(data){
         dfd.resolve(data);
@@ -160,12 +147,13 @@ define([
     command: function(com){
       var dfd = new Deferred();
       xhr("/php/command.php?xhr=" + com, {
+        preventCache: true,
+        handleAs: "json"
       }).then(function(data){
+        console.log(data);
         dfd.resolve(data);
       }, function(err){
         dfd.resolve(err);
-      }, function(evt){
-        dfd.resolve(evt);
       });
       return dfd.promise;
     },
@@ -187,8 +175,6 @@ define([
         dfd.resolve(data);
       }, function(err){
         dfd.resolve(err);
-      }, function(evt){
-        dfd.resolve(evt);
       });
       return dfd.promise;
     },

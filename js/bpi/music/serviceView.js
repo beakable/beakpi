@@ -104,6 +104,15 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       settingsDisplay.show();
     },*/
 
+    _filterData: function(result) {
+      if(result.data) {
+        return result.data;
+      }
+      else{
+        return result;
+      }
+    },
+
     _applyListeners: function (){
 
      if(dojoConfig.device !== "computer") {
@@ -123,40 +132,30 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
     },
 
     _updateCurrentPlaying: function(){
-      var mpcInfo = [],
-          timeInfo = [],
-          seekInfo,
-          status,
-          dfd = new Deferred(),
-          track;
-      when(util.requestCurrentSeek()).then(lang.hitch(this, function(res){
+      var timeInfo = [], dfd = new Deferred();
+      when(util.command("mpc"), lang.hitch(this, function(res){
+        //res = this._filterData(res);
         if(res !== undefined) {
-          if(res.indexOf("[playing]") !== -1) {
-            mpcInfo = res.split("  ");
-            track = mpcInfo[0].split("[playing]");
-            domAttr.set(this._currentlyPlaying, "innerHTML", track[0]);
-            mpcInfo = mpcInfo[1].split(" ");
-            timeInfo = mpcInfo[1].split("/");
-            domAttr.set(this._currentlyPlayingTime, "innerHTML", (timeInfo[0] + " / " + timeInfo[1]));
-            seekInfo = mpcInfo[2].replace(/[^0-9]/gi, '');
-            this._playingControl.set("songSeek", parseInt(seekInfo, 10));
-            this._playingControl.set("playButton", "Pause");
-            this._playingControl.set("volumeSeek", parseInt(mpcInfo[3], 10));
-            dfd.resolve();
-          }
-          else if(res.indexOf("[paused]") !== -1) {
-            this._playingControl.set("playButton", "Play");
-            domAttr.set(this._currentlyPlayingTime, "innerHTML", "Paused");
-            dfd.resolve();
+          console.log(res);
+          if (res[1]){
+            if (res[1].indexOf("[playing]") !== -1) {
+              domAttr.set(this._currentlyPlaying, "innerHTML", res[0]);
+              timeInfo = (res[1].split("   "))[1].split(" ");
+              domAttr.set(this._currentlyPlayingTime, "innerHTML", timeInfo[0]);
+              this._playingControl.set("songSeek", parseInt(timeInfo[1].replace(/[^0-9]/gi, ''), 10));
+              this._playingControl.set("playButton", "Pause");
+              this._playingControl.set("volumeSeek", parseInt(res[2].replace(/[^0-9]/gi, ''), 10));
+              dfd.resolve();
+            }
+            else if (res[1].indexOf("[paused]") !== -1) {
+              this._playingControl.set("playButton", "Play");
+              domAttr.set(this._currentlyPlaying, "innerHTML", res[0]);
+              domAttr.set(this._currentlyPlayingTime, "innerHTML", "Paused");
+              dfd.resolve();
+            }
           }
           else {
-            domAttr.set(this._currentlyPlaying, "innerHTML", "Stopped");
-            domAttr.set(this._currentlyPlayingTime, "innerHTML", "");
-            mpcInfo = res.split("  ");
-            mpcInfo = mpcInfo[0].split(" ");
-            this._playingControl.set("volumeSeek", parseInt(mpcInfo[3], 10));
-            this._playingControl.set("songSeek", 0);
-            this._playingControl.set("playButton", "Play");
+            domAttr.set(this._currentlyPlaying, "innerHTML", "Stopped") ;
             dfd.resolve();
           }
         }

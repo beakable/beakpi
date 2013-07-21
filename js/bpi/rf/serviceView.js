@@ -64,10 +64,8 @@ function(declare, lang, array, JSON, Deferred, domConst, _WidgetBase, _WidgetsIn
       var _self = this;
       var dfd = new Deferred();
       when(util.requestRF('<zbpPacket><Object>ZBP_System</Object><methodName>Sys_Authenticate</methodName><Arguments><Argument type="string">'+dojoConfig.radioFrequencySHAPassword+'</Argument></Arguments></zbpPacket>'), function(res){
-        res = _self._filterData(res);
         _self._session = "<session>" + res.session + "</session>";
-        when(util.requestRF('<zbpPacket><Object>ZBP_Node</Object><methodName>Node_GetAllNodesJson</methodName><Arguments></Arguments>'+_self._session+'</zbpPacket>'), function(listRes){
-           listRes = _self._filterData(listRes);
+        when(util.requestRF('<zbpPacket><Object>ZBP_Node</Object><methodName>Node_GetAllNodesJson</methodName><Arguments></Arguments>'+_self._session+'</zbpPacket>'), function(listRes) {
             console.log(listRes);
           _self.viewNodes(listRes);
           dfd.resolve();
@@ -75,16 +73,6 @@ function(declare, lang, array, JSON, Deferred, domConst, _WidgetBase, _WidgetsIn
       });
       return dfd.promise;
     },
-
-    _filterData: function(result) {
-      if(result.data) {
-        return result.data;
-      }
-      else{
-        return result;
-      }
-    },
-
 
     viewNodes: function(nodes) {
       var nodeArray = JSON.parse(nodes.Arguments.Argument[1]);
