@@ -1,5 +1,13 @@
 # BeakPi Home Automation
 
+![Example Player Interface](http://www.beakable.com/img/preview-1.png)
+
+The following video shows the current state of BeakPi: http://www.youtube.com/watch?v=8AcSKF8fZjw
+
+
+
+====
+
 These setup instructions cover setting BeakPi up from a fresh OS install.
 
 Currently it is presummed you are pulling this source for either using as a Spotify Player, a Harmony RF Gateway, or both.
