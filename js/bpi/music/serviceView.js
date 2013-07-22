@@ -125,6 +125,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
     _updateCurrentPlaying: function(){
       var timeInfo = [], dfd = new Deferred();
       when(util.command("mpc"), lang.hitch(this, function(res){
+        console.log(res);
         if(res !== undefined) {
           if (res[1]){
             if (res[1].indexOf("[playing]") !== -1) {
