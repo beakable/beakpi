@@ -151,8 +151,6 @@ define([
         dfd.resolve(data);
       }, function(err){
         dfd.resolve(err);
-      }, function(evt){
-        dfd.resolve(evt);
       });
       return dfd.promise;
     }
