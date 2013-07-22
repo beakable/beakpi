@@ -38,9 +38,8 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
 
     listStored: function(domHolder, buttonSplit, domToPlaceInto) {
       var storedPlaylists = [], _self = this, btnPlaylistTitle;
-      when(util.requestStoredPlaylists()).then(lang.hitch(this, function(res){
-        res = res.replace(/\n/g,"$%^");
-        storedPlaylists = res.split("$%^");
+      when(util.command("mpc lsplaylists")).then(lang.hitch(this, function(storedPlaylists){
+        console.log(storedPlaylists);
         domConst.empty(domHolder);
         btnPlaylistTitle= new Button({
           label: "Current Playlist",
@@ -81,12 +80,9 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
     listCurrent: function(domToPlaceInto) {
       var tracklist = [], i, individualTrack = [];
       domConst.empty(domToPlaceInto);
-      when(util.requestCurrentPlaylist()).then(lang.hitch(this, function(res){
-        console.log(res);
+      when(util.command("mpc playlist")).then(lang.hitch(this, function(tracklist){
         this._summary("Current Playlist");
-        if(res) {
-          res = res.replace(/\n/g,"$%^");
-          tracklist = res.split("$%^");
+        if(tracklist) {
           for(i = 0; i <= tracklist.length; i++ ){
             if(tracklist[i] !== "" && tracklist[i] !== undefined) {
               var trackResult = new track();

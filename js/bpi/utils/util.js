@@ -86,44 +86,6 @@ define([
       return dfd.promise;
     },
 
-    requestCurrentSeek: function(){
-      var dfd = new Deferred();
-      xhr("/php/currentSeek.php", {
-        preventCache: false
-      }).then(function(data){
-        dfd.resolve(data);
-      }, function(err){
-        dfd.resolve(undefined);
-      }, function(evt){
-      });
-      return dfd.promise;
-    },
-
-    requestStoredPlaylists: function(){
-      var dfd = new Deferred();
-        xhr("/php/mpc.php?xhr=lsplaylists", {
-        }).then(function(data){
-          dfd.resolve(data);
-        }, function(err){
-          dfd.resolve(err);
-        }, function(evt){
-        });
-      return dfd.promise;
-    },
-
-    requestCurrentPlaylist: function(){
-      var dfd = new Deferred();
-      xhr("/php/currentPlaylist.php", {
-        preventCache: false
-      }).then(function(data){
-        dfd.resolve(data);
-      }, function(err){
-        dfd.resolve(undefined);
-      }, function(evt){
-      });
-      return dfd.promise;
-    },
-
     commandPlayTrack: function(com){
        mopidy.tracklist.add(null, null, com);
     },
@@ -150,7 +112,6 @@ define([
         preventCache: true,
         handleAs: "json"
       }).then(function(data){
-        console.log(data);
         dfd.resolve(data);
       }, function(err){
         dfd.resolve(err);
@@ -172,6 +133,7 @@ define([
               xmlpost: xml
         }
       }).then(function(data){
+        console.log(data);
         dfd.resolve(data);
       }, function(err){
         dfd.resolve(err);

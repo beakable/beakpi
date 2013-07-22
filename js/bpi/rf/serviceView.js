@@ -65,8 +65,8 @@ function(declare, lang, array, JSON, Deferred, domConst, _WidgetBase, _WidgetsIn
       var dfd = new Deferred();
       when(util.requestRF('<zbpPacket><Object>ZBP_System</Object><methodName>Sys_Authenticate</methodName><Arguments><Argument type="string">'+dojoConfig.radioFrequencySHAPassword+'</Argument></Arguments></zbpPacket>'), function(res){
         _self._session = "<session>" + res.session + "</session>";
+        console.log(res)
         when(util.requestRF('<zbpPacket><Object>ZBP_Node</Object><methodName>Node_GetAllNodesJson</methodName><Arguments></Arguments>'+_self._session+'</zbpPacket>'), function(listRes) {
-            console.log(listRes);
           _self.viewNodes(listRes);
           dfd.resolve();
         });

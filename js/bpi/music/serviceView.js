@@ -104,15 +104,6 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       settingsDisplay.show();
     },*/
 
-    _filterData: function(result) {
-      if(result.data) {
-        return result.data;
-      }
-      else{
-        return result;
-      }
-    },
-
     _applyListeners: function (){
 
      if(dojoConfig.device !== "computer") {
@@ -134,9 +125,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
     _updateCurrentPlaying: function(){
       var timeInfo = [], dfd = new Deferred();
       when(util.command("mpc"), lang.hitch(this, function(res){
-        //res = this._filterData(res);
         if(res !== undefined) {
-          console.log(res);
           if (res[1]){
             if (res[1].indexOf("[playing]") !== -1) {
               domAttr.set(this._currentlyPlaying, "innerHTML", res[0]);
