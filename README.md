@@ -4,7 +4,9 @@
 
 The following video shows the current state of BeakPi: http://www.youtube.com/watch?v=8AcSKF8fZjw
 
+Home audio control interface currently only supports Spotify however Pandora is currently being implemented.
 
+Around the 5th minute in the linked video there is basic interaction with RF devices.
 
 ====
 
