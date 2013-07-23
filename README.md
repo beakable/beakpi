@@ -8,6 +8,8 @@ Home audio control interface currently only supports Spotify however Pandora is 
 
 Around the 5th minute in the linked video there is basic interaction with RF devices.
 
+Follow more about this project on Twitter: [Beakable Twitter for BeakPi](https://twitter.com/Beakable)
+
 ====
 
 These setup instructions cover setting BeakPi up from a fresh OS install.
