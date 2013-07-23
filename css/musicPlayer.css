@@ -138,6 +138,7 @@ body {
   word-wrap: break-word;
   display: inline-block;
 }
+
 .trackWithoutArt .title .artist{
   font-weight: 100;
   width: 200px;
@@ -167,6 +168,12 @@ body {
   text-align: center;
   height: 50px;
   border: solid 2px #37373C;
+  position: relative;
+}
+
+.currentlyPlayingInfo {
+  position: relative;
+  z-index: 30;
 }
 
 .noSongs{
@@ -189,31 +196,60 @@ body {
   margin: 0 auto;
 }
 
-.iconPlay {
-  background: url(/img/music-images/Play.png);
+.spotifyButton{
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: url(/img/music-images/spotify.png) center right;
+  background-size:200px 200px;
+  height: 71px;
+  width: 100px;
+  opacity: 0.4;
+  z-index: 20;
+}
+
+.pandoraButton{
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: url(/img/music-images/pandora.png) center left;
+  background-size: 150px 150px;
+  height: 71px;
+  width: 100px;
+  opacity: 0.4;
+  z-index: 20;  
+}
+
+.iconPlay{
+  background: url(/img/music-images/Play.png) center center no-repeat;
+  background-size: 10px 10px;
   height: 20px;
   width: 20px;
 }
 
-.iconPause {
-  background: url(/img/music-images/Pause.png);
+.iconPause{
+  background: url(/img/music-images/Pause.png) center center no-repeat;
+  background-size: 10px 10px;
   height: 20px;
   width: 20px;
 }
 
-.iconPrev {
-  background: url(/img/music-images/Skip-back.png);
+.iconPrev{
+  background: url(/img/music-images/Skip-back.png) center center no-repeat;
+  background-size: 10px 10px;
   height: 20px;
   width: 20px;
 }
 
-.iconNext {
-  background: url(/img/music-images/Skip-ahead.png);
+.iconNext{
+  background: url(/img/music-images/Skip-ahead.png) center center no-repeat;
+  background-size: 10px 10px;
   height: 20px;
   width: 20px;
 }
-.iconShuffle {
-  background: url(/img/music-images/random-shuffle.png);
+.iconShuffle{
+  background: url(/img/music-images/random-shuffle.png) center center no-repeat;
+  background-size: 14px 14px;
   height: 20px;
   width: 20px;
 }
