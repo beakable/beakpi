@@ -153,7 +153,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             Bpi.placeAt(BpiMenuHolder);
 
             function closePanes(toIgnore) {
-              console.log(toIgnore);
               if (homeRF !== null && toIgnore !== "homeRF") {
                 homeRF.destroy();
                 homeRF = null;

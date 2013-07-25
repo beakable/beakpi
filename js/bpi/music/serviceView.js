@@ -124,10 +124,9 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
 
     _updateCurrentPlaying: function(){
       var timeInfo = [], dfd = new Deferred();
-      when(util.command("mpc"), lang.hitch(this, function(res){
-        console.log(res);
+      when(util.command("mpc"), lang.hitch(this, function(res) {
         if(res !== undefined) {
-          if (res[1]){
+          if (res[1]) {
             if (res[1].indexOf("[playing]") !== -1) {
               domAttr.set(this._currentlyPlaying, "innerHTML", res[0]);
               timeInfo = (res[1].split("   "))[1].split(" ");
@@ -145,7 +144,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
             }
           }
           else {
-            domAttr.set(this._currentlyPlaying, "innerHTML", "Stopped") ;
+            domAttr.set(this._currentlyPlaying, "innerHTML", "Stopped");
             dfd.resolve();
           }
         }
