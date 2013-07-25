@@ -50,7 +50,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
     _playingControl: null,
     _slider: null,
 
-    loadMusicNodes: function (){
+    load: function (){
       var dfd = new Deferred();
 
       this._playingControl = new PlayingControl();
