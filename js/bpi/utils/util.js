@@ -122,9 +122,7 @@ define([
   // ---------------------------
   // RF Stuff
 
-
     requestRF: function(xml) {
-      var _self = this;
       var dfd = new Deferred();
       xhr.post("/php/tcpsocket.php",{
         method: "POST",
