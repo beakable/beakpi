@@ -131,7 +131,6 @@ define([
               xmlpost: xml
         }
       }).then(function(data){
-        console.log(data);
         dfd.resolve(data);
       }, function(err){
         dfd.resolve(err);

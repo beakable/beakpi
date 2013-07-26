@@ -60,7 +60,7 @@ function(declare, lang, array, JSON, Deferred, domConst, _WidgetBase, _WidgetsIn
     _CURRENT: 0,
 
 
-    loadRfNodes: function(){
+    load: function(){
       var _self = this;
       var dfd = new Deferred();
       when(util.requestRF('<zbpPacket><Object>ZBP_System</Object><methodName>Sys_Authenticate</methodName><Arguments><Argument type="string">'+dojoConfig.radioFrequencySHAPassword+'</Argument></Arguments></zbpPacket>'), function(res){

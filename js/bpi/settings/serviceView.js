@@ -58,7 +58,7 @@ function(declare, lang, array, Deferred, domConst, _WidgetBase, _WidgetsInTempla
       this._intervalCurrentUsage.stop();
     },
 
-    loadSettings: function() {
+    load: function() {
       var _self = this;
       var dfd = new Deferred();
       var systemData = [];

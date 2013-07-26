@@ -64,6 +64,18 @@ function(declare, lang, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, B
       btnMusicPlayer.placeAt(this._menu);
     },
 
+    _setDisplayTempTrackButtonAttr: function() {
+      var _self = this;
+      var btnTempTrack = new Button({
+        label: "Temperature",
+        onClick: function(){
+          _self.launchTemperature();
+        }
+      });
+      btnTempTrack.placeAt(this._menu);
+    },
+
+
 
     launchMusicPlayer: function() {
       // Synthetic Event
@@ -74,6 +86,10 @@ function(declare, lang, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, B
     },
 
     launchHomeRF: function() {
+      // Synthetic Event
+    },
+
+    launchTemperature: function() {
       // Synthetic Event
     }
 

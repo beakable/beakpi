@@ -39,7 +39,6 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
     listStored: function(domHolder, buttonSplit, domToPlaceInto) {
       var storedPlaylists = [], _self = this, btnPlaylistTitle;
       when(util.command("mpc lsplaylists")).then(lang.hitch(this, function(storedPlaylists){
-        console.log(storedPlaylists);
         domConst.empty(domHolder);
         btnPlaylistTitle= new Button({
           label: "Current Playlist",
