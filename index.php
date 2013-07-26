@@ -4,6 +4,7 @@ error_reporting(E_ALL); ini_set('display_errors', '1');
 <?php 
 // SETTINGS 
 // ---------------------------------------------------
+  $TemperatureTrack = true;
   $PiSettings = true;
   $RadioFrequencyController = true;
   $RadioFrequencySHAPassword = "b02e5b66ace6dc3b459be661062c452b50ea1c13";
@@ -53,8 +54,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
               Future : 
               Value the mix of MPC and Mopidy and if there is any reason for it
-              Improve UI layout including the addition of standard player features such as repeat and randomise
               Expand on media using the Mopidy support for SoundCloud and Last.fm
+              Implement Pandora
 
   - RF Control :
               Requirements :
@@ -98,6 +99,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       device: "<?php echo $deviceType ?>",
       countryCode: "<?php echo $countryCode ?>",
       piSettings: "<?php echo $PiSettings ?>",
+      tempTrack: "<?php echo $TemperatureTrack ?>",
       radioFrequencySHAPassword: "<?php echo $RadioFrequencySHAPassword ?>"
       }
     </script>
@@ -132,144 +134,107 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           "bpi/menu",
           "bpi/music/serviceView",
           "bpi/rf/serviceView",
+          "bpi/temperature/serviceView",
           "bpi/settings/serviceView",
           "dojox/mobile/parser",
           "dojox/mobile"
-        ], function(parser, ready, lang, on, fx, dom, domConst, domStyle, aspect, menu, MusicPlayer, HomeRF, PiSettings){
+        ], function(parser, ready, lang, on, fx, dom, domConst, domStyle, aspect, menu, MusicPlayer, HomeRF, Temperature, PiSettings){
         	ready(function(){
         		parser.parse();
             var BpiMenuHolder = dom.byId("serviceMenuView");
             var BpiHolder = dom.byId("serviceView");
             var Bpi = new menu();
             var musicPlayer = null;
+            var temperature = null;
             var homeRF = null;
             var piSettings = null;
+
+
             Bpi.placeAt(BpiMenuHolder);
 
+            function closePanes(toIgnore) {
+              if (homeRF !== null && toIgnore !== "homeRF") {
+                homeRF.destroy();
+                homeRF = null;
+              }
+              if (temperature !== null && toIgnore !== "temperature") {
+                temperature.destroy();
+                temperature = null;
+              }
+              if (musicPlayer !== null && toIgnore !== "musicPlayer") {
+                musicPlayer.endPlayer();
+                musicPlayer.destroy();
+                musicPlayer = null;
+              }
+             if (piSettings !== null && toIgnore !== "piSettings") {
+                piSettings.endSettings();
+                piSettings.destroy();
+                piSettings = null;
+              }
+            }
+
+            function launchPane(toIgnore, pane, service) {
+              var closeAnimation = fx.wipeOut({
+                node: BpiHolder,
+                duration: 500
+              });
+              var openAnimation = fx.wipeIn({
+                node: BpiHolder
+              });
+              if (pane === null) {
+                pane = new service();
+                var closeAni = on(closeAnimation, "End", lang.hitch(this, function() {
+                  closePanes(toIgnore);
+                  closeAni.remove();
+                  when(pane.load(), function(){
+                    pane.placeAt(BpiHolder);
+                    openAnimation.play();
+                  });
+                }));
+                closeAnimation.play(); 
+              }
+              return pane;
+            }
+
+
+            // Temperature Service Display
+            if(dojoConfig.tempTrack) {
+              domStyle.set(BpiMenuHolder, "display", "block");
+              Bpi.set("displayTempTrackButton", true);
+              aspect.after(Bpi, "launchTemperature", lang.hitch(this, function(){
+                temperature = launchPane("temperature", temperature, Temperature);
+              }));
+            }
+
+            // Audio Player Service Display
             if(dojoConfig.mopidyPlayer) {
-              if(!dojoConfig.rfController) {
-                musicPlayer = new MusicPlayer();
-                musicPlayer.loadMusicNodes();
-                musicPlayer.placeAt(BpiHolder);
-                domStyle.set(BpiHolder, "margin-top", 0);
-              }
-              else {
-                domStyle.set(BpiMenuHolder, "display", "block");
-                Bpi.set("displayMusicButton", true);
-                aspect.after(Bpi, "launchMusicPlayer", lang.hitch(this, function(){
-                  if (musicPlayer === null) {
-                    musicPlayer = new MusicPlayer();
-                    
-                    var close = fx.wipeOut({
-                      node: BpiHolder,
-                      duration: 500
-                    });
-
-                    var open = fx.wipeIn({
-                      node: BpiHolder
-                    });
-
-                    on(close, "End", lang.hitch(this, function() {
-                      if (homeRF !== null) {
-                        homeRF.destroy();
-                        homeRF = null;
-                      }
-                      if (piSettings !== null) {
-                        piSettings.endSettings();
-                        piSettings.destroy();
-                        piSettings = null;
-                      }
-                      when(musicPlayer.loadMusicNodes(), function(){
-                        musicPlayer.placeAt(BpiHolder);
-                        open.play();
-                      });
-                    }));
-                    close.play();
-                  }
-                }));
-              }
+              domStyle.set(BpiMenuHolder, "display", "block");
+              Bpi.set("displayMusicButton", true);
+              aspect.after(Bpi, "launchMusicPlayer", lang.hitch(this, function(){
+                musicPlayer = launchPane("musicPlayer", musicPlayer, MusicPlayer);
+              }));
             }
 
+            // RF Controller Service Display
             if(dojoConfig.rfController) {
-              if(!dojoConfig.mopidyPlayer) {
-                homeRF = new HomeRF();
-                homeRF.loadRfNodes()
-                homeRF.placeAt(BpiHolder);
-                domStyle.set(BpiHolder, "margin-top", 0);
-              }
-              else {
-                domStyle.set(BpiMenuHolder, "display", "block");
-                Bpi.set("displayRFButton", true);
-                aspect.after(Bpi, "launchHomeRF", lang.hitch(this, function(){
-                  if (homeRF === null) {
-                    homeRF = new HomeRF();
-
-                    var close = fx.wipeOut({
-                      node: BpiHolder,
-                      duration: 500
-                    });
-
-                    var open = fx.wipeIn({
-                      node: BpiHolder
-                    });
-                    
-                    on(close, "End", lang.hitch(this, function() {
-                      if (musicPlayer !== null) {
-                        musicPlayer.endPlayer();
-                        musicPlayer.destroy();
-                        musicPlayer = null;
-                      }
-                     if (piSettings !== null) {
-                        piSettings.endSettings();
-                        piSettings.destroy();
-                        piSettings = null;
-                      }
-                      when(homeRF.loadRfNodes(), function(){
-                        homeRF.placeAt(BpiHolder);
-                        open.play();
-                      });
-                    }));
-                    close.play(); 
-                  }
-                }));
-              }
+              domStyle.set(BpiMenuHolder, "display", "block");
+              Bpi.set("displayRFButton", true);
+              aspect.after(Bpi, "launchHomeRF", lang.hitch(this, function(){
+                homeRF = launchPane("homeRF", homeRF, HomeRF);
+              }));
             }
 
+            // Settings Service Display
             if(dojoConfig.piSettings) {
               domStyle.set(BpiMenuHolder, "display", "block");
               Bpi.set("displayPiSettingsButton", true);
               aspect.after(Bpi, "launchPiSettings", lang.hitch(this, function(){
-                if (piSettings === null) {
-                  piSettings = new PiSettings();
-
-                  var close = fx.wipeOut({
-                    node: BpiHolder,
-                    duration: 500
-                  });
-
-                  var open = fx.wipeIn({
-                    node: BpiHolder
-                  });
-                  
-                  on(close, "End", lang.hitch(this, function() {
-                    if (homeRF !== null) {
-                      homeRF.destroy();
-                      homeRF = null;
-                    }
-                    if (musicPlayer !== null) {
-                      musicPlayer.endPlayer();
-                      musicPlayer.destroy();
-                      musicPlayer = null;
-                    }    
-                    when(piSettings.loadSettings(), function(){
-                      piSettings.placeAt(BpiHolder);
-                      open.play();
-                    });
-                  }));
-                  close.play(); 
-                }
+                piSettings = launchPane("piSettings", piSettings, PiSettings);
               }));
             }
+
+            // Set Default Pane
+            temperature = launchPane("temperature", temperature, Temperature);
 
         	});
         });
