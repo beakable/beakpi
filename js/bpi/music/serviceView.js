@@ -45,6 +45,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
 
     _currentlyPlaying: null,
     intervalCurrentPlaying: new timing.Timer(1000),
+    _currentPlayer: null,
     _currentPlaylist: null,
     _currentSearch: null,
     _playingControl: null,
@@ -52,6 +53,8 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
 
     load: function (){
       var dfd = new Deferred();
+
+
 
       this._playingControl = new PlayingControl();
       this._slider = new Slider();
@@ -91,21 +94,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       this.intervalCurrentPlaying.stop();
     },
 
-    /*showSettings: function() {
-      var musicSettings = new settings();
-      var settingsDisplay = new Dialog({
-        title: "Music Settings",
-        style: "width: 200px"
-      });
-      aspect.after(musicSettings, "storeSettings", lang.hitch(this, function(){
-        settingsDisplay.hide();
-      }));
-      settingsDisplay.set("content", musicSettings);
-      settingsDisplay.show();
-    },*/
-
     _applyListeners: function (){
-
      if(dojoConfig.device !== "computer") {
         on(this._btnStored, "click", lang.hitch(this, function(evt)  {
           this._slider.show();
@@ -115,40 +104,84 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
           this._slider.hide();
         }));
       }
+
       aspect.after(this._playingControl, "btnShufflePressed", lang.hitch(this, function(){
         when(util.commandShuffleTracks(), lang.hitch(this, function(){
           this._currentPlaylist.listCurrent(this._trackListHolder);
         }));
       }));
+      on(this._spotifyButton, "click", lang.hitch(this, function(evt){
+        this._currentPlayer = "spotify";
+        this._slider.show();
+      }));
+      on(this._pandoraButton, "click", lang.hitch(this, function(evt){
+        this._currentPlayer = "pandora";
+        this._slider.hide();
+      }));
     },
 
     _updateCurrentPlaying: function(){
-      var timeInfo = [], dfd = new Deferred();
-      when(util.command("mpc"), lang.hitch(this, function(res) {
-        if(res !== undefined) {
-          if (res[1]) {
-            if (res[1].indexOf("[playing]") !== -1) {
-              domAttr.set(this._currentlyPlaying, "innerHTML", res[0]);
-              timeInfo = (res[1].split("   "))[1].split(" ");
-              domAttr.set(this._currentlyPlayingTime, "innerHTML", timeInfo[0]);
-              this._playingControl.set("songSeek", parseInt(timeInfo[1].replace(/[^0-9]/gi, ''), 10));
-              this._playingControl.set("playButton", "Pause");
-              this._playingControl.set("volumeSeek", parseInt(res[2].replace(/[^0-9]/gi, ''), 10));
-              dfd.resolve();
+      var timeInfo = [], dfd = new Deferred(), ticker = 0;
+      if(this._currentPlayer === "spotify") {
+        when(util.command("mpc"), lang.hitch(this, function(res) {
+          if(res !== undefined) {
+            if (res[1]) {
+              if (res[1].indexOf("[playing]") !== -1) {
+                domAttr.set(this._currentlyPlaying, "innerHTML", res[0]);
+                timeInfo = (res[1].split("   "))[1].split(" ");
+                domAttr.set(this._currentlyPlayingTime, "innerHTML", timeInfo[0]);
+                this._playingControl.set("songSeek", parseInt(timeInfo[1].replace(/[^0-9]/gi, ''), 10));
+                this._playingControl.set("playButton", "Pause");
+                this._playingControl.set("volumeSeek", parseInt(res[2].replace(/[^0-9]/gi, ''), 10));
+                dfd.resolve();
+              }
+              else if (res[1].indexOf("[paused]") !== -1) {
+                this._playingControl.set("playButton", "Play");
+                domAttr.set(this._currentlyPlaying, "innerHTML", res[0]);
+                domAttr.set(this._currentlyPlayingTime, "innerHTML", "Paused");
+                dfd.resolve();
+              }
             }
-            else if (res[1].indexOf("[paused]") !== -1) {
-              this._playingControl.set("playButton", "Play");
-              domAttr.set(this._currentlyPlaying, "innerHTML", res[0]);
-              domAttr.set(this._currentlyPlayingTime, "innerHTML", "Paused");
+            else {
+              domAttr.set(this._currentlyPlaying, "innerHTML", "Stopped");
+              domAttr.set(this._currentlyPlayingTime, "innerHTML", "");
               dfd.resolve();
             }
           }
-          else {
-            domAttr.set(this._currentlyPlaying, "innerHTML", "Stopped");
+        }));
+      }
+      else {
+        when(util.command("piano -v"), lang.hitch(this, function(res) {
+          if(res !== undefined) {
+            if (res[0]) {
+              if (res[0].indexOf("Playing") !== -1) {
+                //domAttr.set(this._currentlyPlaying, "innerHTML", res[0]);
+                timeInfo = (res[0].split("Playing "))[1].split("/");
+                domAttr.set(this._currentlyPlayingTime, "innerHTML", timeInfo[0]);
+               // this._playingControl.set("songSeek", parseInt(timeInfo[1].replace(/[^0-9]/gi, ''), 10));
+                this._playingControl.set("playButton", "Pause");
+               //  this._playingControl.set("volumeSeek", parseInt(res[2].replace(/[^0-9]/gi, ''), 10));
+                dfd.resolve();
+                ticker ++;
+                if(ticker >= 6) {
+                  ticker = 0;
+                }
+              }
+            }
+            else {
+              domAttr.set(this._currentlyPlaying, "innerHTML", "Stopped");
+              dfd.resolve();
+            }
+          }
+        }));
+        if (ticker == 0) {
+          when(util.command("piano status"), lang.hitch(this, function(res) {
+            domAttr.set(this._currentlyPlaying, "innerHTML", res[2].slice(8) + " - " + res[3].slice(7));
             dfd.resolve();
-          }
+           }));
         }
-      }));
+      }
+
       return dfd.promise;
     }
   });
