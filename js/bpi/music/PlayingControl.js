@@ -58,12 +58,12 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
       this._volumeSeek = new seekbar();
       this._currentSongSeek = new seekbar();
 
-      on(this._btnPlayPause, "click", lang.hitch(this, function(evt)  {
-        if(this._btnPlayPause.get("label") === "Pause"){
-          util.commandPlayer("pause");
+      on (this._btnPlayPause, "click", lang.hitch(this, function(evt)  {
+        if (this._btnPlayPause.get("label") === "Pause"){
+          this.btnPausePressed();
           this._btnPlayPause.set("iconClass", "iconPlay");
         } else{
-          util.commandPlayer("play");
+          this.btnPlayPressed();
           this._btnPlayPause.set("iconClass", "iconPause");
         }
       }));
@@ -115,6 +115,14 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
     },
 
     btnShufflePressed: function() {
+      // Synthetic Event
+    },
+
+    btnPausePressed: function() {
+      // Synthetic Event
+    },
+
+    btnPlayPressed: function() {
       // Synthetic Event
     },
 
