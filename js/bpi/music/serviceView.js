@@ -51,10 +51,11 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
     _playingControl: null,
     _slider: null,
 
+
+
+
     load: function (){
       var dfd = new Deferred();
-
-
 
       this._playingControl = new PlayingControl();
       this._slider = new Slider();
@@ -90,10 +91,33 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       return dfd.promise;
     },
 
+
+
     endPlayer: function() {
       this.intervalCurrentPlaying.stop();
     },
 
+
+
+
+    // returns the util command to use for each player 
+    _playerCommand: function (com) {
+      if (this._currentPlayer === "spotify") {
+        switch (com) {
+          case "pause": return util.commandPlayer("pause"); break;
+          case "play": return util.commandPlayer("play"); break;
+        }
+      }
+      if (this._currentPlayer === "pandora") {
+        switch (com) {
+          case "pause": return util.command("piano " + dojoConfig.pianoUser + " PAUSE"); break;
+          case "play": return util.command("piano " + dojoConfig.pianoUser + " PLAY mix"); break;
+        }
+      }
+    },
+
+
+    // Applies listeners to the external classes actions to keep events in one place
     _applyListeners: function (){
      if(dojoConfig.device !== "computer") {
         on(this._btnStored, "click", lang.hitch(this, function(evt)  {
@@ -110,16 +134,30 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
           this._currentPlaylist.listCurrent(this._trackListHolder);
         }));
       }));
+
+      aspect.after(this._playingControl, "btnPausePressed", lang.hitch(this, function(){
+        when(this._playerCommand("pause"), lang.hitch(this, function(res) {
+          this._playingControl.set("playButton", "Pause");
+        }));
+      }))
+
+      aspect.after(this._playingControl, "btnPlayPressed", lang.hitch(this, function(){
+        when(this._playerCommand("play"), lang.hitch(this, function(res) {
+          this._playingControl.set("playButton", "Play");
+        }));
+      }))
+
       on(this._spotifyButton, "click", lang.hitch(this, function(evt){
         this._currentPlayer = "spotify";
-        this._slider.show();
       }));
       on(this._pandoraButton, "click", lang.hitch(this, function(evt){
         this._currentPlayer = "pandora";
-        this._slider.hide();
       }));
     },
 
+
+
+    // Uses currentPlayer to determine what command to use and how to format returned playing information 
     _updateCurrentPlaying: function(){
       var timeInfo = [], dfd = new Deferred(), ticker = 0;
       if(this._currentPlayer === "spotify") {
@@ -155,9 +193,8 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
           if(res !== undefined) {
             if (res[0]) {
               if (res[0].indexOf("Playing") !== -1) {
-                //domAttr.set(this._currentlyPlaying, "innerHTML", res[0]);
                 timeInfo = (res[0].split("Playing "))[1].split("/");
-                domAttr.set(this._currentlyPlayingTime, "innerHTML", timeInfo[0]);
+                domAttr.set(this._currentlyPlayingTime, "innerHTML", timeInfo[0] + "/" +timeInfo[1]);
                // this._playingControl.set("songSeek", parseInt(timeInfo[1].replace(/[^0-9]/gi, ''), 10));
                 this._playingControl.set("playButton", "Pause");
                //  this._playingControl.set("volumeSeek", parseInt(res[2].replace(/[^0-9]/gi, ''), 10));
@@ -166,6 +203,9 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
                 if(ticker >= 6) {
                   ticker = 0;
                 }
+              }
+              else {
+                this._playingControl.set("playButton", "Play");
               }
             }
             else {
