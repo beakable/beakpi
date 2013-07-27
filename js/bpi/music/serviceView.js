@@ -115,6 +115,20 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
         }
       }
     },
+    
+
+
+    // applies the required changes for selection of an audio player
+    _playerSelect: function (player) {
+      this._currentPlayer = player;
+      if (player === "spotify") {
+        this._currentPlaylist.listCurrent(this._trackListHolder);
+      }
+      if (player === "pandora") {
+        domConst.empty(this._trackListHolder);
+      }
+    },
+
 
 
     // Applies listeners to the external classes actions to keep events in one place
@@ -148,12 +162,15 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       }))
 
       on(this._spotifyButton, "click", lang.hitch(this, function(evt){
-        this._currentPlayer = "spotify";
+        this._playerSelect("spotify");
+
       }));
       on(this._pandoraButton, "click", lang.hitch(this, function(evt){
-        this._currentPlayer = "pandora";
+        this._playerSelect("pandora");
       }));
     },
+
+
 
 
 
