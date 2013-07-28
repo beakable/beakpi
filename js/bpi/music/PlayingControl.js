@@ -126,6 +126,14 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
       // Synthetic Event
     },
 
+    btnPrevPressed: function() {
+      // Synethetic Event
+    },
+
+    btnNextPressed: function() {
+      // Synthetic Event
+    }
+
     _setPlayButtonAttr: function(val) {
       this._btnPlayPause.set("label", val);
       this._btnPlayPause.set("iconClass", "icon"+val);

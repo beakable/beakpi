@@ -111,6 +111,8 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
         switch (com) {
           case "pause": return util.commandPlayer("pause"); break;
           case "play": return util.commandPlayer("play"); break;
+          case "prev": return util.commandPlayer("previous"); break;
+          case "next": return util.commandPlayer("next"); break;
         }
       }
       if (this._currentPlayer === "pandora") {
@@ -160,28 +162,52 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
         }));
       }
 
+      // Playing Control Shuffle Button
       aspect.after(this._playingControl, "btnShufflePressed", lang.hitch(this, function(){
         when(util.commandShuffleTracks(), lang.hitch(this, function(){
           this._currentPlaylist.listCurrent(this._trackListHolder);
         }));
       }));
 
+      // Playing Control Pause Button
       aspect.after(this._playingControl, "btnPausePressed", lang.hitch(this, function(){
         when(this._playerCommand("pause"), lang.hitch(this, function(res) {
           this._playingControl.set("playButton", "Pause");
         }));
-      }))
+      }));
 
+      // Playing Control Play Button
       aspect.after(this._playingControl, "btnPlayPressed", lang.hitch(this, function(){
         when(this._playerCommand("play"), lang.hitch(this, function(res) {
           this._playingControl.set("playButton", "Play");
         }));
-      }))
+      }));
+
+      // Playing Control Pause Button
+      aspect.after(this._playingControl, "btnPausePressed", lang.hitch(this, function(){
+        when(this._playerCommand("pause"), lang.hitch(this, function(res) {
+          this._playingControl.set("playButton", "Pause");
+        }));
+      }));
+
+      // Playing Control Previous Button
+      aspect.after(this._playingControl, "btnPrevPressed", lang.hitch(this, function(){
+        this._playerCommand("prev"), lang.hitch(this, function(res) {
+         //
+        }));
+      }));
+
+      // Playing Control Next Button
+      aspect.after(this._playingControl, "btnNextPressed", lang.hitch(this, function(){
+        this._playerCommand("next"), lang.hitch(this, function(res) {
+          //
+        }));
+      }));
 
       on(this._spotifyButton, "click", lang.hitch(this, function(evt){
         this._playerSelect("spotify");
-
       }));
+
       on(this._pandoraButton, "click", lang.hitch(this, function(evt){
         this._playerSelect("pandora");
       }));
