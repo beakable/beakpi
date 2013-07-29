@@ -21,20 +21,15 @@ define([
   "dojo/dom-construct",
   "dojo/dom-attr",
   "dijit/_WidgetBase",
-  "dijit/_WidgetsInTemplateMixin",
-  "dijit/_TemplatedMixin",
   "bpi/music/track",
-  "dojo/text!./templates/search.html",
   "dijit/form/TextBox",
   "dijit/form/Form",
   "dijit/form/Button"
 ],
 
-function(declare, lang, array, when, domConstruct, domAttr, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, Track, template) {
-  return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
-    widgetsInTemplate: true,
-    templateString: template,
-
+function(declare, lang, array, when, domConstruct, domAttr, _WidgetBase, Track) {
+  return declare([_WidgetBase], {
+ 
     totalTracks: null,
 
     _resultsHolder: null,
