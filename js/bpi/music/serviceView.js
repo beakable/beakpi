@@ -59,18 +59,17 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
     load: function (){
       var dfd = new Deferred();
 
-
       this._playingControl = new PlayingControl();
       this._exploreBar = new ExploreBar();
-
       this._slider = new Slider();
       this._currentPlaylist = new playlist();
       this._currentSearch = new search();
 
       this._playingControl.placeAt(this);
       this._slider.placeAt(this);
-
       this._exploreBar.placeAt(this._trackSearchView);
+
+
       this._currentSearch.set("resultsHolder", this._trackListHolder);
       this._currentSearch.set("resultsInfo", this._trackListHolderInfo);
 
@@ -118,7 +117,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
           case "explore":
             domConst.empty(this._trackListHolder);
             domConst.empty(this._trackListHolderInfo);
-            when(util.requestSearch("http://ws.spotify.com/search/1/track.json?q=" + val), lang.hitch(this, function(res){
+            when(util.requestSearch("http://ws.spotify.com/search/1/track.json?q=" + val), lang.hitch(this, function(res) {
               return this._currentSearch.listResults(res);
             }));
           break;
@@ -141,21 +140,29 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       if (player === "spotify") {
         this._exploreBar.set("exploreButton", "Search");
         this._exploreBar.set("placeHolder", "Search...")
+        this._btnStored.set("label", "Playlists");
         when(this._updateCurrentPlaying(), lang.hitch(this, function() {
           this._currentPlaylist.listCurrent(this._trackListHolder);
           dfd.resolve();
         }));
         domStyle.set(this._pandoraButton, "opacity", 0.2);
         domStyle.set(this._spotifyButton, "opacity", 0.9);
+        this._playingControl.set("btnPrevIconClass","iconPrev");
+        this._playingControl.set("btnNextIconClass","iconNext");
+        this._playingControl.set("btnShuffleIconClass","iconShuffle");
       }
       if (player === "pandora") {
         this._exploreBar.set("exploreButton", "Launch");
         this._exploreBar.set("placeHolder", "New radio station...");
+        this._btnStored.set("label", "Stations");
         this._updateCurrentPlaying();
         domConst.empty(this._trackListHolder);
         domConst.empty(this._trackListHolderInfo);
         domStyle.set(this._pandoraButton, "opacity", 0.9);
         domStyle.set(this._spotifyButton, "opacity", 0.2);
+        this._playingControl.set("btnPrevIconClass","iconDislike");
+        this._playingControl.set("btnNextIconClass","iconLike");
+        this._playingControl.set("btnShuffleIconClass","iconNext");
         dfd.resolve();
       }
       return dfd.promise;
@@ -298,14 +305,14 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
             }
           }
         }));
-        if (ticker == 0) {
+        if (ticker === 0) {
           when(util.command("piano status"), lang.hitch(this, function(res) {
             if (this._currentPlayer === "pandora") {
               domAttr.set(this._currentlyPlaying, "innerHTML", res[2].slice(8) + " - " + res[3].slice(7));
               domAttr.set(this._trackListHolder, "innerHTML", "<img id='pandoraArt' src='" + res[4].slice(10) + "' />");
               dfd.resolve();
             }
-           }));
+          }));
         }
       }
 

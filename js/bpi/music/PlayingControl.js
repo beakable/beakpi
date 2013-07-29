@@ -114,6 +114,18 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
       this._currentSongSeek.slider.sliderHandle.display = false;
     },
 
+    _setBtnPrevIconClassAttr: function(val) {
+      this._btnPrev.set("iconClass", val);
+    },
+
+    _setBtnNextIconClassAttr: function(val) {
+      this._btnNext.set("iconClass", val);
+    },
+
+    _setBtnShuffleIconClassAttr: function(val) {
+      this._btnShuffle.set("iconClass", val);
+    },
+
     btnShufflePressed: function() {
       // Synthetic Event
     },

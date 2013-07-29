@@ -253,11 +253,29 @@ body {
   height: 20px;
   width: 20px;
 }
+
 .iconShuffle{
   background: url(/img/music-images/random-shuffle.png) center center no-repeat;
   background-size: 14px 14px;
   height: 20px;
   width: 20px;
+}
+
+.iconLike{
+  background: url(/img/music-images/black-like.png) center center no-repeat;
+  background-size: 20px 20px;
+  height: 20px;
+  width: 20px;
+}
+
+.iconDislike{
+  background: url(/img/music-images/black-like.png) center center no-repeat;
+  background-size: 20px 20px;
+  height: 20px;
+  width: 20px;
+  transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
 }
 
 /* --------------- */
