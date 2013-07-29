@@ -116,8 +116,10 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
           case "prev": return util.commandPlayer("previous"); break;
           case "next": return util.commandPlayer("next"); break;
           case "explore":
-            return when(util.requestSearch("http://ws.spotify.com/search/1/track.json?q=" + val), lang.hitch(this, function(res){
-              this._currentSearch._list(res);
+            domConst.empty(this._trackListHolder);
+            domConst.empty(this._trackListHolderInfo);
+            when(util.requestSearch("http://ws.spotify.com/search/1/track.json?q=" + val), lang.hitch(this, function(res){
+              return this._currentSearch.listResults(res);
             }));
           break;
         }

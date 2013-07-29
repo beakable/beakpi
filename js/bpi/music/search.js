@@ -16,17 +16,13 @@
 define([
   "dojo/_base/declare",
   "dojo/_base/lang",
-  "dojo/_base/fx",
-  "dojo/on",
+  "dojo/_base/array",
   "dojo/when",
   "dojo/dom-construct",
   "dojo/dom-attr",
-  "dojo/keys",
   "dijit/_WidgetBase",
   "dijit/_WidgetsInTemplateMixin",
   "dijit/_TemplatedMixin",
-  "dijit/registry",
-  "bpi/utils/util",
   "bpi/music/track",
   "dojo/text!./templates/search.html",
   "dijit/form/TextBox",
@@ -34,48 +30,42 @@ define([
   "dijit/form/Button"
 ],
 
-function(declare, lang, fx, on, when, domConstruct, domAttr, keys, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, registry, util, track, template) {
+function(declare, lang, array, when, domConstruct, domAttr, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, Track, template) {
   return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
     widgetsInTemplate: true,
     templateString: template,
-    inputSearch: null,
+
     totalTracks: null,
-    _btSearch: null,
+
     _resultsHolder: null,
     _resultsInfo: null,
 
-    _summary: function(result) {
+    _summary: function(results) {
+      var i;
+      array.forEach(results.tracks, lang.hitch(this, function(track) {
+        if(track.album.availability.territories.indexOf(dojoConfig.countryCode) !== -1) {
+          ++ this.totalTracks;
+        }
+      }));
+      domAttr.set(this._resultsInfo, "innerHTML", "Displaying Results 0 of " + this.totalTracks);
     },
 
-    _list: function(result) {
+    listResults: function(results) {
       var trackResult,
-          i,
           trackResultNumber = 1,
           displayArt = false,
           clearSplit = 2;
 
-      var loadedSettings = util.storeGet("musicSettings");
-      this._clearList();
-      for(i =0; i < result.tracks.length; i++){
-        if(result.tracks[i].album.availability.territories.indexOf(dojoConfig.countryCode) !== -1) {
-          ++this.totalTracks;
-        }
-      }
-      domAttr.set(this._resultsInfo, "innerHTML", "Displaying Results 0 of "+ this.totalTracks);      
+      this.totalTracks = 0;
+      this._summary(results);
 
-      if (loadedSettings) {
-        if (loadedSettings.albumArt) {
-          displayArt = loadedSettings.albumArt;
-          clearSplit = 3;
-        }
-      }
-      for(i =0; i < result.tracks.length; i++){
-        trackResult = new track();
-        if (result.tracks[i].album.availability.territories.indexOf(dojoConfig.countryCode) !== -1) {
+      array.forEach(results.tracks, lang.hitch(this, function(track) {
+        trackResult = new Track();
+        if (track.album.availability.territories.indexOf(dojoConfig.countryCode) !== -1) {
           var trackInfo = {
-            name: result.tracks[i].name,
-            href: result.tracks[i].href,
-            artist: result.tracks[i].artists[0].name
+            name: track.name,
+            href: track.href,
+            artist: track.artists[0].name
           };
           when(trackResult.displayTrack(trackInfo, this._resultsHolder, displayArt)).then(lang.hitch(this, function(){
               domAttr.set(this._resultsInfo, "innerHTML", "Displaying Results "+ trackResultNumber +" of "+ this.totalTracks);
@@ -85,14 +75,7 @@ function(declare, lang, fx, on, when, domConstruct, domAttr, keys, _WidgetBase, 
               ++trackResultNumber;
           }));
         }
-      }
-    },
-
-    _clearList: function() {
-      var clearResults;
-      this.totalTracks = 0;
-      domConstruct.empty(this._resultsInfo);
-      domConstruct.empty(this._resultsHolder);
+      }));
     },
 
     _setResultsHolderAttr: function (val){
