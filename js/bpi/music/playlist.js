@@ -86,8 +86,8 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
             if(tracklist[i] !== "" && tracklist[i] !== undefined) {
               var trackResult = new track();
               individualTrack = tracklist[i].split(" - ");
-              when(trackResult.displayTrack({name: individualTrack[0], href: (i + 1), artist: individualTrack[1]}, domToPlaceInto, false)).then(lang.hitch(this, function(){
-                aspect.after(trackResult, "onPlaylistRemove", lang.hitch(this, function(){ this.listCurrent() }));
+              when(trackResult.displayTrack({name: individualTrack[1], href: (i + 1), artist: individualTrack[0]}, domToPlaceInto, false)).then(lang.hitch(this, function(){
+                aspect.after(trackResult, "onPlaylistRemove", lang.hitch(this, function(){ this.listCurrent(); }));
               }));
             }
           }

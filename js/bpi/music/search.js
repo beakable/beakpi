@@ -44,41 +44,7 @@ function(declare, lang, fx, on, when, domConstruct, domAttr, keys, _WidgetBase, 
     _resultsHolder: null,
     _resultsInfo: null,
 
-    postCreate: function(){
-      var _self = this;
-      on(this._btSearch, "click", function(evt){
-        _self._clearList();
-        when(util.requestSearch("http://ws.spotify.com/search/1/track.json?q="+_self.inputSearch.value)).then(
-          function(res) {
-            _self._summary(res);
-            _self._list(res);
-            fx.fadeIn({node: _self._resultsHolder}).play();
-          }
-        );
-      });
-      on(this.inputSearch, "keydown", function(evt){
-        if(evt.keyCode === keys.ENTER){
-          evt.preventDefault();
-          _self._clearList();
-          when(util.requestSearch("http://ws.spotify.com/search/1/track.json?q="+evt.target.value)).then(
-            function(res) {
-            _self._summary(res);
-            _self._list(res);
-            fx.fadeIn({node: _self._resultsHolder}).play();
-            }
-          );
-        }
-      });
-    },
-
     _summary: function(result) {
-      var i;
-      for(i =0; i < result.tracks.length; i++){
-        if(result.tracks[i].album.availability.territories.indexOf(dojoConfig.countryCode) !== -1) {
-          ++this.totalTracks;
-        }
-      }
-      domAttr.set(this._resultsInfo, "innerHTML", "Displaying Results 0 of "+ this.totalTracks);
     },
 
     _list: function(result) {
@@ -89,6 +55,14 @@ function(declare, lang, fx, on, when, domConstruct, domAttr, keys, _WidgetBase, 
           clearSplit = 2;
 
       var loadedSettings = util.storeGet("musicSettings");
+      this._clearList();
+      for(i =0; i < result.tracks.length; i++){
+        if(result.tracks[i].album.availability.territories.indexOf(dojoConfig.countryCode) !== -1) {
+          ++this.totalTracks;
+        }
+      }
+      domAttr.set(this._resultsInfo, "innerHTML", "Displaying Results 0 of "+ this.totalTracks);      
+
       if (loadedSettings) {
         if (loadedSettings.albumArt) {
           displayArt = loadedSettings.albumArt;
@@ -117,16 +91,8 @@ function(declare, lang, fx, on, when, domConstruct, domAttr, keys, _WidgetBase, 
     _clearList: function() {
       var clearResults;
       this.totalTracks = 0;
-      if(dojoConfig.device !== "computer") {
-        domConstruct.empty(this._resultsHolder);
-      }
-      else{
-        clearResults = fx.fadeOut({node: this._resultsHolder}).play();
-        on(clearResults, "End", lang.hitch(this, function(){
-          domConstruct.empty(this._resultsHolder);
-        }));
-      }
       domConstruct.empty(this._resultsInfo);
+      domConstruct.empty(this._resultsHolder);
     },
 
     _setResultsHolderAttr: function (val){

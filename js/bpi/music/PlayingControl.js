@@ -132,7 +132,7 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
 
     btnNextPressed: function() {
       // Synthetic Event
-    }
+    },
 
     _setPlayButtonAttr: function(val) {
       this._btnPlayPause.set("label", val);

@@ -31,13 +31,14 @@ define([
   "bpi/music/search",
   "bpi/music/settings",
   "bpi/music/playlist",
+  "bpi/music/ExploreBar",
   "bpi/music/PlayingControl",
   "bpi/utils/util",
   "bpi/utils/Slider",
   "dojo/text!./templates/serviceView.html",
   "dijit/form/Button"
 ],
-function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Dialog, timing, search, settings, playlist, PlayingControl, util, Slider, template) {
+function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Dialog, timing, search, settings, playlist, ExploreBar, PlayingControl, util, Slider, template) {
 
   return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
     widgetsInTemplate: true,
@@ -49,6 +50,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
     _currentPlaylist: null,
     _currentSearch: null,
     _playingControl: null,
+    _exploreBar: null,
     _slider: null,
 
 
@@ -59,6 +61,8 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
 
 
       this._playingControl = new PlayingControl();
+      this._exploreBar = new ExploreBar();
+
       this._slider = new Slider();
       this._currentPlaylist = new playlist();
       this._currentSearch = new search();
@@ -66,7 +70,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       this._playingControl.placeAt(this);
       this._slider.placeAt(this);
 
-      this._currentSearch.placeAt(this._trackSearchView);
+      this._exploreBar.placeAt(this._trackSearchView);
       this._currentSearch.set("resultsHolder", this._trackListHolder);
       this._currentSearch.set("resultsInfo", this._trackListHolderInfo);
 
@@ -103,16 +107,19 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
     },
 
 
-
-
     // returns the util command to use for each player 
-    _playerCommand: function (com) {
+    _playerCommand: function (com, val) {
       if (this._currentPlayer === "spotify") {
         switch (com) {
           case "pause": return util.commandPlayer("pause"); break;
           case "play": return util.commandPlayer("play"); break;
           case "prev": return util.commandPlayer("previous"); break;
           case "next": return util.commandPlayer("next"); break;
+          case "explore":
+            return when(util.requestSearch("http://ws.spotify.com/search/1/track.json?q=" + val), lang.hitch(this, function(res){
+              this._currentSearch._list(res);
+            }));
+          break;
         }
       }
       if (this._currentPlayer === "pandora") {
@@ -130,6 +137,8 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       var dfd = new Deferred();
       this._currentPlayer = player;
       if (player === "spotify") {
+        this._exploreBar.set("exploreButton", "Search");
+        this._exploreBar.set("placeHolder", "Search...")
         when(this._updateCurrentPlaying(), lang.hitch(this, function() {
           this._currentPlaylist.listCurrent(this._trackListHolder);
           dfd.resolve();
@@ -138,12 +147,14 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
         domStyle.set(this._spotifyButton, "opacity", 0.9);
       }
       if (player === "pandora") {
-        dfd.resolve();
+        this._exploreBar.set("exploreButton", "Launch");
+        this._exploreBar.set("placeHolder", "New radio station...");
         this._updateCurrentPlaying();
         domConst.empty(this._trackListHolder);
         domConst.empty(this._trackListHolderInfo);
         domStyle.set(this._pandoraButton, "opacity", 0.9);
         domStyle.set(this._spotifyButton, "opacity", 0.2);
+        dfd.resolve();
       }
       return dfd.promise;
     },
@@ -157,58 +168,65 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
           this._slider.show();
           this._currentPlaylist.listStored(this._slider.get("holder"), "<br />", this._trackListHolder);
         }));
-        aspect.after(this._currentPlaylist, "playlistLoading", lang.hitch(this, function(){
+        aspect.after(this._currentPlaylist, "playlistLoading", lang.hitch(this, function() {
           this._slider.hide();
         }));
       }
 
       // Playing Control Shuffle Button
-      aspect.after(this._playingControl, "btnShufflePressed", lang.hitch(this, function(){
+      aspect.after(this._playingControl, "btnShufflePressed", lang.hitch(this, function() {
         when(util.commandShuffleTracks(), lang.hitch(this, function(){
           this._currentPlaylist.listCurrent(this._trackListHolder);
         }));
       }));
 
       // Playing Control Pause Button
-      aspect.after(this._playingControl, "btnPausePressed", lang.hitch(this, function(){
+      aspect.after(this._playingControl, "btnPausePressed", lang.hitch(this, function() {
         when(this._playerCommand("pause"), lang.hitch(this, function(res) {
           this._playingControl.set("playButton", "Pause");
         }));
       }));
 
       // Playing Control Play Button
-      aspect.after(this._playingControl, "btnPlayPressed", lang.hitch(this, function(){
+      aspect.after(this._playingControl, "btnPlayPressed", lang.hitch(this, function() {
         when(this._playerCommand("play"), lang.hitch(this, function(res) {
           this._playingControl.set("playButton", "Play");
         }));
       }));
 
       // Playing Control Pause Button
-      aspect.after(this._playingControl, "btnPausePressed", lang.hitch(this, function(){
+      aspect.after(this._playingControl, "btnPausePressed", lang.hitch(this, function() {
         when(this._playerCommand("pause"), lang.hitch(this, function(res) {
           this._playingControl.set("playButton", "Pause");
         }));
       }));
 
       // Playing Control Previous Button
-      aspect.after(this._playingControl, "btnPrevPressed", lang.hitch(this, function(){
-        this._playerCommand("prev"), lang.hitch(this, function(res) {
+      aspect.after(this._playingControl, "btnPrevPressed", lang.hitch(this, function() {
+        when(this._playerCommand("prev"), lang.hitch(this, function(res) {
          //
         }));
       }));
 
       // Playing Control Next Button
-      aspect.after(this._playingControl, "btnNextPressed", lang.hitch(this, function(){
-        this._playerCommand("next"), lang.hitch(this, function(res) {
+      aspect.after(this._playingControl, "btnNextPressed", lang.hitch(this, function() {
+        when(this._playerCommand("next"), lang.hitch(this, function(res) {
           //
         }));
       }));
 
-      on(this._spotifyButton, "click", lang.hitch(this, function(evt){
+      // Explore Bar Perform - e.g. Search / Add Station
+      aspect.after(this._exploreBar, "explorePerform", lang.hitch(this, function(val) {
+        when(this._playerCommand("explore", val), lang.hitch(this, function(res) {
+          //
+        }));        
+      }), true);
+
+      on(this._spotifyButton, "click", lang.hitch(this, function(evt) {
         this._playerSelect("spotify");
       }));
 
-      on(this._pandoraButton, "click", lang.hitch(this, function(evt){
+      on(this._pandoraButton, "click", lang.hitch(this, function(evt) {
         this._playerSelect("pandora");
       }));
     },
