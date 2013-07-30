@@ -1,12 +1,16 @@
 # BeakPi Home Automation
 
-![Example Player Interface](http://www.beakable.com/img/preview-1.png)
+![Spotify Player Interface](http://beakable.com/img/beakpi/image-1.png)![Pandora Player Interface](http://beakable.com/img/beakpi/image-2.png)
+
+![Desktop Player Interface](http://beakable.com/img/beakpi/desk-view.jpg)
 
 The following video shows the current state of BeakPi: http://www.youtube.com/watch?v=8AcSKF8fZjw
 
-Home audio control interface currently only supports Spotify however Pandora is currently being implemented.
+The latest video shows the Spotify Player and RF control of lights.
 
-Around the 5th minute in the linked video there is basic interaction with RF devices.
+Since this video Pandora has been implemented as well as a basic room temperature output.
+
+BeakPi now supports Audio playback through Spotify and Pandora (instructions on Pandora setup coming soon).
 
 Follow more about this project on Twitter: [Beakable Twitter for BeakPi](https://twitter.com/Beakable)
 
