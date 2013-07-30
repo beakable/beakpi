@@ -53,6 +53,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
     _exploreBar: null,
     _slider: null,
 
+    _ticker: 0,
 
 
 
@@ -89,7 +90,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       if(dojoConfig.device === "computer") {
         domConst.destroy(this._btnStored.domNode);
         this._slider.show();
-        this._currentPlaylist.listStored(this._slider.get("holder"), "<br />", this._trackListHolder);
+        this._currentPlaylist.listStoredSpotify(this._slider.get("holder"), "<br />", this._trackListHolder);
       }
 
       this._applyListeners();
@@ -135,15 +136,15 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
           case "shuffle": return util.command("piano " + dojoConfig.pianoUser + " SKIP"); break;
           case "prev": return util.command("piano " + dojoConfig.pianoUser + " RATE BAD"); break;
           case "next": return util.command("piano " + dojoConfig.pianoUser + " RATE GOOD"); break;
-          case "explore": 
+          case "explore":
             when(util.command("piano " + dojoConfig.pianoUser + "  FIND ARTIST '" + val +"'"), lang.hitch(this, function(res) {
-              when(util.command("piano " + dojoConfig.pianoUser + " CREATE STATION FROM SUGGESTION " + res[0].slice(4)), lang.hitch(this, function(res){
-                when(util.command("piano " + dojoConfig.pianoUser + "  PLAY STATION '" + val + " Radio'"), lang.hitch(this, function(res){
-                  util.command("piano " + dojoConfig.pianoUser + " SKIP");
+              when(util.command("piano " + dojoConfig.pianoUser + " CREATE STATION FROM SUGGESTION " + res[0].slice(4)), lang.hitch(this, function(res) {
+                when(util.command("piano " + dojoConfig.pianoUser + "  PLAY STATION '" + val + " Radio'"), lang.hitch(this, function(res) {
+                  return util.command("piano " + dojoConfig.pianoUser + " SKIP");
                 }));
               }));
             }));
-          ; break;
+          break;
         }
       }
     },
@@ -156,7 +157,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       this._currentPlayer = player;
       if (player === "spotify") {
         this._exploreBar.set("exploreButton", "Search");
-        this._exploreBar.set("placeHolder", "Search...")
+        this._exploreBar.set("placeHolder", "Search...");
         this._btnStored.set("label", "Playlists");
         when(this._updateCurrentPlaying(), lang.hitch(this, function() {
           this._currentPlaylist.listCurrent(this._trackListHolder);
@@ -167,6 +168,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
         this._playingControl.set("btnPrevIconClass","iconPrev");
         this._playingControl.set("btnNextIconClass","iconNext");
         this._playingControl.set("btnShuffleIconClass","iconShuffle");
+        this._currentPlaylist.listStoredSpotify(this._slider.get("holder"), "<br />", this._trackListHolder);
       }
       if (player === "pandora") {
         this._exploreBar.set("exploreButton", "Launch");
@@ -180,6 +182,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
         this._playingControl.set("btnPrevIconClass","iconDislike");
         this._playingControl.set("btnNextIconClass","iconLike");
         this._playingControl.set("btnShuffleIconClass","iconNext");
+        this._currentPlaylist.listStoredPandora(this._slider.get("holder"), "<br />", this._trackListHolder);
         dfd.resolve();
       }
       return dfd.promise;
@@ -192,7 +195,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
      if(dojoConfig.device !== "computer") {
         on(this._btnStored, "click", lang.hitch(this, function(evt)  {
           this._slider.show();
-          this._currentPlaylist.listStored(this._slider.get("holder"), "<br />", this._trackListHolder);
+          this._currentPlaylist.listStoredSpotify(this._slider.get("holder"), "<br />", this._trackListHolder);
         }));
         aspect.after(this._currentPlaylist, "playlistLoading", lang.hitch(this, function() {
           this._slider.hide();
@@ -263,7 +266,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
 
     // Uses currentPlayer to determine what command to use and how to format returned playing information 
     _updateCurrentPlaying: function(){
-      var timeInfo = [], dfd = new Deferred(), ticker = 0;
+      var timeInfo = [], dfd = new Deferred();
       if(this._currentPlayer === "spotify") {
         when(util.command("mpc"), lang.hitch(this, function(res) {
           if(this._currentPlayer === "spotify") {
@@ -306,9 +309,9 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
                   this._playingControl.set("playButton", "Pause");
                  //  this._playingControl.set("volumeSeek", parseInt(res[2].replace(/[^0-9]/gi, ''), 10));
                   dfd.resolve();
-                  ticker ++;
-                  if(ticker >= 6) {
-                    ticker = 0;
+                  this._ticker ++;
+                  if(this._ticker >= 4) {
+                    this._ticker = 0;
                   }
                 }
                 else {
@@ -322,7 +325,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
             }
           }
         }));
-        if (ticker === 0) {
+        if (this._ticker === 0) {
           when(util.command("piano status"), lang.hitch(this, function(res) {
             if (this._currentPlayer === "pandora") {
               domAttr.set(this._currentlyPlaying, "innerHTML", res[2].slice(8) + " - " + res[3].slice(7));

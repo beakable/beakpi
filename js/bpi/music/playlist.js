@@ -36,7 +36,7 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
 
     _resultsInfo: null,
 
-    listStored: function(domHolder, buttonSplit, domToPlaceInto) {
+    listStoredSpotify: function(domHolder, buttonSplit, domToPlaceInto) {
       var storedPlaylists = [], _self = this, btnPlaylistTitle;
       when(util.command("mpc lsplaylists")).then(lang.hitch(this, function(storedPlaylists){
         domConst.empty(domHolder);
@@ -75,6 +75,33 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
         }
       }));
     },
+
+    listStoredPandora: function(domHolder, buttonSplit, domToPlaceInto) {
+      var storedPlaylists = [], _self = this, btnPlaylistTitle;
+      when(util.command("piano " + dojoConfig.pianoUser + " STATIONS")).then(lang.hitch(this, function(storedPlaylists){
+        domConst.empty(domHolder);  
+
+        for (i = 0; i <= storedPlaylists.length; i++) {
+          btnPlaylistTitle = new Button({
+              label: storedPlaylists[i].slice(9),
+              onClick: function(){
+                console.log(this.label)
+                when(util.command("piano " + dojoConfig.pianoUser + "  PLAY STATION '" + this.label + "'"), lang.hitch(this, function(res) {
+                  console.log(res);
+                  util.command("piano " + dojoConfig.pianoUser + " SKIP");
+                }));
+              }
+            });
+            btnPlaylistTitle.placeAt(domHolder);
+            domStyle.set(btnPlaylistTitle.domNode,"width","80%");
+            domStyle.set(btnPlaylistTitle.domNode.firstChild, "display", "block");
+            if (buttonSplit) {
+              domConst.place(buttonSplit, domHolder);
+            }
+        }
+      }));
+    },
+
 
     listCurrent: function(domToPlaceInto) {
       var tracklist = [], i, individualTrack = [];
