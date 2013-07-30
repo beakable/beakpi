@@ -114,6 +114,11 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
           case "play": return util.commandPlayer("play"); break;
           case "prev": return util.commandPlayer("previous"); break;
           case "next": return util.commandPlayer("next"); break;
+          case "shuffle": 
+            when(util.commandShuffleTracks(), lang.hitch(this, function(res){
+              return this._currentPlaylist.listCurrent(this._trackListHolder);
+            }))
+          break;
           case "explore":
             domConst.empty(this._trackListHolder);
             domConst.empty(this._trackListHolderInfo);
@@ -127,6 +132,18 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
         switch (com) {
           case "pause": return util.command("piano " + dojoConfig.pianoUser + " PAUSE"); break;
           case "play": return util.command("piano " + dojoConfig.pianoUser + " PLAY mix"); break;
+          case "shuffle": return util.command("piano " + dojoConfig.pianoUser + " SKIP"); break;
+          case "prev": return util.command("piano " + dojoConfig.pianoUser + " RATE BAD"); break;
+          case "next": return util.command("piano " + dojoConfig.pianoUser + " RATE GOOD"); break;
+          case "explore": 
+            when(util.command("piano " + dojoConfig.pianoUser + "  FIND ARTIST '" + val +"'"), lang.hitch(this, function(res) {
+              when(util.command("piano " + dojoConfig.pianoUser + " CREATE STATION FROM SUGGESTION " + res[0].slice(4)), lang.hitch(this, function(res){
+                when(util.command("piano " + dojoConfig.pianoUser + "  PLAY STATION '" + val + " Radio'"), lang.hitch(this, function(res){
+                  util.command("piano " + dojoConfig.pianoUser + " SKIP");
+                }));
+              }));
+            }));
+          ; break;
         }
       }
     },
@@ -184,8 +201,8 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
 
       // Playing Control Shuffle Button
       aspect.after(this._playingControl, "btnShufflePressed", lang.hitch(this, function() {
-        when(util.commandShuffleTracks(), lang.hitch(this, function(){
-          this._currentPlaylist.listCurrent(this._trackListHolder);
+        when(this._playerCommand("shuffle"), lang.hitch(this, function(){
+          //
         }));
       }));
 
