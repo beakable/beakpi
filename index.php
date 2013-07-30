@@ -8,6 +8,8 @@ error_reporting(E_ALL); ini_set('display_errors', '1');
   $PiSettings = true;
   $RadioFrequencyController = true;
   $RadioFrequencySHAPassword = "b02e5b66ace6dc3b459be661062c452b50ea1c13";
+  $PandoraMusicPlayer = true;
+  $PianoUser = "-U admin -P admin"; // Flags needed
   $MopidyMusicPlayer = true;
   $mopidySocket = "ws://192.168.1.68:6680/mopidy/ws/";
   $countryCode = "GB";
@@ -96,6 +98,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   	  isDebug: true,
       rfController: "<?php echo $RadioFrequencyController ?>",
       mopidyPlayer: "<?php echo $MopidyMusicPlayer ?>",
+      pandoraPlayer: "<?php echo $PandoraMusicPlayer ?>",
+      pianoUser: "<?php echo $PianoUser ?>",
       device: "<?php echo $deviceType ?>",
       countryCode: "<?php echo $countryCode ?>",
       piSettings: "<?php echo $PiSettings ?>",
@@ -158,6 +162,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 homeRF = null;
               }
               if (temperature !== null && toIgnore !== "temperature") {
+                temperature.unload();
                 temperature.destroy();
                 temperature = null;
               }
@@ -207,7 +212,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             }
 
             // Audio Player Service Display
-            if(dojoConfig.mopidyPlayer) {
+            if(dojoConfig.mopidyPlayer || dojoConfig.pandoraPlayer) {
               domStyle.set(BpiMenuHolder, "display", "block");
               Bpi.set("displayMusicButton", true);
               aspect.after(Bpi, "launchMusicPlayer", lang.hitch(this, function(){
