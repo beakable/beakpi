@@ -43,6 +43,10 @@ function(declare, lang, when, domAttr, _WidgetBase, _WidgetsInTemplateMixin, _Te
       this.intervalCurrentPlaying.start();
     },
 
+    unload: function() {
+      this.intervalCurrentPlaying.stop();
+    },
+
     _updateCurrentTemp: function() {
       when(util.command("usbtenkiget -T f"), lang.hitch(this, function(res) {
         domAttr.set(this._serviceView, "innerHTML", "Current Temperature: " + res);

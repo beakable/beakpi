@@ -162,6 +162,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 homeRF = null;
               }
               if (temperature !== null && toIgnore !== "temperature") {
+                temperature.unload();
                 temperature.destroy();
                 temperature = null;
               }
