@@ -195,7 +195,6 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
      if(dojoConfig.device !== "computer") {
         on(this._btnStored, "click", lang.hitch(this, function(evt)  {
           this._slider.show();
-          this._currentPlaylist.listStoredSpotify(this._slider.get("holder"), "<br />", this._trackListHolder);
         }));
         aspect.after(this._currentPlaylist, "playlistLoading", lang.hitch(this, function() {
           this._slider.hide();
