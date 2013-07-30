@@ -1,6 +1,6 @@
 # BeakPi Home Automation
 
-![Spotify Player Interface](http://beakable.com/img/beakpi/image-1.png)![Pandora Player Interface](http://beakable.com/img/beakpi/image-2.png)
+![Spotify Player Interface](http://beakable.com/img/beakpi/image-3.png)![Pandora Player Interface](http://beakable.com/img/beakpi/image-2.png)
 
 ![Desktop Player Interface](http://beakable.com/img/beakpi/desk-view.jpg)
 
