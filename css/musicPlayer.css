@@ -88,7 +88,7 @@ body {
 /* Audio Player */
 /* ------------ */
 
-.inputSearch {
+.inputExplore {
   margin: 0 0 0 8px;
   padding: 0;
   width: 622px;
@@ -174,6 +174,7 @@ body {
 .currentlyPlayingInfo {
   position: relative;
   z-index: 30;
+  pointer-events:none;
 }
 
 .noSongs{
@@ -204,7 +205,7 @@ body {
   background-size:200px 200px;
   height: 71px;
   width: 100px;
-  opacity: 0.4;
+  opacity: 0.2;
   z-index: 20;
 }
 
@@ -216,8 +217,13 @@ body {
   background-size: 150px 150px;
   height: 71px;
   width: 100px;
-  opacity: 0.4;
+  opacity: 0.2;
   z-index: 20;  
+}
+
+#pandoraArt {
+  display: block;
+  margin: 0 auto;
 }
 
 .iconPlay{
@@ -247,11 +253,29 @@ body {
   height: 20px;
   width: 20px;
 }
+
 .iconShuffle{
   background: url(/img/music-images/random-shuffle.png) center center no-repeat;
   background-size: 14px 14px;
   height: 20px;
   width: 20px;
+}
+
+.iconLike{
+  background: url(/img/music-images/black-like.png) center center no-repeat;
+  background-size: 20px 20px;
+  height: 20px;
+  width: 20px;
+}
+
+.iconDislike{
+  background: url(/img/music-images/black-like.png) center center no-repeat;
+  background-size: 20px 20px;
+  height: 20px;
+  width: 20px;
+  transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
 }
 
 /* --------------- */

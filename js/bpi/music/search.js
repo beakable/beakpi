@@ -16,92 +16,51 @@
 define([
   "dojo/_base/declare",
   "dojo/_base/lang",
-  "dojo/_base/fx",
-  "dojo/on",
+  "dojo/_base/array",
   "dojo/when",
   "dojo/dom-construct",
   "dojo/dom-attr",
-  "dojo/keys",
   "dijit/_WidgetBase",
-  "dijit/_WidgetsInTemplateMixin",
-  "dijit/_TemplatedMixin",
-  "dijit/registry",
-  "bpi/utils/util",
   "bpi/music/track",
-  "dojo/text!./templates/search.html",
   "dijit/form/TextBox",
   "dijit/form/Form",
   "dijit/form/Button"
 ],
 
-function(declare, lang, fx, on, when, domConstruct, domAttr, keys, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, registry, util, track, template) {
-  return declare([ _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
-    widgetsInTemplate: true,
-    templateString: template,
-    inputSearch: null,
+function(declare, lang, array, when, domConstruct, domAttr, _WidgetBase, Track) {
+  return declare([_WidgetBase], {
+ 
     totalTracks: null,
-    _btSearch: null,
+
     _resultsHolder: null,
     _resultsInfo: null,
 
-    postCreate: function(){
-      var _self = this;
-      on(this._btSearch, "click", function(evt){
-        _self._clearList();
-        when(util.requestSearch("http://ws.spotify.com/search/1/track.json?q="+_self.inputSearch.value)).then(
-          function(res) {
-            _self._summary(res);
-            _self._list(res);
-            fx.fadeIn({node: _self._resultsHolder}).play();
-          }
-        );
-      });
-      on(this.inputSearch, "keydown", function(evt){
-        if(evt.keyCode === keys.ENTER){
-          evt.preventDefault();
-          _self._clearList();
-          when(util.requestSearch("http://ws.spotify.com/search/1/track.json?q="+evt.target.value)).then(
-            function(res) {
-            _self._summary(res);
-            _self._list(res);
-            fx.fadeIn({node: _self._resultsHolder}).play();
-            }
-          );
-        }
-      });
-    },
-
-    _summary: function(result) {
+    _summary: function(results) {
       var i;
-      for(i =0; i < result.tracks.length; i++){
-        if(result.tracks[i].album.availability.territories.indexOf(dojoConfig.countryCode) !== -1) {
-          ++this.totalTracks;
+      array.forEach(results.tracks, lang.hitch(this, function(track) {
+        if(track.album.availability.territories.indexOf(dojoConfig.countryCode) !== -1) {
+          ++ this.totalTracks;
         }
-      }
-      domAttr.set(this._resultsInfo, "innerHTML", "Displaying Results 0 of "+ this.totalTracks);
+      }));
+      domAttr.set(this._resultsInfo, "innerHTML", "Displaying Results 0 of " + this.totalTracks);
     },
 
-    _list: function(result) {
+    listResults: function(results) {
       var trackResult,
-          i,
           trackResultNumber = 1,
           displayArt = false,
           clearSplit = 2;
 
-      var loadedSettings = util.storeGet("musicSettings");
-      if (loadedSettings) {
-        if (loadedSettings.albumArt) {
-          displayArt = loadedSettings.albumArt;
-          clearSplit = 3;
-        }
-      }
-      for(i =0; i < result.tracks.length; i++){
-        trackResult = new track();
-        if (result.tracks[i].album.availability.territories.indexOf(dojoConfig.countryCode) !== -1) {
+      this.totalTracks = 0;
+      this._summary(results);
+
+      array.forEach(results.tracks, lang.hitch(this, function(track) {
+        trackResult = new Track();
+        if (track.album.availability.territories.indexOf(dojoConfig.countryCode) !== -1) {
           var trackInfo = {
-            name: result.tracks[i].name,
-            href: result.tracks[i].href,
-            artist: result.tracks[i].artists[0].name
+            name: track.name,
+            href: track.href,
+            artist: track.artists[0].name
           };
           when(trackResult.displayTrack(trackInfo, this._resultsHolder, displayArt)).then(lang.hitch(this, function(){
               domAttr.set(this._resultsInfo, "innerHTML", "Displaying Results "+ trackResultNumber +" of "+ this.totalTracks);
@@ -111,22 +70,7 @@ function(declare, lang, fx, on, when, domConstruct, domAttr, keys, _WidgetBase, 
               ++trackResultNumber;
           }));
         }
-      }
-    },
-
-    _clearList: function() {
-      var clearResults;
-      this.totalTracks = 0;
-      if(dojoConfig.device !== "computer") {
-        domConstruct.empty(this._resultsHolder);
-      }
-      else{
-        clearResults = fx.fadeOut({node: this._resultsHolder}).play();
-        on(clearResults, "End", lang.hitch(this, function(){
-          domConstruct.empty(this._resultsHolder);
-        }));
-      }
-      domConstruct.empty(this._resultsInfo);
+      }));
     },
 
     _setResultsHolderAttr: function (val){

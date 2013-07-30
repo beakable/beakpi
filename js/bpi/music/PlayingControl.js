@@ -58,12 +58,12 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
       this._volumeSeek = new seekbar();
       this._currentSongSeek = new seekbar();
 
-      on(this._btnPlayPause, "click", lang.hitch(this, function(evt)  {
-        if(this._btnPlayPause.get("label") === "Pause"){
-          util.commandPlayer("pause");
+      on (this._btnPlayPause, "click", lang.hitch(this, function(evt)  {
+        if (this._btnPlayPause.get("label") === "Pause"){
+          this.btnPausePressed();
           this._btnPlayPause.set("iconClass", "iconPlay");
         } else{
-          util.commandPlayer("play");
+          this.btnPlayPressed();
           this._btnPlayPause.set("iconClass", "iconPause");
         }
       }));
@@ -114,7 +114,35 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
       this._currentSongSeek.slider.sliderHandle.display = false;
     },
 
+    _setBtnPrevIconClassAttr: function(val) {
+      this._btnPrev.set("iconClass", val);
+    },
+
+    _setBtnNextIconClassAttr: function(val) {
+      this._btnNext.set("iconClass", val);
+    },
+
+    _setBtnShuffleIconClassAttr: function(val) {
+      this._btnShuffle.set("iconClass", val);
+    },
+
     btnShufflePressed: function() {
+      // Synthetic Event
+    },
+
+    btnPausePressed: function() {
+      // Synthetic Event
+    },
+
+    btnPlayPressed: function() {
+      // Synthetic Event
+    },
+
+    btnPrevPressed: function() {
+      // Synethetic Event
+    },
+
+    btnNextPressed: function() {
       // Synthetic Event
     },
 
