@@ -94,13 +94,6 @@ sudo make install
 
 ### Setup pianod
 
-```
-sudo touch /etc/pianod.startscript
-sudo chmod 777 /etc/pianod.startscript
-sudo nano /etc/pianod.startscript
-
-```
-
 Create the service file:
 
 ```
@@ -216,6 +209,13 @@ case "$1" in
 esac
 
 exit 0
+```
+
+```
+sudo touch /etc/pianod.startscript
+sudo chmod 777 /etc/pianod.startscript
+sudo nano /etc/pianod.startscript
+
 ```
 
 Inside the startscript file place:
