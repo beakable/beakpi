@@ -80,8 +80,6 @@ Download the latest tar from DeviousFish and install:
 
 http://deviousfish.com/Downloads/pianod/
 
-(Replacing # with latest version)
-
 ```
 cd
 sudo wget http://deviousfish.com/Downloads/pianod/pianod-latest.tar.gz
@@ -212,6 +210,8 @@ exit 0
 ```
 
 ```
+sudo touch /etc/pianod.passwd
+sudo chmod 777 /etc/pianod.passwd
 sudo touch /etc/pianod.startscript
 sudo chmod 777 /etc/pianod.startscript
 sudo nano /etc/pianod.startscript
@@ -245,6 +245,12 @@ LOGGING=
 # run as user pi
 ARGS="-n root"
 ```
+
+```
+sudo update-rc.d pianod  defaults 
+```
+
+Perform a `service pianod start`
 
 Reboot your Pi
 
