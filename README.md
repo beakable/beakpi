@@ -18,11 +18,19 @@ Follow more about this project on Twitter: [Beakable Twitter for BeakPi](https:/
 
 These setup instructions cover setting BeakPi up from a fresh OS install.
 
-Currently it is presummed you are pulling this source for either using as a Spotify Player, a Harmony RF Gateway, or both.
+Currently it is presummed you are pulling this source for either using as a Spotify Player, Pandora Player, a Harmony RF Gateway, or all three.
 
 Requirements for the Spotify Player: Spotify Premium Account - https://www.spotify.com/
 
+Requirements for the Pandora Player: Free or Paid Pandora Account - http://www.pandora.com/
+
 Requirements for the RF Gateway: ZBPLM - https://www.simplehomenet.com/proddetail.asp?prod=ZigBee_INSTEON_X10_Interface
+
+Requirements for the Temperature USB: http://www.dracal.com/store/products/usbtenki/index.php
+
+The eventual aim of BeakPi is not to be tied to set devices and allow for easy modifcation of system command calls. However right now these are the peripherals being used.
+
+ ====
 
 
 After installing line 7 to 12 in index.php holds the required config parameters to run BeakPi.
@@ -49,12 +57,198 @@ sudo git clone https://github.com/beakable/beakpi.git .
 ```
 
 
-### To setup access to system info for Settings:
+## Pi Settings
 
 ```
 sudo usermod -G video www-data
 sudo reboot
 ```
+
+## Pandora
+
+### Install pianod:
+
+http://deviousfish.com/pianod/index.html
+
+You will probably need to do the following first
+
+```
+sudo apt-get install libgcrypt11-dev libgnutls-dev libjson0-dev libfaad-dev ksh
+```
+
+Download the latest tar from DeviousFish and install:
+
+http://deviousfish.com/Downloads/pianod/
+
+(Replacing # with latest version)
+
+```
+cd
+sudo wget http://deviousfish.com/Downloads/pianod/pianod-latest.tar.gz
+tar zxvf pianod-latest.tar.gz
+cd pianod-latest
+sudo ./configure 
+sudp make
+sudo make install
+```
+
+### Setup pianod
+
+```
+sudo touch /etc/pianod.startscript
+sudo chmod 777 /etc/pianod.startscript
+sudo nano /etc/pianod.startscript
+
+```
+
+Create the service file:
+
+```
+sudo nano /etc/init.d/pianod
+```
+
+Inside it place:
+
+```
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          pianod
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Starts pianod
+# Description:       pianod is a clent/server for Pandora.  This init script
+#                    copied and repurposed from RasPi init.d/lirc
+### END INIT INFO
+
+# Load functions
+. /lib/lsb/init-functions
+
+# Load config file if exists
+CONFIGFILE=/etc/pianod.conf
+if [ -f "$CONFIGFILE" ]; then
+  . "$CONFIGFILE"
+fi
+
+# Use value set by config file or else defaults
+DAEMON=${DAEMON:-/usr/sbin/pianod}
+test -f $DAEMON || exit 0
+
+case "$1" in
+  start)
+    log_daemon_msg "Starting pianod"
+
+    # Load param from config file or else use default
+    STARTSCRIPT=${STARTSCRIPT:-/etc/pianod.startscript}
+
+    if [ ! -f "$STARTSCRIPT" ]; then
+      log_warning_msg "$STARTSCRIPT not found"
+      log_end_msg 1
+    else
+      # Use params from config file if available or leave blank for defaults
+      USERFILE=${USERFILE:-/etc/pianod.userfile}
+      ARGS="-i $STARTSCRIPT ${PORT:+-p $PORT} ${USERFILE:+-u $USERFILE} ${LOGGING:+$LOGGING} $ARGS"
+
+      #/usr/local/bin/ao_example > /tmp/ao_example.log 2>&1
+      #$DAEMON $ARGS > /tmp/pianod.log 2>&1
+      start-stop-daemon --start --background --quiet --exec $DAEMON -- $ARGS
+      exitval=$?
+
+      # Because we are using --background flag to force pianod into the BG,
+      # we can't get the actual return value from pianod, so 0 doesn't 
+      # necessarily mean it actually started
+      if [ $exitval = 0 ]; then
+        # Check whether it started, but it might be too early...
+        start-stop-daemon --status --exec $DAEMON
+        exitval=$?
+        
+        # If hasn't started yet, wait a little while...
+        if [ $exitval = 3 ]; then
+          sleep 0.5
+          start-stop-daemon --status --exec $DAEMON
+          exitval=$?
+        fi
+
+        # Wait a little more...
+        if [ $exitval = 3 ]; then
+          sleep 0.5
+          start-stop-daemon --status --exec $DAEMON
+          exitval=$?
+        fi
+
+        # Wait a little more...
+        if [ $exitval = 3 ]; then
+          sleep 0.5
+          start-stop-daemon --status --exec $DAEMON
+          exitval=$?
+        fi
+
+        # Waited long enough; report success or failure
+        log_end_msg $exitval
+      else
+        log_end_msg $exitval
+      fi
+    fi
+    ;;
+
+  stop)
+    log_daemon_msg "Stopping pianod"
+    start-stop-daemon --stop --quiet --exec $DAEMON
+    log_end_msg $?
+    ;;
+
+  restart|reload|force-reload)
+    $0 stop
+    sleep 1
+    $0 start
+    ;;
+
+  status)
+    status_of_proc $DAEMON "pianod"
+    ;;
+
+  *)
+    echo "Usage: /etc/init.d/pianod {start|stop|reload|restart|force-reload}"
+    echo "Configuration loaded from $CONFIGFILE"
+    exit 1
+    ;;
+esac
+
+exit 0
+```
+
+Inside the startscript file place:
+
+```
+user admin admin
+pandora user PANDORAUSER PANDORAPASS
+```
+
+```
+sudo touch /etc/pianod.conf
+sudo chmod 777 /etc/pianod.conf
+sudo nano /etc/pianod.conf
+
+```
+Inside the conf file place:
+
+```
+#!/bin/sh
+DAEMON=/usr/local/bin/pianod
+STARTSCRIPT=/etc/pianod.startscript
+USERFILE=/etc/pianod.passwd
+# default port 4445
+PORT=
+# LOGGING=-Z/dev/stderr
+LOGGING=
+# run as user pi
+ARGS="-n root"
+```
+
+Reboot your Pi
+
+## Spotify
 
 ### Install Mopidy:
 
@@ -181,6 +375,7 @@ sudo chmod 666 /var/run/mopidy.pid
 sudo service mopidy start
 ```
 
+## Smartenit RF 
 
 ### To Setup Smartenit RF Gateway:
 
