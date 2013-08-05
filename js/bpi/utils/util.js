@@ -158,6 +158,7 @@ define([
     getStoredTemps: function(){
       var dfd = new Deferred();
       xhr("/php/storedTemp.php", {
+        handleAs: "json"
       }).then(function(data){
         dfd.resolve(data);
       }, function(err){

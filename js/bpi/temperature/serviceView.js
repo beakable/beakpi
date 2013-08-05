@@ -16,6 +16,7 @@
 define([
   "dojo/_base/declare",
   "dojo/_base/lang",
+  "dojo/_base/array",
   "dojo/when",
   "dojo/dom-attr",
   "dijit/_WidgetBase",
@@ -23,11 +24,14 @@ define([
   "dijit/_TemplatedMixin",
   "bpi/utils/util",
   "dojox/timing",
-  "dojox/data/CouchDBRestStore",
+  "dojox/charting/Chart",
+  "dojox/charting/axis2d/Default",
+  "dojox/charting/plot2d/StackedLines",
+  "dojox/charting/themes/Julie",
   "dojo/text!./templates/serviceView.html"
 ],
 
-function(declare, lang, when, domAttr, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, util, timing, CouchDBRestStore, template) {
+function(declare, lang, array, when, domAttr, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, util, timing, Chart, Default, StackedLines, Julie, template) {
 
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
@@ -36,8 +40,23 @@ function(declare, lang, when, domAttr, _WidgetBase, _WidgetsInTemplateMixin, _Te
     intervalCurrentPlaying: new timing.Timer(1500),
 
     load: function() {
-      var tempStore = new dojox.data.CouchDBRestStore({target:"/temperature"});
-      console.log(tempStore);
+      when(util.getStoredTemps(), lang.hitch(this, function(res){
+        var tempArray = [];
+        console.log(res.rows);
+        array.forEach(res.rows, lang.hitch(this, function (val) {
+          tempArray.push(val.value.replace(/[^0-9.]+/g, ''));
+        }));
+        var c = new Chart("stacked");
+        c.addPlot("default", {type: StackedLines})
+        c.addAxis("x", {fixLower: "major", fixUpper: "major"})
+        c.addAxis("y", {vertical: true, fixLower: "major", fixUpper: "major", min: 60})
+        c.setTheme(Julie)
+        //c.addSeries("Series 1", [1, 2, 3, 4, 5])
+
+        c.addSeries("Series 2", tempArray, {stroke: {color: "red"}})
+        c.render();
+            
+      }));
       
       when(this._updateCurrentTemp(), lang.hitch(this, function() {
         this.intervalCurrentPlaying.onTick = lang.hitch(this,function() {
