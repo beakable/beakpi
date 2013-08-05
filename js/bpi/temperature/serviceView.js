@@ -23,10 +23,11 @@ define([
   "dijit/_TemplatedMixin",
   "bpi/utils/util",
   "dojox/timing",
+  "dojox/data/CouchDBRestStore",
   "dojo/text!./templates/serviceView.html"
 ],
 
-function(declare, lang, when, domAttr, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, util, timing, template) {
+function(declare, lang, when, domAttr, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, util, timing, CouchDBRestStore, template) {
 
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
@@ -35,6 +36,9 @@ function(declare, lang, when, domAttr, _WidgetBase, _WidgetsInTemplateMixin, _Te
     intervalCurrentPlaying: new timing.Timer(1500),
 
     load: function() {
+      var tempStore = new dojox.data.CouchDBRestStore({target:"/temperature"});
+      console.log(tempStore);
+      
       when(this._updateCurrentTemp(), lang.hitch(this, function() {
         this.intervalCurrentPlaying.onTick = lang.hitch(this,function() {
           this._updateCurrentTemp();
@@ -48,7 +52,7 @@ function(declare, lang, when, domAttr, _WidgetBase, _WidgetsInTemplateMixin, _Te
     },
 
     _updateCurrentTemp: function() {
-      when(util.command("usbtenkiget -T f"), lang.hitch(this, function(res) {
+      when(util.command("sudo usbtenkiget -T f"), lang.hitch(this, function(res) {
         domAttr.set(this._serviceView, "innerHTML", "Current Temperature: " + res);
       }));
       return;

@@ -150,6 +150,20 @@ define([
         dfd.resolve(err);
       });
       return dfd.promise;
+    },
+
+    //---------------------
+    // Temperature Stuff
+
+    getStoredTemps: function(){
+      var dfd = new Deferred();
+      xhr("/php/storedTemp.php", {
+      }).then(function(data){
+        dfd.resolve(data);
+      }, function(err){
+        dfd.resolve(err);
+      });
+      return dfd.promise;
     }
 
   };
