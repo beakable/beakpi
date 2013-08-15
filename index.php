@@ -111,6 +111,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <!--<script src="js/dojo/dojo/dojo.js"></script>-->
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dijit/themes/claro/claro.css">
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojox/widget/Toaster/Toaster.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">
 
     <?php if ($deviceType == 'computer' || $deviceType == 'tablet') { ?>
       <link rel="stylesheet" href="css/musicPlayer.css" />
