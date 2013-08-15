@@ -6,7 +6,7 @@
 /* -------- */
 
 body {
-  background: url(/img/background.jpg) repeat;
+  background: url(../img/background.jpg) repeat;
   margin: 0;
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -16,7 +16,7 @@ body {
 }
 
 #serviceViewHolder {
-  background: url(/img/serviceView-background.png) repeat-x top center;
+  background: url(../img/serviceView-background.png) repeat-x top center;
   width: 100%;
   float: left;
   min-height: 188px;
@@ -25,7 +25,7 @@ body {
 }
 
 #serviceMenuView {
-  background: url(/img/menu-background.png) repeat; 
+  background: url(../img/menu-background.png) repeat; 
   width:100%;
   text-align: center;	
   border-bottom: solid 2px #000;
@@ -73,7 +73,7 @@ body {
 }
 
 .claro .dijitDialogPaneContent {
-  background: url(/img/background.jpg) repeat;
+  background: url(../img/background.jpg) repeat;
 }
 
 .claro .dijitSlider .dijitSliderProgressBarH, .claro .dijitSlider .dijitSliderLeftBumper,
@@ -161,7 +161,7 @@ body {
 }
 
 .currentlyPlaying{
-  background: url(/img/playing-background.png) repeat-x;
+  background: url(../img/playing-background.png) repeat-x;
   padding: 10px 0;
   display: block;
   margin: 10px auto 0;
@@ -183,7 +183,7 @@ body {
 }
 
 .PlayingControlHolder {
-  background: url(/img/menu-background.png) repeat; 
+  background: url(../img/menu-background.png) repeat; 
   position: fixed;
   bottom: 0;
   left: 0;
@@ -201,7 +201,7 @@ body {
   position: absolute;
   left: 0;
   top: 0;
-  background: url(/img/music-images/spotify.png) center right;
+  background: url(../img/music-images/spotify.png) center right;
   background-size:200px 200px;
   height: 71px;
   width: 100px;
@@ -213,7 +213,7 @@ body {
   position: absolute;
   right: 0;
   top: 0;
-  background: url(/img/music-images/pandora.png) center left;
+  background: url(../img/music-images/pandora.png) center left;
   background-size: 150px 150px;
   height: 71px;
   width: 100px;
@@ -227,49 +227,49 @@ body {
 }
 
 .iconPlay{
-  background: url(/img/music-images/Play.png) center center no-repeat;
+  background: url(../img/music-images/Play.png) center center no-repeat;
   background-size: 10px 10px;
   height: 20px;
   width: 20px;
 }
 
 .iconPause{
-  background: url(/img/music-images/Pause.png) center center no-repeat;
+  background: url(../img/music-images/Pause.png) center center no-repeat;
   background-size: 10px 10px;
   height: 20px;
   width: 20px;
 }
 
 .iconPrev{
-  background: url(/img/music-images/Skip-back.png) center center no-repeat;
+  background: url(../img/music-images/Skip-back.png) center center no-repeat;
   background-size: 10px 10px;
   height: 20px;
   width: 20px;
 }
 
 .iconNext{
-  background: url(/img/music-images/Skip-ahead.png) center center no-repeat;
+  background: url(../img/music-images/Skip-ahead.png) center center no-repeat;
   background-size: 10px 10px;
   height: 20px;
   width: 20px;
 }
 
 .iconShuffle{
-  background: url(/img/music-images/random-shuffle.png) center center no-repeat;
+  background: url(../img/music-images/random-shuffle.png) center center no-repeat;
   background-size: 14px 14px;
   height: 20px;
   width: 20px;
 }
 
 .iconLike{
-  background: url(/img/music-images/black-like.png) center center no-repeat;
+  background: url(../img/music-images/black-like.png) center center no-repeat;
   background-size: 20px 20px;
   height: 20px;
   width: 20px;
 }
 
 .iconDislike{
-  background: url(/img/music-images/black-like.png) center center no-repeat;
+  background: url(../img/music-images/black-like.png) center center no-repeat;
   background-size: 20px 20px;
   height: 20px;
   width: 20px;
