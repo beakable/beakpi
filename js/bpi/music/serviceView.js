@@ -165,23 +165,23 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
         }));
         domStyle.set(this._pandoraButton, "opacity", 0.2);
         domStyle.set(this._spotifyButton, "opacity", 0.9);
-        this._playingControl.set("btnPrevIconClass","iconPrev");
-        this._playingControl.set("btnNextIconClass","iconNext");
-        this._playingControl.set("btnShuffleIconClass","iconShuffle");
+        this._playingControl.set("btnPrevIconClass", '<i class="icon-step-backward"></i>');
+        this._playingControl.set("btnNextIconClass", '<i class="icon-step-forward"></i>');
+        this._playingControl.set("btnShuffleIconClass", '<i class="icon-random"></i>');
         this._currentPlaylist.listStoredSpotify(this._slider.get("holder"), "<br />", this._trackListHolder);
       }
       if (player === "pandora") {
         this._exploreBar.set("exploreButton", "Launch");
         this._exploreBar.set("placeHolder", "New radio station...");
-        this._btnStored.set("label", "Stations");
+        this._btnStored.set("`", "Stations");
         this._updateCurrentPlaying();
         domConst.empty(this._trackListHolder);
         domConst.empty(this._trackListHolderInfo);
         domStyle.set(this._pandoraButton, "opacity", 0.9);
         domStyle.set(this._spotifyButton, "opacity", 0.2);
-        this._playingControl.set("btnPrevIconClass","iconDislike");
-        this._playingControl.set("btnNextIconClass","iconLike");
-        this._playingControl.set("btnShuffleIconClass","iconNext");
+        this._playingControl.set("btnPrevIconClass", '<i class="icon-thumbs-down-alt"></i>');
+        this._playingControl.set("btnNextIconClass", '<i class="icon-thumbs-up-alt"></i>');
+        this._playingControl.set("btnShuffleIconClass", '<i class="icon-step-forward"></i>');
         this._currentPlaylist.listStoredPandora(this._slider.get("holder"), "<br />", this._trackListHolder);
         dfd.resolve();
       }
@@ -208,24 +208,17 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
         }));
       }));
 
-      // Playing Control Pause Button
-      aspect.after(this._playingControl, "btnPausePressed", lang.hitch(this, function() {
-        when(this._playerCommand("pause"), lang.hitch(this, function(res) {
-          this._playingControl.set("playButton", "Pause");
-        }));
-      }));
-
       // Playing Control Play Button
       aspect.after(this._playingControl, "btnPlayPressed", lang.hitch(this, function() {
         when(this._playerCommand("play"), lang.hitch(this, function(res) {
-          this._playingControl.set("playButton", "Play");
+          this._playingControl.set("playButton", '<i class="icon-play"></i>');
         }));
       }));
 
       // Playing Control Pause Button
       aspect.after(this._playingControl, "btnPausePressed", lang.hitch(this, function() {
         when(this._playerCommand("pause"), lang.hitch(this, function(res) {
-          this._playingControl.set("playButton", "Pause");
+          this._playingControl.set("playButton", '<i class="icon-pause"></i>');
         }));
       }));
 
@@ -276,12 +269,12 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
                   timeInfo = (res[1].split("   "))[1].split(" ");
                   domAttr.set(this._currentlyPlayingTime, "innerHTML", timeInfo[0]);
                   this._playingControl.set("songSeek", parseInt(timeInfo[1].replace(/[^0-9]/gi, ''), 10));
-                  this._playingControl.set("playButton", "Pause");
+                  this._playingControl.set("playButton", '<i class="icon-pause"></i>');
                   this._playingControl.set("volumeSeek", parseInt(res[2].replace(/[^0-9]/gi, ''), 10));
                   dfd.resolve();
                 }
                 else if (res[1].indexOf("[paused]") !== -1) {
-                  this._playingControl.set("playButton", "Play");
+                  this._playingControl.set("playButton", '<i class="icon-play"></i>');
                   domAttr.set(this._currentlyPlaying, "innerHTML", res[0]);
                   domAttr.set(this._currentlyPlayingTime, "innerHTML", "Paused");
                   dfd.resolve();
@@ -305,7 +298,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
                   timeInfo = (res[0].split("Playing "))[1].split("/");
                   domAttr.set(this._currentlyPlayingTime, "innerHTML", timeInfo[0] + "/" +timeInfo[1]);
                  // this._playingControl.set("songSeek", parseInt(timeInfo[1].replace(/[^0-9]/gi, ''), 10));
-                  this._playingControl.set("playButton", "Pause");
+                  this._playingControl.set("playButton", '<i class="icon-pause"></i>');
                  //  this._playingControl.set("volumeSeek", parseInt(res[2].replace(/[^0-9]/gi, ''), 10));
                   dfd.resolve();
                   this._ticker ++;
@@ -314,7 +307,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
                   }
                 }
                 else {
-                  this._playingControl.set("playButton", "Play");
+                  this._playingControl.set("playButton", '<i class="icon-play"></i>');
                 }
               }
               else {

@@ -59,12 +59,12 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
       this._currentSongSeek = new seekbar();
 
       on (this._btnPlayPause, "click", lang.hitch(this, function(evt)  {
-        if (this._btnPlayPause.get("label") === "Pause"){
+        if (this._btnPlayPause.get("label") === '<i class="icon-pause"></i>'){
           this.btnPausePressed();
-          this._btnPlayPause.set("iconClass", "iconPlay");
+          this._btnPlayPause.set("label", '<i class="icon-play"></i>');
         } else{
           this.btnPlayPressed();
-          this._btnPlayPause.set("iconClass", "iconPause");
+          this._btnPlayPause.set("label", '<i class="icon-pause"></i>');
         }
       }));
 
@@ -115,15 +115,15 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
     },
 
     _setBtnPrevIconClassAttr: function(val) {
-      this._btnPrev.set("iconClass", val);
+      this._btnPrev.set("label", val);
     },
 
     _setBtnNextIconClassAttr: function(val) {
-      this._btnNext.set("iconClass", val);
+      this._btnNext.set("label", val);
     },
 
     _setBtnShuffleIconClassAttr: function(val) {
-      this._btnShuffle.set("iconClass", val);
+      this._btnShuffle.set("label", val);
     },
 
     btnShufflePressed: function() {
@@ -148,7 +148,6 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
 
     _setPlayButtonAttr: function(val) {
       this._btnPlayPause.set("label", val);
-      this._btnPlayPause.set("iconClass", "icon"+val);
     },
 
     _setVolumeSeekAttr: function(val) {

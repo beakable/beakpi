@@ -113,7 +113,7 @@ function(declare, lang, fx, on, when, Deferred, domConstruct, domAttr, domClass,
               }));
             }
             else {
-              this._btnQueue.set("label", " × ");
+              this._btnQueue.set("label", '<i class="icon-remove"></i>');
               on(this._btnQueue, "click", lang.hitch(this, function(evt) {
                 when(util.command("mpc del " + this.href)).then(lang.hitch(this, function(res) {
                   this.onPlaylistRemove();
