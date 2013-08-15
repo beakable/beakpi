@@ -90,9 +90,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       var dojoConfig = {
        packages: [{
           name: "bpi",
-          location: "/js/bpi"
+          location: location.pathname.replace(/\/[^/]+$/, '') + "js/bpi"
         }],
-  	  location: location.pathname.replace(/\/[^/]*$/, ''),
       debugAtAllCosts: true,
   	  async: true,
   	  isDebug: true,
