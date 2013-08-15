@@ -30,7 +30,7 @@ Requirements for the Temperature USB: http://www.dracal.com/store/products/usbte
 
 The eventual aim of BeakPi is not to be tied to set devices and allow for easy modifcation of system command calls. However right now these are the peripherals being used.
 
- ====
+====
 
 
 After installing line 7 to 12 in index.php holds the required config parameters to run BeakPi.
@@ -379,6 +379,27 @@ sudo chmod 666 /var/log/mopidy.log
 sudo touch /var/run/mopidy.pid
 sudo chmod 666 /var/run/mopidy.pid
 sudo service mopidy start
+```
+
+## USBTeki Temperature USB
+
+### Install USBTenki
+
+```
+sudo apt-get install libusb-dev
+cd
+sudo wget http://www.raphnet.net/electronique/usbtenki/usbtenki-2.0.4.tar.gz
+sudo zxvf usbtenki-2.0.4.tar.gz
+cd usbtenki-2.0.4/client
+sudo make
+sudo cp usbtenkiget /bin/usbtenkiget
+sudo nano /etc/sudoers
+```
+
+Apend to the file:
+
+```
+
 ```
 
 ## Smartenit RF 
