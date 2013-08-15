@@ -5,7 +5,7 @@ var cronJob = require('cron').CronJob;
 
 var temperature = nano.use('temperature');
 
-new cronJob('*/1   *    *    *    *', function() {
+new cronJob('*/5   *    *    *    *', function() {
 
   function insertTemp(val) {
     temperature.insert({ temp:  val, time: new Date().getTime()}, new Date().getTime(), function(err, body, header) {
