@@ -73,8 +73,6 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
 
       this._currentSearch.set("resultsHolder", this._trackListHolder);
       this._currentSearch.set("resultsInfo", this._trackListHolderInfo);
-
-      this._currentPlaylist.listCurrent(this._trackListHolder);
       this._currentPlaylist.set("resultsInfo", this._trackListHolderInfo);
 
 
