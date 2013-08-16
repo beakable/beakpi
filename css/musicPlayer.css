@@ -142,7 +142,7 @@ body {
 .trackWithoutArt .title .artist{
   font-weight: 100;
   width: 200px;
-  height: 15px;
+  height: 14px;
   text-overflow: ellipsis;
   overflow: hidden;
   word-wrap: break-word;
