@@ -5,12 +5,18 @@ error_reporting(E_ALL); ini_set('display_errors', '1');
 // SETTINGS 
 // ---------------------------------------------------
   $TemperatureTrack = true;
-  $PiSettings = true;
-  $RadioFrequencyController = true;
-  $RadioFrequencySHAPassword = "b02e5b66ace6dc3b459be661062c452b50ea1c13";
-  $PandoraMusicPlayer = true;
-  $PianoUser = "-U admin -P admin"; // Flags needed
   $MopidyMusicPlayer = true;
+  $PandoraMusicPlayer = true;
+  $RadioFrequencyController = true;
+  $PiSettings = true;
+
+  $defaultPane = 2; // 1 - Temperature, 2 - Audio, 3 - RF Controller, 4 - Settings
+
+
+  $RadioFrequencySHAPassword = "b02e5b66ace6dc3b459be661062c452b50ea1c13";
+  
+  $PianoUser = "-U admin -P admin"; // Flags needed
+  
   $mopidySocket = "ws://192.168.1.68:6680/mopidy/ws/";
   $countryCode = "GB";
 // AG AI AQ AR AU BB BM BO BR BS BT BZ CK CL CO CR CU DE DM DO EC FK GB 
@@ -42,32 +48,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 - Copyright : Iain M Hamilton 2013
 
-- Link : http://www.beakpi.com
-
-- Current supported automation features :
-  
-  - Home Audio : 
-              Requirements : 
-              MPD, Mopidy, MPC, Premium Spotify Account
-
-              Allows : 
-              Currently with a hybrid mix of MPC and Mopidy functionality the app allows for you to
-              control music output from the Pi
-
-              Future : 
-              Value the mix of MPC and Mopidy and if there is any reason for it
-              Expand on media using the Mopidy support for SoundCloud and Last.fm
-              Implement Pandora
-
-  - RF Control :
-              Requirements :
-              Smartenit ZBPM Plug, X10, Insteon or ZigBee modules
-
-              Allows :
-              Currently allows for turning toggling X10 devices as well as controlling dimming of lampgs
-
-              Future :
-              Improve the visual interface and make it possible to add your own devices through a simple UI
+- Link : https://github.com/beakable/beakpi - http://www.beakpi.com
 
 */
 ?>
@@ -103,7 +84,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       countryCode: "<?php echo $countryCode ?>",
       piSettings: "<?php echo $PiSettings ?>",
       tempTrack: "<?php echo $TemperatureTrack ?>",
-      radioFrequencySHAPassword: "<?php echo $RadioFrequencySHAPassword ?>"
+      radioFrequencySHAPassword: "<?php echo $RadioFrequencySHAPassword ?>",
+      defaultPane: <?php echo $defaultPane ?>
       }
     </script>
     <script src="js/mopidy.js"></script>
@@ -239,7 +221,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             }
 
             // Set Default Pane
-            temperature = launchPane("temperature", temperature, Temperature);
+            if(dojoConfig.defaultPane === 1) {
+              temperature = launchPane("temperature", temperature, Temperature);
+            }
+            if(dojoConfig.defaultPane === 2) {
+              musicPlayer = launchPane("musicPlayer", musicPlayer, MusicPlayer);
+            }
+            if(dojoConfig.defaultPane === 3) {
+              homeRF = launchPane("homeRF", homeRF, HomeRF);
+            }
+            if(dojoConfig.defaultPane === 4) {
+              piSettings = launchPane("piSettings", piSettings, PiSettings);
+            }
+
 
         	});
         });
