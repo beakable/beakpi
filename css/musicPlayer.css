@@ -141,8 +141,9 @@ body {
 
 .trackWithoutArt .title .artist{
   font-weight: 100;
+  font-size:11px;
   width: 200px;
-  height: 15px;
+  height: 13px;
   text-overflow: ellipsis;
   overflow: hidden;
   word-wrap: break-word;
