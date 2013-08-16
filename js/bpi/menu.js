@@ -34,7 +34,7 @@ function(declare, lang, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, B
     _setDisplayRFButtonAttr: function() {
       var _self = this;
       var btnHomeRF = new Button({
-        label: "Home Control",
+        label: "<i class='icon-lightbulb'></i> Control",
         onClick: function(){
           _self.launchHomeRF();
         }
@@ -45,7 +45,7 @@ function(declare, lang, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, B
     _setDisplayMusicButtonAttr: function() {
       var _self = this;
       var btnMusicPlayer = new Button({
-        label: "Home Audio",
+        label: "<i class='icon-music'></i> Audio",
         onClick: function(){
           _self.launchMusicPlayer();
         }
@@ -56,7 +56,7 @@ function(declare, lang, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, B
     _setDisplayPiSettingsButtonAttr: function() {
       var _self = this;
       var btnMusicPlayer = new Button({
-        label: "Pi Settings",
+        label: "<i class='icon-cog'></i> Settings",
         onClick: function(){
           _self.launchPiSettings();
         }
@@ -67,7 +67,7 @@ function(declare, lang, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, B
     _setDisplayTempTrackButtonAttr: function() {
       var _self = this;
       var btnTempTrack = new Button({
-        label: "Temperature",
+        label: "<i class='icon-sun'></i> Temperature",
         onClick: function(){
           _self.launchTemperature();
         }
