@@ -59,12 +59,12 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
       this._currentSongSeek = new seekbar();
 
       on (this._btnPlayPause, "click", lang.hitch(this, function(evt)  {
-        if (this._btnPlayPause.get("label") === '<i class="icon-pause"></i>'){
+        if (this._btnPlayPause.get("label") === '<i class="icon-pause icon-2x"></i>'){
           this.btnPausePressed();
-          this._btnPlayPause.set("label", '<i class="icon-play"></i>');
+          this._btnPlayPause.set("label", '<i class="icon-play icon-2x"></i>');
         } else{
           this.btnPlayPressed();
-          this._btnPlayPause.set("label", '<i class="icon-pause"></i>');
+          this._btnPlayPause.set("label", '<i class="icon-pause icon-2x"></i>');
         }
       }));
 

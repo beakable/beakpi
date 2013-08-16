@@ -85,9 +85,7 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
           btnPlaylistTitle = new Button({
               label: storedPlaylists[i].slice(9),
               onClick: function(){
-                console.log(this.label)
                 when(util.command("piano " + dojoConfig.pianoUser + "  PLAY STATION '" + this.label + "'"), lang.hitch(this, function(res) {
-                  console.log(res);
                   util.command("piano " + dojoConfig.pianoUser + " SKIP");
                 }));
               }
@@ -114,7 +112,7 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
               var trackResult = new track();
               individualTrack = tracklist[i].split(" - ");
               when(trackResult.displayTrack({name: individualTrack[1], href: (i + 1), artist: individualTrack[0]}, domToPlaceInto, false)).then(lang.hitch(this, function(){
-                aspect.after(trackResult, "onPlaylistRemove", lang.hitch(this, function(){ this.listCurrent(); }));
+                aspect.after(trackResult, "onPlaylistRemove", lang.hitch(this, function(){ this.listCurrent(domToPlaceInto); }));
               }));
             }
           }
