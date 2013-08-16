@@ -68,6 +68,8 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
         }
       }));
 
+
+
       on(this._btnNext, "click", lang.hitch(this, function(evt)  {
         util.commandPlayer("next");
       }));
@@ -75,6 +77,15 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
       on(this._btnPrev, "click", lang.hitch(this, function(evt)  {
         util.commandPlayer("previous");
       }));
+
+      domClass.add(this._btnPrev.domNode, "iconPrev");
+      domStyle.set(this._btnPrev.domNode.firstChild, "display", "block");
+
+      domClass.add(this._btnNext.domNode, "iconNext");
+      domStyle.set(this._btnNext.domNode.firstChild, "display", "block");
+
+      domClass.add(this._btnShuffle.domNode, "iconShuffle");
+      domStyle.set(this._btnShuffle.domNode.firstChild, "display", "block");
 
       if (dojoConfig.device !== "computer") {
         var windowBox = win.getBox();

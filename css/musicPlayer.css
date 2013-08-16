@@ -237,18 +237,15 @@ body {
 }
 
 .iconPrev{
-  height: 20px;
-  width: 20px;
+  width: 31px;
 }
 
 .iconNext{
-  height: 20px;
-  width: 20px;
+  width: 31px;
 }
 
 .iconShuffle{
-  height: 20px;
-  width: 20px;
+  width: 40px;
 }
 
 .iconLike{
