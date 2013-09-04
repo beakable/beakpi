@@ -19,17 +19,20 @@ define([
   "dojo/_base/lang",
   "dojo/_base/array",
   "dojo/Deferred",
+  "dojo/dom",
   "dojo/dom-construct",
   "dijit/_WidgetBase",
   "dijit/_WidgetsInTemplateMixin",
   "dijit/_TemplatedMixin",
   "dijit/form/Button",
+  "dijit/form/Select",
   "bpi/utils/util",
+  "bpi/utils/couchdb",
   "dojox/timing",
   "dojo/text!./templates/serviceView.html"
 ],
 
-function(declare, lang, array, Deferred, domConst, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, Button, util, timing, template) {
+function(declare, lang, array, Deferred, dom, domConst, _WidgetBase, _WidgetsInTemplateMixin, _TemplatedMixin, Button, Select, util, couchdb, timing, template) {
 
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
@@ -62,6 +65,40 @@ function(declare, lang, array, Deferred, domConst, _WidgetBase, _WidgetsInTempla
       var _self = this;
       var dfd = new Deferred();
       var systemData = [];
+
+      couchdb.getValues("settings").fetch({
+        query:"_design/all/_view/all",
+        onComplete:function(results){
+        },
+        onError: function(err){
+        }
+      });
+
+      var themeSelect = new Select({
+        name: "colourScheme",
+        style: "color: #000; width:200px",
+        options: [
+            { label: "Original BeakPi", value: "original" },
+            { label: "Drugged Lemonade", value: "lemonade"},
+            { label: "Firebelly Toad", value: "firebelly" },
+            { label: "Burnt Toast", value: "burnt" },
+            { label: "Clear Clouds", value: "clear" }
+        ]
+      }).placeAt(this._serviceViewControls);
+
+      new Button({
+        name: "saveScheme",
+        label: "Update Sceheme",
+        onClick: lang.hitch(this, function() {
+          couchdb.updateValue("settings", "theme", themeSelect.get("value"));
+            if(dojoConfig.device === "phone") {
+              dom.byId("beakPiTheme").href = 'css/' + themeSelect.get("value") + '/bpiMobile.css';
+            }
+            else {
+              dom.byId("beakPiTheme").href = 'css/' + themeSelect.get("value") + '/bpiMain.css';
+            }
+        })
+      }).placeAt(this._serviceViewControls);
 
       this._intervalCurrentUsage.onTick = lang.hitch(this,function() {
         this._refreshCurrentUsage();

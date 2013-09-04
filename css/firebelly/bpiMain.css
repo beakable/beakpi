@@ -1,0 +1,161 @@
+/* BeakPi - CSS */
+
+/*
+
+Primary Color:
+FD2338  DACFA6  374C00  E8DCB1  E8DDB3
+Secondary Color A:
+AD82A0  6F7E48  A16D91  B68AA9  B68CA9
+Secondary Color B:
+739A8C  6F9286  4C0007  7DA496  7FA497
+
+*/
+
+
+/* App Main */
+/* -------- */
+
+body {
+  background: #FD2338;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  color: #4C0007;
+}
+
+#serviceViewHolder {
+  background: #FD2338
+}
+
+#serviceMenuView {
+  background: #6F7E48;
+}
+
+#serviceView {
+}
+
+
+.slideInHolder {
+  background: #6F7E48;
+
+}
+/* --------------- */
+/* --------------- */
+
+
+
+/* Dojo Overwrites */
+/* --------------- */
+
+.dijitButtonText {
+}
+
+.claro .dijitSliderReadOnly .dijitSliderImageHandleH, .claro .dijitSliderDisabled .dijitSliderImageHandleH {
+}
+
+.claro .dijitDialogPaneContent {
+  background: url(/img/background.jpg) repeat;
+}
+
+.claro .dijitSlider .dijitSliderProgressBarH, .claro .dijitSlider .dijitSliderLeftBumper,
+.claro .dijitSliderDisabled .dijitSliderProgressBarH, .claro .dijitSliderDisabled .dijitSliderLeftBumper{
+  background: #28292C
+}
+/* --------------- */
+/* --------------- */
+
+
+
+/* Audio Player */
+/* ------------ */
+
+.inputExplore {
+}
+
+.trackWithArt {
+}
+
+.trackWithArt .buttons{
+}
+
+.trackWithArt .title{
+}
+
+.trackWithoutArt {
+}
+
+.trackWithoutArt .title{
+}
+
+.trackWithoutArt .title .name{
+}
+
+.trackWithoutArt .title .artist{
+}
+
+.trackWithoutArt .buttons{
+}
+
+.searchSummary{
+}
+
+.currentlyPlaying{
+  color: #FFF;
+  background: #6F7E48;
+  border: solid 4px #374C00;
+}
+
+.currentlyPlayingInfo {
+}
+
+.noSongs{
+}
+
+.PlayingControlHolder {
+  background: #6F7E48;
+  color: #FD2338;
+}
+
+.PlayingControl {
+}
+
+.spotifyButton{
+}
+
+.pandoraButton{
+}
+
+#pandoraArt {
+}
+
+.iconPlay{
+}
+
+.iconPause{
+}
+
+.iconPrev{
+}
+
+.iconNext{
+}
+
+.iconShuffle{
+}
+
+.iconLike{
+}
+
+.iconDislike{
+}
+
+/* --------------- */
+/* --------------- */
+
+
+
+/* RF Controller */
+/* ------------ */
+
+.rfControlList {
+}
+

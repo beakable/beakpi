@@ -55,7 +55,25 @@ You should now be able to go to the IP address of your Pi in a browser and see a
 cd /var/www
 sudo git clone https://github.com/beakable/beakpi.git .
 ```
+## Install CouchDB 
 
+```
+sudo apt-get install couchdb
+```
+
+UPDATE PROXY to access couchdb without cross domain proxy issues (Need to look at using localhost rather than fixed IP).
+Change the IP 192.168.1.68 to reflect your fixed IP -- Temporary.
+
+```
+sudo a2enmod proxy
+
+sudo nano /etc/apache2/mods-enabled/proxy.conf
+
+ProxyRequests On
+ProxyPass /couchdb http://192.168.1.68:5984
+
+sudo service apache2 restart
+```
 
 ## Pi Settings
 
@@ -403,6 +421,8 @@ sudo service zbp start
 Use http://harmonygateway.com/ to setup initial Config.
 ```
 
+
+
 ## Misc Setup
 
 
@@ -446,3 +466,9 @@ Then:
 sudo apt-get install vsftpd
 sudo chmod -R 777 /var/www/
 ```
+
+
+
+
+
+
