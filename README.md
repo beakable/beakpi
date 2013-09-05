@@ -1,5 +1,8 @@
 # BeakPi Home Automation
 
+Follow more about this project on Twitter: Beakable Twitter for BeakPi
+
+
 ![Spotify Player Interface](http://beakable.com/img/beakpi/image-3.png)![Pandora Player Interface](http://beakable.com/img/beakpi/image-2.png)
 
 ![Desktop Player Interface](http://beakable.com/img/beakpi/desk-view.jpg)
