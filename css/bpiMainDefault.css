@@ -1,0 +1,262 @@
+/* BeakPi - CSS */
+
+
+
+/* App Main */
+/* -------- */
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+#serviceViewHolder {
+  width: 100%;
+  float: left;
+  min-height: 188px;
+  margin-bottom: 62px;
+  padding-top: 10px;
+}
+
+#serviceMenuView {
+  width:100%;
+  text-align: center;	
+  height: 34px;
+  display: none;
+  position:absolute;
+  z-index: 100;
+}
+
+#serviceView {
+  width: 700px;
+  margin: 36px auto 0 auto;
+  padding: 20px 0 0;
+}
+
+.clear {
+  clear: both;
+}
+
+.slideInHolder {
+  top: 0px;
+  height: 100%;
+  left: 0px;
+  padding-top: 84px;
+  width: 21%;
+  position: fixed;
+  z-index: 50;
+  text-align: center;
+}
+/* --------------- */
+/* --------------- */
+
+
+
+/* Dojo Overwrites */
+/* --------------- */
+
+.dijitButtonText {
+  font-size:10px;
+}
+
+.claro .dijitSliderReadOnly .dijitSliderImageHandleH, .claro .dijitSliderDisabled .dijitSliderImageHandleH {
+  display: none
+}
+
+.claro .dijitDialogPaneContent {
+
+}
+
+.claro .dijitSlider .dijitSliderProgressBarH, .claro .dijitSlider .dijitSliderLeftBumper,
+.claro .dijitSliderDisabled .dijitSliderProgressBarH, .claro .dijitSliderDisabled .dijitSliderLeftBumper{
+
+}
+/* --------------- */
+/* --------------- */
+
+
+
+/* Audio Player */
+/* ------------ */
+
+.inputExplore {
+  margin: 0 0 0 8px;
+  padding: 0;
+  width: 622px;
+}
+
+.trackWithArt {
+  float: left; 
+  width: 233px; 
+  height: 130px; 
+  display: inline; 
+  opacity: 0;
+  font-size: 10px;
+}
+
+.trackWithArt .buttons{
+  margin: 0 0 0 5px;
+  float: left;
+}
+
+.trackWithArt .title{
+  margin: 0 0 0 5px;
+  width: 120px;
+  height: 76px;
+  font-size: 11px;
+  float: left;
+}
+
+.trackWithoutArt {
+  float: left; 
+  width: 335px;
+  opacity: 0
+}
+.trackWithoutArt .title{
+  float: left;
+  font-size: 12px;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+.trackWithoutArt .title .name{
+  width: 200px;
+  height: 15px;
+  font-size:13px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-wrap: break-word;
+  display: inline-block;
+}
+
+.trackWithoutArt .title .artist{
+  font-weight: 100;
+  font-size:11px;
+  width: 200px;
+  height: 13px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-wrap: break-word;
+  display: inline-block;
+}
+
+.trackWithoutArt .buttons{
+  float: left;
+  margin: 0 10px 0 0;
+}
+
+.searchSummary{
+  font-size: 9px; 
+  font-weight: 100; 
+  margin-left: 7px;
+}
+
+.currentlyPlaying{
+  padding: 10px 0;
+  display: block;
+  margin: 10px auto 0;
+  text-align: center;
+  height: 50px;
+  position: relative;
+}
+
+.currentlyPlayingInfo {
+  position: relative;
+  z-index: 30;
+  pointer-events:none;
+}
+
+.noSongs{
+  text-align: center;
+  display: block;
+}
+
+.PlayingControlHolder {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 44px;
+  z-index: 60;
+}
+
+.PlayingControl {
+  width: 700px;
+  margin: 0 auto;
+}
+
+.spotifyButton{
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: url(/img/music-images/spotify.png) center right;
+  background-size:200px 200px;
+  height: 71px;
+  width: 100px;
+  opacity: 0.2;
+  z-index: 20;
+}
+
+.pandoraButton{
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: url(/img/music-images/pandora.png) center left;
+  background-size: 150px 150px;
+  height: 71px;
+  width: 100px;
+  opacity: 0.2;
+  z-index: 20;  
+}
+
+#pandoraArt {
+  display: block;
+  margin: 0 auto;
+}
+
+.iconPlay{
+  height: 20px;
+  width: 20px;
+}
+
+.iconPause{
+  height: 20px;
+  width: 20px;
+}
+
+.iconPrev{
+  width: 31px;
+}
+
+.iconNext{
+  width: 31px;
+}
+
+.iconShuffle{
+  width: 40px;
+}
+
+.iconLike{
+  height: 20px;
+  width: 20px;
+}
+
+.iconDislike{
+  height: 20px;
+  width: 20px;
+}
+
+/* --------------- */
+/* --------------- */
+
+
+
+/* RF Controller */
+/* ------------ */
+
+.rfControlList {
+  text-align: center;
+}
+

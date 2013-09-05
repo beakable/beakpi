@@ -1,0 +1,169 @@
+/* BeakPi - CSS */
+
+/*
+
+Color Scheme:
+http://colorschemedesigner.com/#3r61Ejbm68HPN
+
+
+*/
+
+
+/* App Main */
+/* -------- */
+
+body {
+  background: #B7FB9A;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  color: #0F3200;
+}
+
+#serviceViewHolder {
+  background: #B7FB9A
+}
+
+#serviceMenuView {
+  background: #2C466C;
+}
+
+#serviceView {
+}
+
+
+.slideInHolder {
+  background: #7CD854;
+
+}
+/* --------------- */
+/* --------------- */
+
+
+
+/* Dojo Overwrites */
+/* --------------- */
+
+.claro .dijitButton .dijitButtonNode, .claro .dijitDropDownButton .dijitButtonNode, .claro .dijitComboButton .dijitButtonNode, .claro .dijitToggleButton .dijitButtonNode {
+  background-color: #FFF;
+  background-image: none;
+  border: 1px solid #000;
+  color: #0F3200;
+  border-radius: 0;
+}
+
+.dijitButtonText {
+}
+
+.claro .dijitSliderReadOnly .dijitSliderImageHandleH, .claro .dijitSliderDisabled .dijitSliderImageHandleH {
+}
+
+.claro .dijitDialogPaneContent {
+  background: url(/img/background.jpg) repeat;
+}
+
+.claro .dijitSlider .dijitSliderProgressBarH, .claro .dijitSlider .dijitSliderLeftBumper,
+.claro .dijitSliderDisabled .dijitSliderProgressBarH, .claro .dijitSliderDisabled .dijitSliderLeftBumper{
+  background: #0F3200
+}
+/* --------------- */
+/* --------------- */
+
+
+
+/* Audio Player */
+/* ------------ */
+
+.inputExplore {
+}
+
+.trackWithArt {
+}
+
+.trackWithArt .buttons{
+}
+
+.trackWithArt .title{
+}
+
+.trackWithoutArt {
+}
+
+.trackWithoutArt .title{
+}
+
+.trackWithoutArt .title .name{
+}
+
+.trackWithoutArt .title .artist{
+}
+
+.trackWithoutArt .buttons{
+}
+
+.searchSummary{
+}
+
+.currentlyPlaying{
+  color: #0F3200;
+  background: #7CD854;
+  border: solid 2px #0F3200;
+ -webkit-box-shadow: 0px 0px 2px 2px rgba(200, 200, 200, .75);
+  -moz-box-shadow: 0px 0px 2px 2px rgba(200, 200, 200, .75);
+  box-shadow: 0px 0px 2px 2px rgba(200, 200, 200, .75);
+}
+
+.currentlyPlayingInfo {
+}
+
+.noSongs{
+}
+
+.PlayingControlHolder {
+  background: #7CD854;
+  color: #52646A;
+}
+
+.PlayingControl {
+}
+
+.spotifyButton{
+}
+
+.pandoraButton{
+}
+
+#pandoraArt {
+}
+
+.iconPlay{
+}
+
+.iconPause{
+}
+
+.iconPrev{
+}
+
+.iconNext{
+}
+
+.iconShuffle{
+}
+
+.iconLike{
+}
+
+.iconDislike{
+}
+
+/* --------------- */
+/* --------------- */
+
+
+
+/* RF Controller */
+/* ------------ */
+
+.rfControlList {
+}
+
