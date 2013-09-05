@@ -11,13 +11,12 @@ Follow more about this project on Twitter: [Beakable Twitter for BeakPi](https:/
 
 The following video shows an early state of BeakPi: http://www.youtube.com/watch?v=8AcSKF8fZjw
 
+====
 
 
 The latest video shows the Spotify Player and RF control of lights.
 
-Since this video Pandora has been implemented as well as a basic room temperature output.
-
-BeakPi now supports Audio playback through Spotify and Pandora (instructions on Pandora setup coming soon).
+Since this video Pandora has been implemented as well as a basic room temperature output and themes.
 
 
 ====
