@@ -10,7 +10,11 @@ error_reporting(E_ALL); ini_set('display_errors', '1');
   $RadioFrequencyController = true;
   $PiSettings = true;
 
-  $defaultPane = 2; // 1 - Temperature, 2 - Audio, 3 - RF Controller, 4 - Settings
+  $couchdb = true;
+  $defaultTheme = "original"; // If couchdb is not setup you can manually set the theme to use:
+  // original, clear, toast, lemonade, firebelly.
+
+  $defaultPane = 3; // 1 - Temperature, 2 - Audio, 3 - RF Controller, 4 - Settings
 
 
   $RadioFrequencySHAPassword = "b02e5b66ace6dc3b459be661062c452b50ea1c13";
@@ -76,6 +80,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       debugAtAllCosts: false,
   	  async: true,
   	  isDebug: false,
+      couchdb: "<?php echo $couchdb ?>",
       rfController: "<?php echo $RadioFrequencyController ?>",
       mopidyPlayer: "<?php echo $MopidyMusicPlayer ?>",
       pandoraPlayer: "<?php echo $PandoraMusicPlayer ?>",
@@ -94,13 +99,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dijit/themes/claro/claro.css">
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojox/widget/Toaster/Toaster.css">
     <link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">
-    <?php if ($deviceType == 'computer' || $deviceType == 'tablet') { ?>
+    <?php 
+      if ($deviceType == 'computer' || $deviceType == 'tablet') { 
+    ?>
       <link rel="stylesheet" href="css/bpiMainDefault.css" />
-    <?php  } ?>
+    <?php  
+        if ($couchdb == false) { 
+          echo '<link rel="stylesheet" href="css/'.$defaultTheme.'/bpiMain.css" />';
+        }
+      } 
+    ?>
 
-    <?php if ($deviceType == 'phone') { ?>
+    <?php 
+      if ($deviceType == 'phone') {
+    ?>
       <link rel="stylesheet" href="css/bpiMobileDefault.css" />
-    <?php } ?>   
+    <?php  
+        if ($couchdb == false) { 
+          echo '<link rel="stylesheet" href="css/'.$defaultTheme.'/bpiMobile.css" />';
+        }
+      } 
+    ?>   
 
     <link id="beakPiTheme" type="text/css" rel="stylesheet"/>
    
@@ -139,20 +158,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             var homeRF = null;
             var piSettings = null;
 
-            couchdb.getValues("settings").fetch({
-              query:"_design/all/_view/all",
-              onComplete:function(results){
-                if(dojoConfig.device === "phone") {
-                  dom.byId("beakPiTheme").href = 'css/' + couchdb.getValue(results, "theme") + '/bpiMobile.css';
+            if(dojoConfig.couchdb) {
+              couchdb.getValues("settings").fetch({
+                query:"_design/all/_view/all",
+                onComplete:function(results){
+                  if(dojoConfig.device === "phone") {
+                    dom.byId("beakPiTheme").href = 'css/' + couchdb.getValue(results, "theme") + '/bpiMobile.css';
+                  }
+                  else {
+                    dom.byId("beakPiTheme").href = 'css/' + couchdb.getValue(results, "theme") + '/bpiMain.css';
+                  }
+                },
+                onError: function(err){
+                  console.log(err);
                 }
-                else {
-                  dom.byId("beakPiTheme").href = 'css/' + couchdb.getValue(results, "theme") + '/bpiMain.css';
-                }
-              },
-              onError: function(err){
-                console.log(err);
-              }
-            });
+              });
+            }
 
             Bpi.placeAt(BpiMenuHolder);
 
