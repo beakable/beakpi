@@ -61,6 +61,27 @@ sudo git clone https://github.com/beakable/beakpi.git .
 sudo apt-get install couchdb
 ```
 
+Create a Table called Settings
+
+Add a Field: "theme" 
+with the value: "clear"
+
+So it looks like the following:
+
+````
+_id: 09abf27c06c77ee0d116ed7c1400b697
+_rev: 73-5266717cd8db3070edc70c0bfdf41642
+theme: clear
+
+```
+Add a view called "all" which does the following:
+
+```
+function(doc) {
+  emit(doc._id, doc);
+}
+```
+
 UPDATE PROXY to access couchdb without cross domain proxy issues (Need to look at using localhost rather than fixed IP).
 Change the IP 192.168.1.68 to reflect your fixed IP -- Temporary.
 
