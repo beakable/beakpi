@@ -59,7 +59,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
 
     load: function (){
       var dfd = new Deferred();
-
+      var defaultPLayer = "";
       this._playingControl = new PlayingControl();
       this._exploreBar = new ExploreBar();
       this._slider = new Slider();
@@ -75,8 +75,14 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       this._currentSearch.set("resultsInfo", this._trackListHolderInfo);
       this._currentPlaylist.set("resultsInfo", this._trackListHolderInfo);
 
+      if(dojoConfig.mopidyPlayer) {
+        defaultPLayer = "spotify";
+      }
+      else {
+        defaultPLayer = "pandora";
+      }
 
-      when(this._playerSelect("spotify"), lang.hitch(this, function() {
+      when(this._playerSelect(defaultPLayer), lang.hitch(this, function() {
         // Wait for the media player to finish preparing then begin polling
         this.intervalCurrentPlaying.onTick = lang.hitch(this,function() {
           this._updateCurrentPlaying();

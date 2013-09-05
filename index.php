@@ -5,7 +5,7 @@ error_reporting(E_ALL); ini_set('display_errors', '1');
 // SETTINGS 
 // ---------------------------------------------------
   $TemperatureTrack = true;
-  $MopidyMusicPlayer = true;
+  $MopidyMusicPlayer = false;
   $PandoraMusicPlayer = true;
   $RadioFrequencyController = true;
   $PiSettings = true;
@@ -14,7 +14,7 @@ error_reporting(E_ALL); ini_set('display_errors', '1');
   $defaultTheme = "original"; // If couchdb is not setup you can manually set the theme to use:
   // original, clear, toast, lemonade, firebelly.
 
-  $defaultPane = 3; // 1 - Temperature, 2 - Audio, 3 - RF Controller, 4 - Settings
+  $defaultPane = 2; // 1 - Temperature, 2 - Audio, 3 - RF Controller, 4 - Settings
 
 
   $RadioFrequencySHAPassword = "b02e5b66ace6dc3b459be661062c452b50ea1c13";
