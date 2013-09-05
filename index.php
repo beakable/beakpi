@@ -5,7 +5,7 @@ error_reporting(E_ALL); ini_set('display_errors', '1');
 // SETTINGS 
 // ---------------------------------------------------
   $TemperatureTrack = true;
-  $MopidyMusicPlayer = false;
+  $MopidyMusicPlayer = true;
   $PandoraMusicPlayer = true;
   $RadioFrequencyController = true;
   $PiSettings = true;

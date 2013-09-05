@@ -246,14 +246,22 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
           //
         }));        
       }), true);
-
-      on(this._spotifyButton, "click", lang.hitch(this, function(evt) {
-        this._playerSelect("spotify");
-      }));
-
-      on(this._pandoraButton, "click", lang.hitch(this, function(evt) {
-        this._playerSelect("pandora");
-      }));
+      if(dojoConfig.mopidyPlayer) {
+        on(this._spotifyButton, "click", lang.hitch(this, function(evt) {
+          this._playerSelect("spotify");
+        }));
+      }
+      else {
+        domStyle.set(this._spotifyButton, "display", "none");
+      }
+      if(dojoConfig.pandoraPlayer) {
+        on(this._pandoraButton, "click", lang.hitch(this, function(evt) {
+          this._playerSelect("pandora");
+        }));
+      }
+      else {
+        domStyle.set(this._pandoraButton, "display", "none");
+      }
     },
 
 
