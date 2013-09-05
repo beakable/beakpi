@@ -1,6 +1,6 @@
 # BeakPi Home Automation
 
-Follow more about this project on Twitter: Beakable Twitter for BeakPi
+Follow more about this project on Twitter: [Beakable Twitter for BeakPi](https://twitter.com/Beakable)
 
 
 ![Spotify Player Interface](http://beakable.com/img/beakpi/image-3.png)![Pandora Player Interface](http://beakable.com/img/beakpi/image-2.png)
@@ -15,7 +15,6 @@ Since this video Pandora has been implemented as well as a basic room temperatur
 
 BeakPi now supports Audio playback through Spotify and Pandora (instructions on Pandora setup coming soon).
 
-Follow more about this project on Twitter: [Beakable Twitter for BeakPi](https://twitter.com/Beakable)
 
 ====
 
