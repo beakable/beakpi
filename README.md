@@ -7,7 +7,11 @@ Follow more about this project on Twitter: [Beakable Twitter for BeakPi](https:/
 
 ![Desktop Player Interface](http://beakable.com/img/beakpi/desk-view.jpg)
 
-The following video shows the current state of BeakPi: http://www.youtube.com/watch?v=8AcSKF8fZjw
+[More Images of themes and player here](http://imgur.com/a/4KRRS)
+
+The following video shows an early state of BeakPi: http://www.youtube.com/watch?v=8AcSKF8fZjw
+
+
 
 The latest video shows the Spotify Player and RF control of lights.
 
