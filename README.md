@@ -60,7 +60,10 @@ You should now be able to go to the IP address of your Pi in a browser and see a
 cd /var/www
 sudo git clone https://github.com/beakable/beakpi.git .
 ```
-## Install CouchDB 
+## Install CouchDB
+
+CouchDB is used for the Temperature storage however I've yet to tidy the code and add instructions for this.
+Just now it's used for setting the theme directly though the app rather than a PHP flag.
 
 ```
 sudo apt-get install couchdb
