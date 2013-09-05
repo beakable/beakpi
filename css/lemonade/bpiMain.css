@@ -1,0 +1,168 @@
+/* BeakPi - CSS */
+
+/*
+
+Primary Color:
+E6D9AC  DACFA6  D5C690  E8DCB1  E8DDB3
+Secondary Color A:
+AD82A0  A57E99  A16D91  B68AA9  B68CA9
+Secondary Color B:
+739A8C  6F9286  618F7F  7DA496  7FA497
+
+*/
+
+
+/* App Main */
+/* -------- */
+
+body {
+  background: #E6D9AC;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  color: #618F7F;
+}
+
+#serviceViewHolder {
+  background: #E6D9AC
+}
+
+#serviceMenuView {
+  background: #A57E99;
+}
+
+#serviceView {
+}
+
+
+.slideInHolder {
+  background: #D5C690;
+
+}
+/* --------------- */
+/* --------------- */
+
+
+
+/* Dojo Overwrites */
+/* --------------- */
+
+.claro .dijitButton .dijitButtonNode, .claro .dijitDropDownButton .dijitButtonNode, .claro .dijitComboButton .dijitButtonNode, .claro .dijitToggleButton .dijitButtonNode {
+  background-color: #FF6699;
+  background-image: none;
+  border: none;
+  color: #FFF;
+}
+
+.dijitButtonText {
+}
+
+.claro .dijitSliderReadOnly .dijitSliderImageHandleH, .claro .dijitSliderDisabled .dijitSliderImageHandleH {
+}
+
+.claro .dijitDialogPaneContent {
+  background: url(/img/background.jpg) repeat;
+}
+
+.claro .dijitSlider .dijitSliderProgressBarH, .claro .dijitSlider .dijitSliderLeftBumper,
+.claro .dijitSliderDisabled .dijitSliderProgressBarH, .claro .dijitSliderDisabled .dijitSliderLeftBumper{
+  background: #FF6699
+}
+/* --------------- */
+/* --------------- */
+
+
+
+/* Audio Player */
+/* ------------ */
+
+.inputExplore {
+}
+
+.trackWithArt {
+}
+
+.trackWithArt .buttons{
+}
+
+.trackWithArt .title{
+}
+
+.trackWithoutArt {
+}
+
+.trackWithoutArt .title{
+}
+
+.trackWithoutArt .title .name{
+}
+
+.trackWithoutArt .title .artist{
+}
+
+.trackWithoutArt .buttons{
+}
+
+.searchSummary{
+}
+
+.currentlyPlaying{
+  color: #E6D9AC;
+  background: #A57E99;
+  border: solid 4px #D5C690;
+}
+
+.currentlyPlayingInfo {
+}
+
+.noSongs{
+}
+
+.PlayingControlHolder {
+  background: #A57E99;
+  color: #E6D9AC;
+}
+
+.PlayingControl {
+}
+
+.spotifyButton{
+}
+
+.pandoraButton{
+}
+
+#pandoraArt {
+}
+
+.iconPlay{
+}
+
+.iconPause{
+}
+
+.iconPrev{
+}
+
+.iconNext{
+}
+
+.iconShuffle{
+}
+
+.iconLike{
+}
+
+.iconDislike{
+}
+
+/* --------------- */
+/* --------------- */
+
+
+
+/* RF Controller */
+/* ------------ */
+
+.rfControlList {
+}
+

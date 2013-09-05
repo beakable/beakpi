@@ -6,56 +6,70 @@
 /* -------- */
 
 body {
-  background: url(../img/background.jpg) repeat;
+  background: url(/img/background.jpg) repeat;  
   margin: 0;
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
-  font-weight: 700;
-  color: #FFF;
-  width: 100%;
+  font-weight: 0;
+  color:#FFF;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 #serviceViewHolder {
-  background: url(../img/serviceView-background.png) repeat-x top center;
+  background: url(/img/serviceView-background.png) repeat-x top center;
   width: 100%;
   float: left;
   min-height: 188px;
-  margin-bottom: 62px;
   padding-top: 10px;
+  margin-bottom: 60px;
 }
 
 #serviceMenuView {
-  background: url(../img/menu-background.png) repeat; 
-  width:100%;
-  text-align: center;	
+  width: 100%;
+  text-align: center;
+  background: url(/img/menu-background.png) repeat;   
   border-bottom: solid 2px #000;
   height: 34px;
   display: none;
-  position:absolute;
-  z-index: 100;
+  position: absolute;
+  z-index: 500;
 }
 
 #serviceView {
-  width: 700px;
-  margin: 36px auto 0 auto;
-  padding: 20px 0 0;
+  margin: 36px auto 0;
 }
 
 .clear {
-  clear: both;
+  clear:both;
 }
 
 .slideInHolder {
   top: 0px;
-  height: 100%;
+  bottom: -200px;
   left: 0px;
-  padding-top: 84px;
-  width: 21%;
+  padding-top:84px;
+  width: 63%;
   position: fixed;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.9);
   z-index: 50;
   text-align: center;
 }
+
+.slideInEnder {
+  top: 0px;
+  bottom: -200px;
+  left: 0px;
+  padding-top:44px;
+  width: 100%;
+  position: fixed;
+  z-index: 40;
+  text-align: center;
+}
+
 /* --------------- */
 /* --------------- */
 
@@ -64,22 +78,24 @@ body {
 /* Dojo Overwrites */
 /* --------------- */
 
-.dijitButtonText {
-  font-size:10px;
+.dijitButtonText{
+font-size:10px;
 }
 
-.claro .dijitSliderReadOnly .dijitSliderImageHandleH, .claro .dijitSliderDisabled .dijitSliderImageHandleH {
-  display: none
+.claro .dijitSliderReadOnly .dijitSliderImageHandleH, .claro .dijitSliderDisabled .dijitSliderImageHandleH{
+display: none
 }
 
 .claro .dijitDialogPaneContent {
-  background: url(../img/background.jpg) repeat;
+  background: url(/img/background.jpg) repeat;
 }
 
 .claro .dijitSlider .dijitSliderProgressBarH, .claro .dijitSlider .dijitSliderLeftBumper,
 .claro .dijitSliderDisabled .dijitSliderProgressBarH, .claro .dijitSliderDisabled .dijitSliderLeftBumper{
   background: #28292C
 }
+
+
 /* --------------- */
 /* --------------- */
 
@@ -88,62 +104,31 @@ body {
 /* Audio Player */
 /* ------------ */
 
-.inputExplore {
-  margin: 0 0 0 8px;
-  padding: 0;
-  width: 622px;
-}
-
-.trackWithArt {
-  float: left; 
-  width: 233px; 
-  height: 130px; 
-  display: inline; 
-  opacity: 0;
-  font-size: 10px;
-}
-
-.trackWithArt .buttons{
-  margin: 0 0 0 5px;
-  float: left;
-}
-
-.trackWithArt .title{
-  margin: 0 0 0 5px;
-  width: 120px;
-  height: 76px;
-  font-size: 11px;
-  float: left;
-}
-
 .trackWithoutArt {
   float: left; 
-  width: 335px;
+  width: 100%;  
   opacity: 0
 }
+
 .trackWithoutArt .title{
   float: left;
-  font-size: 12px;
-  overflow: hidden;
-  padding: 0;
-  margin: 0;
+  font-size: 10px;
+  width: 65%;
+  margin: 0 0 0 5px;
 }
 
 .trackWithoutArt .title .name{
-  width: 200px;
-  height: 15px;
   font-size:13px;
+  width: 100%;
+  height: 14px;
   text-overflow: ellipsis;
   overflow: hidden;
   word-wrap: break-word;
   display: inline-block;
 }
-
 .trackWithoutArt .title .artist{
-  font-weight: 100;
-  font-size:11px;
-  width: 200px;
-  height: 13px;
+  width: 100%;
+  height: 11px;
   text-overflow: ellipsis;
   overflow: hidden;
   word-wrap: break-word;
@@ -152,7 +137,7 @@ body {
 
 .trackWithoutArt .buttons{
   float: left;
-  margin: 0 10px 0 0;
+
 }
 
 .searchSummary{
@@ -162,20 +147,46 @@ body {
 }
 
 .currentlyPlaying{
-  background: url(../img/playing-background.png) repeat-x;
+  background: url(/img/playing-background.png) repeat-x;
   padding: 10px 0;
   display: block;
   margin: 10px auto 0;
   text-align: center;
-  height: 50px;
-  border: solid 2px #37373C;
+  border-bottom:solid 2px #37373C;
   position: relative;
+  height: 40px;
+  font-size: 15px
+ -webkit-box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, .75);
+  -moz-box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, .75);
+  box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, .75);
 }
 
 .currentlyPlayingInfo {
   position: relative;
   z-index: 30;
+  text-shadow: 0px 2px rgba(0, 0, 0, .75);
   pointer-events:none;
+  font-size:15px;
+}
+
+.playingTime{
+  font-size:12px;
+}
+
+.controlButtons{
+  text-align: center;
+}
+
+.inputExplore{
+  margin-top: 4px;
+  width: 204px;
+  float: left;
+}
+
+
+.playlistStored{
+  margin: 5px 0 20px;
+  text-align: center;
 }
 
 .noSongs{
@@ -184,7 +195,7 @@ body {
 }
 
 .PlayingControlHolder {
-  background: url(../img/menu-background.png) repeat; 
+  background: url(/img/menu-background.png) repeat;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -194,29 +205,28 @@ body {
 }
 
 .PlayingControl {
-  width: 700px;
-  margin: 0 auto;
+  width: 700px
 }
 
 .spotifyButton{
   position: absolute;
   left: 0;
-  top: 0;
-  background: url(../img/music-images/spotify.png) center right;
-  background-size:200px 200px;
-  height: 71px;
+  top: 1px;
+  background: #006699;
+  height: 58px;
   width: 100px;
+  background: url(/img/music-images/spotify.png) center right;
+  background-size: 200px 200px;
   opacity: 0.2;
-  z-index: 20;
 }
 
 .pandoraButton{
   position: absolute;
   right: 0;
-  top: 0;
-  background: url(../img/music-images/pandora.png) center left;
+  top: 1px;
+  background: url(/img/music-images/pandora.png) center left;
   background-size: 150px 150px;
-  height: 71px;
+  height: 58px;
   width: 100px;
   opacity: 0.2;
   z-index: 20;  
@@ -225,7 +235,10 @@ body {
 #pandoraArt {
   display: block;
   margin: 0 auto;
+  height: 250px;
+  width: 250px;
 }
+
 
 .iconPlay{
   height: 20px;
@@ -246,7 +259,7 @@ body {
 }
 
 .iconShuffle{
-  width: 40px;
+  width: 31px;
 }
 
 .iconLike{
@@ -270,4 +283,3 @@ body {
 .rfControlList {
   text-align: center;
 }
-

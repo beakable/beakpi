@@ -1,0 +1,166 @@
+/* BeakPi - CSS */
+
+/*
+
+Color Scheme:
+http://colorschemedesigner.com/#3E11E5Z--00--
+
+
+*/
+
+
+/* App Main */
+/* -------- */
+
+body {
+  background: #FBFCFF;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  color: #000;
+}
+
+#serviceViewHolder {
+  background: #FBFCFF
+}
+
+#serviceMenuView {
+  background: #E9F2FF;
+}
+
+#serviceView {
+}
+
+
+.slideInHolder {
+  background: #FBFCFF;
+
+}
+/* --------------- */
+/* --------------- */
+
+
+
+/* Dojo Overwrites */
+/* --------------- */
+
+.claro .dijitButton .dijitButtonNode, .claro .dijitDropDownButton .dijitButtonNode, .claro .dijitComboButton .dijitButtonNode, .claro .dijitToggleButton .dijitButtonNode {
+  background-color: #EAF3FF;
+  background-image: none;
+  border: solid 1px #003B8D;
+  color: #000;
+  border-radius: 10px;
+}
+
+.dijitButtonText {
+}
+
+.claro .dijitSliderReadOnly .dijitSliderImageHandleH, .claro .dijitSliderDisabled .dijitSliderImageHandleH {
+}
+
+.claro .dijitDialogPaneContent {
+  background: url(/img/background.jpg) repeat;
+}
+
+.claro .dijitSlider .dijitSliderProgressBarH, .claro .dijitSlider .dijitSliderLeftBumper,
+.claro .dijitSliderDisabled .dijitSliderProgressBarH, .claro .dijitSliderDisabled .dijitSliderLeftBumper{
+  background: #3F5A82
+}
+/* --------------- */
+/* --------------- */
+
+
+
+/* Audio Player */
+/* ------------ */
+
+.inputExplore {
+}
+
+.trackWithArt {
+}
+
+.trackWithArt .buttons{
+}
+
+.trackWithArt .title{
+}
+
+.trackWithoutArt {
+}
+
+.trackWithoutArt .title{
+}
+
+.trackWithoutArt .title .name{
+}
+
+.trackWithoutArt .title .artist{
+}
+
+.trackWithoutArt .buttons{
+}
+
+.searchSummary{
+}
+
+.currentlyPlaying{
+  border: solid 1px #003B8D;
+  color: #000;
+  background: #FBFCFF;
+}
+
+.currentlyPlayingInfo {
+}
+
+.noSongs{
+}
+
+.PlayingControlHolder {
+  background: #FBFCFF;
+  color: #52646A;
+}
+
+.PlayingControl {
+}
+
+.spotifyButton{
+}
+
+.pandoraButton{
+}
+
+#pandoraArt {
+}
+
+.iconPlay{
+}
+
+.iconPause{
+}
+
+.iconPrev{
+}
+
+.iconNext{
+}
+
+.iconShuffle{
+}
+
+.iconLike{
+}
+
+.iconDislike{
+}
+
+/* --------------- */
+/* --------------- */
+
+
+
+/* RF Controller */
+/* ------------ */
+
+.rfControlList {
+}
+

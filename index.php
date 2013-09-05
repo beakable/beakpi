@@ -73,9 +73,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           name: "bpi",
           location: location.pathname.replace(/\/[^/]+$/, '') + "js/bpi"
         }],
-      debugAtAllCosts: true,
+      debugAtAllCosts: false,
   	  async: true,
-  	  isDebug: true,
+  	  isDebug: false,
       rfController: "<?php echo $RadioFrequencyController ?>",
       mopidyPlayer: "<?php echo $MopidyMusicPlayer ?>",
       pandoraPlayer: "<?php echo $PandoraMusicPlayer ?>",
@@ -94,14 +94,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dijit/themes/claro/claro.css">
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojox/widget/Toaster/Toaster.css">
     <link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">
-
     <?php if ($deviceType == 'computer' || $deviceType == 'tablet') { ?>
-      <link rel="stylesheet" href="css/musicPlayer.css" />
+      <link rel="stylesheet" href="css/bpiMainDefault.css" />
     <?php  } ?>
 
     <?php if ($deviceType == 'phone') { ?>
-      <link rel="stylesheet" href="css/musicPlayerMobile.css" />
-    <?php } ?>
+      <link rel="stylesheet" href="css/bpiMobileDefault.css" />
+    <?php } ?>   
+
+    <link id="beakPiTheme" type="text/css" rel="stylesheet"/>
+   
+
 
       <script>
         var mopidy = new Mopidy({
@@ -122,10 +125,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           "bpi/rf/serviceView",
           "bpi/temperature/serviceView",
           "bpi/settings/serviceView",
+          "bpi/utils/couchdb",
           "dojox/mobile/parser",
           "dojox/mobile"
-        ], function(parser, ready, lang, on, fx, dom, domConst, domStyle, aspect, menu, MusicPlayer, HomeRF, Temperature, PiSettings){
-        	ready(function(){
+        ], function(parser, ready, lang, on, fx, dom, domConst, domStyle, aspect, menu, MusicPlayer, HomeRF, Temperature, PiSettings, couchdb){
+        	ready(function() {
         		parser.parse();
             var BpiMenuHolder = dom.byId("serviceMenuView");
             var BpiHolder = dom.byId("serviceView");
@@ -135,6 +139,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             var homeRF = null;
             var piSettings = null;
 
+            couchdb.getValues("settings").fetch({
+              query:"_design/all/_view/all",
+              onComplete:function(results){
+                if(dojoConfig.device === "phone") {
+                  dom.byId("beakPiTheme").href = 'css/' + couchdb.getValue(results, "theme") + '/bpiMobile.css';
+                }
+                else {
+                  dom.byId("beakPiTheme").href = 'css/' + couchdb.getValue(results, "theme") + '/bpiMain.css';
+                }
+              },
+              onError: function(err){
+                console.log(err);
+              }
+            });
 
             Bpi.placeAt(BpiMenuHolder);
 
