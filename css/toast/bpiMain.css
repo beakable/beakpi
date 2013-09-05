@@ -1,15 +1,10 @@
 /* BeakPi - CSS */
 
 /*
-Color Scheme:
-http://colorschemedesigner.com/#5A31KsOsOFfFf
 
-Primary Color:
-E01625  963B42  78040D  F4616C  F49BA2
-Secondary Color A:
-0F9A69  296751  035337  58DDAE  8CDDC0
-Secondary Color B:
-85D315  6B8D38  457104  B5F05F  CCF098
+Color Scheme:
+http://colorschemedesigner.com/#3r61Ejbm68HPN
+
 
 */
 
@@ -18,18 +13,18 @@ Secondary Color B:
 /* -------- */
 
 body {
-  background: #000;
+  background: #B7FB9A;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 700;
-  color: #E01625;
+  color: #0F3200;
 }
 
 #serviceViewHolder {
-  background: #000
+  background: #B7FB9A
 }
 
 #serviceMenuView {
-  background: #000;
+  background: #2C466C;
 }
 
 #serviceView {
@@ -37,7 +32,7 @@ body {
 
 
 .slideInHolder {
-  background: #000;
+  background: #7CD854;
 
 }
 /* --------------- */
@@ -49,10 +44,11 @@ body {
 /* --------------- */
 
 .claro .dijitButton .dijitButtonNode, .claro .dijitDropDownButton .dijitButtonNode, .claro .dijitComboButton .dijitButtonNode, .claro .dijitToggleButton .dijitButtonNode {
-  background-color: #E01625;
+  background-color: #FFF;
   background-image: none;
-  border: none;
-  color: #FFF;
+  border: 1px solid #000;
+  color: #0F3200;
+  border-radius: 0;
 }
 
 .dijitButtonText {
@@ -67,7 +63,7 @@ body {
 
 .claro .dijitSlider .dijitSliderProgressBarH, .claro .dijitSlider .dijitSliderLeftBumper,
 .claro .dijitSliderDisabled .dijitSliderProgressBarH, .claro .dijitSliderDisabled .dijitSliderLeftBumper{
-  background: #0F9A69
+  background: #0F3200
 }
 /* --------------- */
 /* --------------- */
@@ -108,22 +104,23 @@ body {
 }
 
 .currentlyPlaying{
-  color: #58DDAE;
-  background: #000;
-  border: solid 2px #0F9A69;
-
+  color: #0F3200;
+  background: #7CD854;
+  border: solid 2px #0F3200;
+ -webkit-box-shadow: 0px 0px 2px 2px rgba(200, 200, 200, .75);
+  -moz-box-shadow: 0px 0px 2px 2px rgba(200, 200, 200, .75);
+  box-shadow: 0px 0px 2px 2px rgba(200, 200, 200, .75);
 }
 
 .currentlyPlayingInfo {
-  
 }
 
 .noSongs{
 }
 
 .PlayingControlHolder {
-  background: #000;
-  color: #E01625;
+  background: #7CD854;
+  color: #52646A;
 }
 
 .PlayingControl {

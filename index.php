@@ -10,7 +10,7 @@ error_reporting(E_ALL); ini_set('display_errors', '1');
   $RadioFrequencyController = true;
   $PiSettings = true;
 
-  $defaultPane = 4; // 1 - Temperature, 2 - Audio, 3 - RF Controller, 4 - Settings
+  $defaultPane = 2; // 1 - Temperature, 2 - Audio, 3 - RF Controller, 4 - Settings
 
 
   $RadioFrequencySHAPassword = "b02e5b66ace6dc3b459be661062c452b50ea1c13";

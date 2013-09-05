@@ -81,14 +81,14 @@ function(declare, lang, array, Deferred, dom, domConst, _WidgetBase, _WidgetsInT
             { label: "Original BeakPi", value: "original" },
             { label: "Drugged Lemonade", value: "lemonade"},
             { label: "Firebelly Toad", value: "firebelly" },
-            { label: "Burnt Toast", value: "burnt" },
+            { label: "Toasty Green", value: "toast" },
             { label: "Clear Clouds", value: "clear" }
         ]
       }).placeAt(this._serviceViewControls);
 
       new Button({
         name: "saveScheme",
-        label: "Update Sceheme",
+        label: "Update Scheme",
         onClick: lang.hitch(this, function() {
           couchdb.updateValue("settings", "theme", themeSelect.get("value"));
             if(dojoConfig.device === "phone") {
