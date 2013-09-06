@@ -127,7 +127,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
           case "explore":
             domConst.empty(this._trackListHolder);
             domConst.empty(this._trackListHolderInfo);
-            when(util.requestSearch("http://ws.spotify.com/search/1/track.json?q=" + val), lang.hitch(this, function(res) {
+            when(util.mopidySearch(val), lang.hitch(this, function(res) {
               return this._currentSearch.listResults(res);
             }));
           break;
