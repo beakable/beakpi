@@ -22,10 +22,7 @@ error_reporting(E_ALL); ini_set('display_errors', '1');
   $PianoUser = "-U admin -P admin"; // Flags needed
   
   $mopidySocket = "ws://192.168.1.68:6680/mopidy/ws/";
-  $countryCode = "GB";
-// AG AI AQ AR AU BB BM BO BR BS BT BZ CK CL CO CR CU DE DM DO EC FK GB 
-// GD GF GI GP GT GU GY HN HT IO JM KI KN KY LC MP MQ MS MX NI NR NU NZ PA 
-// PE PM PN PR PY SB SR SV TC TK TO TT TV US UY VC VE VG VU WF WS
+  
 // ---------------------------------------------------
 ?>
 <?php
@@ -86,7 +83,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       pandoraPlayer: "<?php echo $PandoraMusicPlayer ?>",
       pianoUser: "<?php echo $PianoUser ?>",
       device: "<?php echo $deviceType ?>",
-      countryCode: "<?php echo $countryCode ?>",
       piSettings: "<?php echo $PiSettings ?>",
       tempTrack: "<?php echo $TemperatureTrack ?>",
       radioFrequencySHAPassword: "<?php echo $RadioFrequencySHAPassword ?>",
