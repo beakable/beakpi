@@ -36,11 +36,8 @@ function(declare, lang, array, when, domConstruct, domAttr, _WidgetBase, Track) 
     _resultsInfo: null,
 
     _summary: function(results) {
-      var i;
-      array.forEach(results.tracks, lang.hitch(this, function(track) {
-        if(track.album.availability.territories.indexOf(dojoConfig.countryCode) !== -1) {
-          ++ this.totalTracks;
-        }
+      array.forEach(results, lang.hitch(this, function(track) {
+        ++ this.totalTracks;
       }));
       domAttr.set(this._resultsInfo, "innerHTML", "Displaying Results 0 of " + this.totalTracks);
     },
@@ -50,16 +47,14 @@ function(declare, lang, array, when, domConstruct, domAttr, _WidgetBase, Track) 
           trackResultNumber = 1,
           displayArt = false,
           clearSplit = 2;
-
       this.totalTracks = 0;
-      this._summary(results);
+      this._summary(results[0].tracks);
 
-      array.forEach(results.tracks, lang.hitch(this, function(track) {
+      array.forEach(results[0].tracks, lang.hitch(this, function(track) {
         trackResult = new Track();
-        if (track.album.availability.territories.indexOf(dojoConfig.countryCode) !== -1) {
           var trackInfo = {
             name: track.name,
-            href: track.href,
+            href: track.uri,
             artist: track.artists[0].name
           };
           when(trackResult.displayTrack(trackInfo, this._resultsHolder, displayArt)).then(lang.hitch(this, function(){
@@ -69,7 +64,6 @@ function(declare, lang, array, when, domConstruct, domAttr, _WidgetBase, Track) 
               }
               ++trackResultNumber;
           }));
-        }
       }));
     },
 
