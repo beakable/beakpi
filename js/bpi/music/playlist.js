@@ -38,7 +38,7 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
 
     listStoredSpotify: function(domHolder, buttonSplit, domToPlaceInto) {
       var storedPlaylists = [], _self = this, btnPlaylistTitle;
-      when(util.command("mpc lsplaylists")).then(lang.hitch(this, function(storedPlaylists){
+      when(util.mopidyPlaylists()).then(lang.hitch(this, function(storedPlaylists){
         domConst.empty(domHolder);
         btnPlaylistTitle= new Button({
           label: "Current Playlist",
@@ -55,11 +55,12 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
         for (i = 0; i <= storedPlaylists.length; i++) {
           if (storedPlaylists[i] !== "" && storedPlaylists[i] !== undefined && storedPlaylists[i] !== "Starred") {
             btnPlaylistTitle = new Button({
-              label: storedPlaylists[i],
+              title: storedPlaylists[i].name,
+              label: storedPlaylists[i].name + " (" + storedPlaylists[i].tracks.length + ")",
               onClick: function(){
-                when(util.commandTracklist("clear"), lang.hitch(this, function(){
+              when(util.command("mpc clear"), lang.hitch(this, function(){
                   _self.playlistLoading();
-                  util.command(("mpc load '" + this.label +"'")).then(lang.hitch(this, function(res) {
+                  util.command(("mpc load '" + this.title +"'")).then(lang.hitch(this, function(res) {
                     _self.listCurrent(domToPlaceInto);
                   }));
                 }));

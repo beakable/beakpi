@@ -86,19 +86,33 @@ define([
       return dfd.promise;
     },
 
+    mopidyPlaylists: function(){
+      return mopidy.playlists.getPlaylists();
+    },
+
+    mopidySearch: function(val) {
+      return mopidy.library.search({'any': [val]});
+    },
+
     commandPlayTrack: function(com){
        mopidy.tracklist.add(null, null, com);
     },
 
-    commandTracklist: function(com){
-       mopidy.tracklist[com]();
+    mopidyTracklist: function(com, args){
+      if (args) {
+        mopidy.tracklist[com](args);
+      }
+      else {
+        mopidy.tracklist[com]();
+      }
     },
+
     commandShuffleTracks: function() {
       mopidy.tracklist.shuffle();
     },
 
-    commandPlayer: function(com,args){
-      if(args){
+    commandPlayer: function(com, args){
+      if (args) {
         mopidy.playback[com](args);
       }
       else{
