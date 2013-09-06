@@ -303,6 +303,16 @@ Reboot your Pi
 
 ## Spotify
 
+### Install MPC:
+
+BeakPi attempts to remain fast and responsive. To keep interactions with Spotify fast it uses a hybrid of Mopidy and MPC.
+Mopidy offers a far better experience with Spotify control, however MPC has shown to be faster for particular basic commands.
+To use BeakPi both is required:
+
+```
+sudo apt-get install mpc
+```
+
 ### Install Mopidy:
 
 http://docs.mopidy.com/en/latest/installation/raspberrypi/
