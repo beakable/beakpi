@@ -90,7 +90,7 @@ function(declare, lang, fx, on, when, Deferred, domConstruct, domAttr, domClass,
 				  this.href = track.href;
 					on(this._btnPlay, "click", lang.hitch(this, function(evt){
               if(isNaN(this.href)) {
-                when(util.commandTracklist("clear")).then(lang.hitch(this, function() {
+                when(util.command("mpc clear")).then(lang.hitch(this, function() {
                   when(util.commandPlayTrack(this.href)).then(lang.hitch(this, function(res) {
                     util.commandPlayer("play");
                   }));
