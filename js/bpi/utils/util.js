@@ -122,7 +122,6 @@ define([
 
     command: function(com){
       var dfd = new Deferred();
-      console.log(encodeURI(com));
       xhr("/php/command.php?xhr=" + encodeURIComponent(com), {
         preventCache: true,
         handleAs: "json"
