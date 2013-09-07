@@ -69,6 +69,7 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
             btnPlaylistTitle.placeAt(domHolder);
             domStyle.set(btnPlaylistTitle.domNode,"width","80%");
             domStyle.set(btnPlaylistTitle.domNode.firstChild, "display", "block");
+            domStyle.set(btnPlaylistTitle.domNode.firstChild.firstChild, "white-space", "normal");
             if (buttonSplit) {
               domConst.place(buttonSplit, domHolder);
             }
@@ -94,6 +95,7 @@ function (declare, lang, when, aspect, on, touch, domConst, domAttr, domGeom, do
             btnPlaylistTitle.placeAt(domHolder);
             domStyle.set(btnPlaylistTitle.domNode,"width","80%");
             domStyle.set(btnPlaylistTitle.domNode.firstChild, "display", "block");
+            domStyle.set(btnPlaylistTitle.domNode.firstChild.firstChild, "white-space", "normal");
             if (buttonSplit) {
               domConst.place(buttonSplit, domHolder);
             }
