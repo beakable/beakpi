@@ -21,7 +21,7 @@ error_reporting(E_ALL); ini_set('display_errors', '1');
   
   $PianoUser = "-U admin -P admin"; // Flags needed
   
-  $mopidySocket = "ws://192.168.1.68:6680/mopidy/ws/";
+  $mopidySocket = "ws://".$_SERVER['SERVER_ADDR'].":6680/mopidy/ws/";
   
 // ---------------------------------------------------
 ?>
