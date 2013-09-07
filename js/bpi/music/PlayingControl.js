@@ -89,15 +89,15 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
 
       if (dojoConfig.device !== "computer") {
         var windowBox = win.getBox();
-        this._currentSongSeek.createBar("song", this._progressSeekBar, windowBox.w+"px");
-        this._volumeSeek.createBar("volume", this._volumeSeekBar, windowBox.w-182+"px");
+        this._currentSongSeek.createBar("song", this._progressSeekBar, 0, 100, windowBox.w+"px");
+        this._volumeSeek.createBar("volume", this._volumeSeekBar, 0, 100, windowBox.w-182+"px");
         domStyle.set(this._controlHolderVolume, "width", windowBox.w-182+"px");
         domStyle.set(this._controlHolder, "width",  "100%");
         domStyle.set(this._controlHolderButtons, "width", "140px");
       }
       else {
-        this._volumeSeek.createBar("volume", this._volumeSeekBar, "100%");
-        this._currentSongSeek.createBar("song", this._progressSeekBar, "100%");
+        this._volumeSeek.createBar("volume", this._volumeSeekBar,  0, 100, "100%");
+        this._currentSongSeek.createBar("song", this._progressSeekBar,  0, 100, "100%");
         domStyle.set(this._controlHolder, "width", "100%");
         domStyle.set(this._controlHolderButtons, "width", "140px");
         domStyle.set(this._controlHolderShuffle, "width", "40px");
@@ -167,6 +167,10 @@ function(declare, lang, fx, window, win, mouse, on, when, Deferred, domConstruct
 
     _setSongSeekAttr: function(val) {
       this._currentSongSeek.trackTo(val);
+    },
+
+    _setSongSeekMaxAttr: function(val) {
+      this._currentSongSeek.updateMax(val);
     }
 
 

@@ -244,7 +244,7 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       aspect.after(this._exploreBar, "explorePerform", lang.hitch(this, function(val) {
         when(this._playerCommand("explore", val), lang.hitch(this, function(res) {
           //
-        }));        
+        }));
       }), true);
       if(dojoConfig.mopidyPlayer) {
         on(this._spotifyButton, "click", lang.hitch(this, function(evt) {
@@ -264,9 +264,10 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
       }
     },
 
-
-
-
+    _convertTimeToSeconds: function(time) {
+      var parts = time.split(':');
+      return (Number(parts[0]) * 60 + Number(parts[1]));
+    },
 
     // Uses currentPlayer to determine what command to use and how to format returned playing information 
     _updateCurrentPlaying: function(){
@@ -279,8 +280,11 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
                 if (res[1].indexOf("[playing]") !== -1) {
                   domAttr.set(this._currentlyPlaying, "innerHTML", res[0]);
                   timeInfo = (res[1].split("   "))[1].split(" ");
+                  var currentTime = (timeInfo[0].split("/"))[0];
+                  var maxTime = (timeInfo[0].split("/"))[1];
                   domAttr.set(this._currentlyPlayingTime, "innerHTML", timeInfo[0]);
-                  this._playingControl.set("songSeek", parseInt(timeInfo[1].replace(/[^0-9]/gi, ''), 10));
+                  this._playingControl.set("songSeek", this._convertTimeToSeconds(currentTime));
+                  this._playingControl.set("songSeekMax", this._convertTimeToSeconds(maxTime));
                   this._playingControl.set("playButton", '<i class="icon-pause icon-2x"></i>');
                   this._playingControl.set("volumeSeek", parseInt(res[2].replace(/[^0-9]/gi, ''), 10));
                   dfd.resolve();
@@ -308,9 +312,11 @@ function(declare, lang, on, when, Deferred, domAttr, domStyle, domConst, aspect,
               if (res[0]) {
                 if (res[0].indexOf("Playing") !== -1) {
                   timeInfo = (res[0].split("Playing "))[1].split("/");
-                  domAttr.set(this._currentlyPlayingTime, "innerHTML", timeInfo[0] + "/" +timeInfo[1]);
-                 // this._playingControl.set("songSeek", parseInt(timeInfo[1].replace(/[^0-9]/gi, ''), 10));
+                  
+                  domAttr.set(this._currentlyPlayingTime, "innerHTML", timeInfo[0] + "/" + timeInfo[1]);
                   this._playingControl.set("playButton", '<i class="icon-pause icon-2x"></i>');
+                  this._playingControl.set("songSeek", this._convertTimeToSeconds(timeInfo[0]));
+                  this._playingControl.set("songSeekMax", this._convertTimeToSeconds(timeInfo[1]));
                  //  this._playingControl.set("volumeSeek", parseInt(res[2].replace(/[^0-9]/gi, ''), 10));
                   dfd.resolve();
                   this._ticker ++;

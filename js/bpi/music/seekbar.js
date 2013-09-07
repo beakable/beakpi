@@ -18,26 +18,30 @@ define([
     "dojo/dom",
     "dijit/_WidgetBase",
     "dijit/form/HorizontalSlider"
-], 
+],
 function(declare, dom, _WidgetBase, HorizontalSlider){
   return declare([_WidgetBase], {
     id: null,
     slider: null,
     dragging: false,
 
-    createBar: function(id, node, width) {
+    createBar: function(id, node, min, max, width) {
       this.id = id;
       this.slider = new HorizontalSlider({
           name: "slider",
           value: 0,
-          minimum: 0,
-          maximum: 100,
+          minimum: min,
+          maximum: max,
           intermediateChanges: true,
-          showButtons:false,
+          showButtons: false,
           style: ("width:"+width+"; float:left"),
           id: id
       }, node);
 
+    },
+
+    updateMax: function(max) {
+      this.slider.set("maximum", max);
     },
 
     trackTo: function(position) {
