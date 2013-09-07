@@ -46,8 +46,21 @@ body {
 /* Dojo Overwrites */
 /* --------------- */
 
-.claro .dijitButton .dijitButtonNode, .claro .dijitDropDownButton .dijitButtonNode, .claro .dijitComboButton .dijitButtonNode, .claro .dijitToggleButton .dijitButtonNode {
+.claro .dijitButton .dijitButtonNode, 
+.claro .dijitDropDownButton .dijitButtonNode, 
+.claro .dijitComboButton .dijitButtonNode, 
+.claro .dijitToggleButton .dijitButtonNode {
   background-color: #FF6699;
+  background-image: none;
+  border: none;
+  color: #FFF;
+}
+
+.claro .dijitButtonHover .dijitButtonNode, 
+.claro .dijitDropDownButtonHover .dijitButtonNode, 
+.claro .dijitComboButtonHover .dijitButtonNode,
+.claro .dijitToggleButtonHover .dijitButtonNode {
+  background-color: #A16D91;
   background-image: none;
   border: none;
   color: #FFF;
